@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { interval } from 'rxjs';
+
 import { GameService } from './game.service';
 import { LeagueService } from './league.service';
 import { RatingService } from './rating.service';
@@ -24,12 +26,19 @@ export class ClientService {
 
   initialized = false;
 
+  refresh_frequency_seconds = 30;
+
   constructor(
     private gameService: GameService,
     private leagueService: LeagueService,
     private userService: UserService,
     private ratingService: RatingService,
-  ) { }
+  ) {
+
+    interval(1000 * this.refresh_frequency_seconds).subscribe(x => {
+      this.loadAllData();
+    });
+  }
 
   loadAllData() {
     this.loadUsersThen( () => {
