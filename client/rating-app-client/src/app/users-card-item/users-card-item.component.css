@@ -1,0 +1,36 @@
+#users-card-item {
+  height: 50px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.title {
+  margin: 8px 16px 8px 16px;
+  font-size: 18px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  display: inline-block;
+}
+
+.delete {
+  margin: 8px;
+  float: right;
+}
+
+.avatar-container {
+  background-color: #9FA8DA;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
+  top: 8px;
+  left: 8px;
+}
+
+.avatar {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+

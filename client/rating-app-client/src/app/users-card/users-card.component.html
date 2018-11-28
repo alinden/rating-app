@@ -1,0 +1,51 @@
+<mat-card>
+  <div class="card-header">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/users.png">
+    </div>
+    <span class="title">Users</span>
+  </div>
+  <mat-card-content [ngSwitch]="mode">
+
+    <div *ngSwitchCase="'list'" class="users-list">
+      <app-users-card-item *ngFor="let user of client.users" [user]="user">
+      </app-users-card-item>
+    </div>
+
+    <div *ngSwitchCase="'add'" class="add-user">
+      <form id="add-user-form">
+        <mat-form-field>
+          <input placeholder="User Name"
+                 [(ngModel)]="userName"
+                 name="username"
+                 matInput/>
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Image"
+                 [(ngModel)]="userImage"
+                 name="userimage"
+                 matInput/>
+        </mat-form-field>
+      </form>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions [ngSwitch]="mode" align="end">
+
+    <div *ngSwitchCase="'list'">
+      <button mat-button class="action-button" (click)="enterAddMode()">
+        Add User
+      </button>
+    </div>
+
+    <div *ngSwitchCase="'add'">
+      <button mat-button class="action-button" (click)="enterListMode()">
+        Cancel
+      </button>
+      <button mat-button class="action-button" (click)="saveUser()">
+        Save
+      </button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>

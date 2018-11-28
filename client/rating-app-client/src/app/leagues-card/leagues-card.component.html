@@ -1,0 +1,52 @@
+<mat-card>
+  <div class="card-header">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/leagues.png">
+    </div>
+    <span class="title">Leagues</span>
+  </div>
+  <mat-card-content [ngSwitch]="mode">
+
+    <div *ngSwitchCase="'list'" class="leagues-list">
+        <app-leagues-card-item *ngFor="let league of client.leagues" [league]="league">
+        </app-leagues-card-item>
+    </div>
+
+    <div *ngSwitchCase="'add'" class="add-league">
+      <form id="add-league-form">
+        <mat-form-field>
+          <input placeholder="League Name"
+                 [(ngModel)]="leagueName"
+                 name="leaguename"
+                 matInput/>
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Image"
+                 [(ngModel)]="leagueImage"
+                 name="leagueimage"
+                 matInput/>
+        </mat-form-field>
+      </form>
+    </div>
+
+
+  </mat-card-content>
+  <mat-card-actions [ngSwitch]="mode" align="end">
+
+    <div *ngSwitchCase="'list'">
+      <button mat-button class="action-button" (click)="enterAddMode()">
+        Add League
+      </button>
+    </div>
+
+    <div *ngSwitchCase="'add'">
+      <button mat-button class="action-button" (click)="enterListMode()">
+        Cancel
+      </button>
+      <button mat-button class="action-button" (click)="saveLeague()">
+        Save
+      </button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>

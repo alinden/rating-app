@@ -1,0 +1,71 @@
+<mat-card>
+  <div class="card-header">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
+    </div>
+    <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+  </div>
+
+  <mat-card-content [ngSwitch]="mode">
+
+    <div *ngSwitchCase="'list'" class="ratings-list">
+      <app-rated-game-card-item *ngFor="let ratedGame of leagueWithGames.ratedGames" [ratedGame]="ratedGame">
+      </app-rated-game-card-item>
+    </div>
+
+    <div *ngSwitchCase="'add'">
+      <form id="add-game-form">
+        <mat-form-field>
+          <mat-select placeholder="Winner" [(ngModel)]="winnerId" name="winner">
+            <mat-option *ngFor="let user of client.users" [value]="user.id">
+              {{user.entity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Loser" [(ngModel)]="loserId" name="loser">
+            <mat-option *ngFor="let user of client.users" [value]="user.id">
+              {{user.entity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <div *ngSwitchCase="'details'">
+      <h2>Stats</h2>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions [ngSwitch]="mode" align="end">
+
+    <div *ngSwitchCase="'list'">
+      <button mat-button class="action-button" (click)="enterAddMode()">
+        Add Game
+      </button>
+      <button mat-button class="action-button" (click)="enterDetailsMode()">
+        Stats
+      </button>
+    </div>
+
+    <div *ngSwitchCase="'add'">
+      <button mat-button class="action-button" (click)="enterListMode()">
+        Cancel
+      </button>
+      <button mat-button class="action-button" (click)="saveGame()">
+        Save
+      </button>
+    </div>
+
+    <div *ngSwitchCase="'details'">
+      <button mat-button class="action-button" (click)="enterAddMode()">
+        Add Game
+      </button>
+      <button mat-button class="action-button" (click)="enterListMode()">
+        List
+      </button>
+    </div>
+
+  </mat-card-actions>
+</mat-card>
