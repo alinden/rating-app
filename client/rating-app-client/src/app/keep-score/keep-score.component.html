@@ -1,0 +1,101 @@
+<mat-card>
+  <div class="card-header">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/{{league.entity.image}}">
+    </div>
+    <span class="title">
+      {{ liveGame.league.entity.name | titlecase}}
+    </span>
+    <span class="summary">{{ liveGame.summary }}</span>
+  </div>
+
+  <mat-card-content [ngSwitch]="rules">
+
+    <div *ngSwitchCase="'cricket'" class="ratings-list">
+      <mat-grid-list cols="2" rowHeight="fit">
+        <mat-grid-tile>
+          <div id="enter-score">
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div id="scorecard">
+            <div class="cricket-row">
+              <div id="miss">Miss</div>
+              <div id="players">
+                <div id="player-one">
+                  <div class="avatar-container">
+                    <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
+                  </div>
+                  <span class="player-title">{{liveGame.players[0].user.entity.name | titlecase}}</span>
+                  <span class="rating">{{liveGame.players[0].rating}}</span>
+                </div>
+                <div id="player-two">
+                  <div class="avatar-container">
+                    <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
+                  </div>
+                  <span class="player-title">{{liveGame.players[1].user.entity.name | titlecase}}</span>
+                  <span class="rating">{{liveGame.players[1].rating}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+            <div class="cricket-row">
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div *ngSwitchCase="'301'">
+      <h2>301 Rules</h2>
+    </div>
+
+    <div *ngSwitchDefault>
+      <h2>N/A</h2>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions [ngSwitch]="mode" align="end">
+
+    <button mat-button class="action-button" (click)="saveGame()">
+      Save
+    </button>
+    <button mat-button class="action-button" (click)="cancelGame()">
+      Cancel
+    </button>
+
+  </mat-card-actions>
+</mat-card>

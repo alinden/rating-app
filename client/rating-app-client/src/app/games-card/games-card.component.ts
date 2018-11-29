@@ -37,6 +37,10 @@ export class GamesCardComponent implements OnInit {
     this.enterListMode();
   }
 
+  keepScore(): void {
+    alert('keep score');
+  }
+
   constructor(
     private client: ClientService,
   ) { }

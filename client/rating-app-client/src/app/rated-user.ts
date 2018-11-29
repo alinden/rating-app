@@ -4,5 +4,5 @@ import { User } from './user';
 
 export class RatedUser {
   user: WithId<User>;
-  rating: string;
+  rating: number;
 }
