@@ -1,4 +1,4 @@
-package com.raybeam.rating.models
+package rating.models
 
 import io.circe.generic.JsonCodec, io.circe.syntax._
 

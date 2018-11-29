@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import io.circe.generic.JsonCodec, io.circe.syntax._
 

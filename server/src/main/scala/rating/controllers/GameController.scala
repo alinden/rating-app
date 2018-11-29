@@ -1,4 +1,4 @@
-package com.raybeam.rating.controllers
+package rating.controllers
 
 import com.github.esap120.scala_elo.{Player => EloPlayer, KFactor}
 
@@ -9,8 +9,8 @@ import io.circe.{Encoder, Decoder, Json}
 import org.http4s.{EntityEncoder, EntityDecoder}
 import org.http4s.circe._
 
-import com.raybeam.rating.models.{Rating, Game, GameWithRatings, LeagueWithGames}
-import com.raybeam.rating.repositories.{GameRepository, LeagueRepository, RatingRepository, WithId}
+import rating.models.{Rating, Game, GameWithRatings, LeagueWithGames}
+import rating.repositories.{GameRepository, LeagueRepository, RatingRepository, WithId}
 
 import doobie._
 import doobie.implicits._

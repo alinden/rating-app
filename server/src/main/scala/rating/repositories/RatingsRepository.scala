@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import doobie._
 import doobie.implicits._
@@ -8,7 +8,7 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models.{Rating, RatedUser, League}
+import rating.models.{Rating, RatedUser, League}
 
 object RatingRepository extends Repository[Rating] {
   override val getAllQuery =

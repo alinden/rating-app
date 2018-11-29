@@ -1,4 +1,4 @@
-package com.raybeam.rating
+package rating
 
 import cats.effect.{Sync, ContextShift, IO}
 import cats.implicits._
@@ -11,9 +11,9 @@ import java.io.File
 import java.util.concurrent._
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models._
-import com.raybeam.rating.repositories.WithId
-import com.raybeam.rating.controllers._
+import rating.models._
+import rating.repositories.WithId
+import rating.controllers._
 
 object Routes {
 
