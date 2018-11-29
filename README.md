@@ -7,22 +7,22 @@ Webapp to track wins and losses between people playing one-on-one games. ELO rat
 1. Install sbt, npm, nodejs, nginx, and postgresql
 2. Setup nginx to serve static files from `/usr/share/rating-app/public/` and to proxy `/api/` requests to port 8080.
   1. Edit `/etc/nginx/nginx.conf` so that it looks like:
-    ```
-        location /api/ {
-		proxy_pass http://127.0.0.1:8080;
-        }
+```
+    location /api/ {
+        proxy_pass http://127.0.0.1:8080;
+    }
 
-        location / {
-            root   /var/www/rating-app/public/;
-            index  index.html;
-	    try_files $uri $uri/ /index.html;
-        }
+    location / {
+        root   /var/www/rating-app/public/;
+        index  index.html;
+  try_files $uri $uri/ /index.html;
+    }
 
-        location /assets/ {
-            root   /var/www/rating-app/public/;
-            index  index.html;
-        }
-     ```
+    location /assets/ {
+        root   /var/www/rating-app/public/;
+        index  index.html;
+    }
+ ```
 3. Initialize database cluster and create a database named `ratings`.
 4. Navigate to `client/rating-app-client/` and install angular: `npm install @angular/cli`
 5. Compile the client code: `ng build --prod`
