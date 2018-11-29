@@ -1,4 +1,4 @@
-package com.raybeam.rating
+package rating
 
 import cats.effect.{ExitCode, IO, IOApp}
 import cats.implicits._

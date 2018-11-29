@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import cats.effect.{ExitCode, IO, IOApp}
 
@@ -10,7 +10,7 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models.User
+import rating.models.User
 
 object UserRepository extends Repository[User] {
   override val getAllQuery =

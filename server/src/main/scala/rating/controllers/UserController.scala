@@ -1,4 +1,4 @@
-package com.raybeam.rating.controllers
+package rating.controllers
 
 import cats.effect.{ExitCode, IO, IOApp}
 
@@ -9,8 +9,8 @@ import io.circe.{Encoder, Decoder, Json}
 import org.http4s.{EntityEncoder, EntityDecoder}
 import org.http4s.circe._
 
-import com.raybeam.rating.models.User
-import com.raybeam.rating.repositories.{WithId, UserRepository}
+import rating.models.User
+import rating.repositories.{WithId, UserRepository}
 
 import doobie._
 import doobie.implicits._

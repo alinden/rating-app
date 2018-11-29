@@ -1,4 +1,4 @@
-package com.raybeam.rating
+package rating
 
 import cats.effect.{ConcurrentEffect, Effect, ExitCode, IO, IOApp, Timer, ContextShift}
 import cats.implicits._
@@ -8,7 +8,7 @@ import org.http4s.implicits._
 import fs2.Stream
 import scala.concurrent.ExecutionContext.global
 
-import com.raybeam.rating.controllers._
+import rating.controllers._
 
 import org.http4s.server.middleware.Logger
 
