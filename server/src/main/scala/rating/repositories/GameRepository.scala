@@ -69,7 +69,8 @@ object GameRepository extends Repository[Game] {
           inner join ratings
           on recent_ratings.id = ratings.id
         ) loser_ratings
-          ON losers.id = loser_ratings.user_id;
+          ON losers.id = loser_ratings.user_id
+      order by games.id desc;
     """
       .query[RatedGame]
       .to[List]
