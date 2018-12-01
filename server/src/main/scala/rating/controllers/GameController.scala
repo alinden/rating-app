@@ -52,8 +52,8 @@ object GameController {
       oldLoserRating: Rating,
       gameId: Int
     ): (Rating, Rating) = {
-      val winnerEloPlayer: EloPlayer = new EloPlayer(rating=oldWinnerRating.rating)
-      val loserEloPlayer: EloPlayer = new EloPlayer(rating=oldLoserRating.rating)
+      val winnerEloPlayer: EloPlayer = new EloPlayer(rating=oldWinnerRating.new_rating)
+      val loserEloPlayer: EloPlayer = new EloPlayer(rating=oldLoserRating.new_rating)
       winnerEloPlayer wins loserEloPlayer
       winnerEloPlayer.updateRating(KFactor.USCF)
       loserEloPlayer.updateRating(KFactor.USCF)

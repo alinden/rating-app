@@ -24,52 +24,35 @@ object GameRepository extends Repository[Game] {
   def getByLeagueQuery(league: WithId[League]) =
     sql"""
       select
-        winners.id as winner_id,
-        winners.name as winner_name,
-        winners.image as winner_image,
-        winner_ratings.rating as winner_rating,
-        losers.id as loser_id,
-        losers.name as loser_name,
-        losers.image as loser_image,
-        loser_ratings.rating as loser_rating
+        winners.id,
+        winners.name,
+        winners.image,
+        winner_ratings.id,
+        winner_ratings.league_id,
+        winner_ratings.user_id,
+        winner_ratings.last_game_id,
+        winner_ratings.new_rating,
+        winner_ratings.previous_rating,
+        losers.id,
+        losers.name,
+        losers.image,
+        loser_ratings.id,
+        loser_ratings.league_id,
+        loser_ratings.user_id,
+        loser_ratings.last_game_id,
+        loser_ratings.new_rating,
+        loser_ratings.previous_rating,
+        games.date_played
       from
         (select * from games where league_id = ${league.id}) games
         inner join users winners
           on games.winner_id = winners.id
-        inner join (
-          select
-            recent_ratings.id id,
-            recent_ratings.user_id user_id,
-            ratings.rating
-          from (
-            select
-              max(ratings.id) id,
-              ratings.user_id
-            from ratings
-            group by ratings.user_id
-          ) recent_ratings
-          inner join ratings
-          on recent_ratings.id = ratings.id
-        ) winner_ratings
-          on winner_ratings.user_id = games.winner_id
         inner join users losers
           on games.loser_id = losers.id
-        inner join (
-          select
-            recent_ratings.id id,
-            recent_ratings.user_id user_id,
-            ratings.rating
-          from (
-            select
-              max(ratings.id) id,
-              ratings.user_id
-            from ratings
-            group by ratings.user_id
-          ) recent_ratings
-          inner join ratings
-          on recent_ratings.id = ratings.id
-        ) loser_ratings
-          ON losers.id = loser_ratings.user_id
+        inner join ratings winner_ratings
+          on games.id = winner_ratings.last_game_id and winners.id = winner_ratings.user_id
+        inner join ratings loser_ratings
+          on games.id = loser_ratings.last_game_id and losers.id = loser_ratings.user_id
       order by games.id desc;
     """
       .query[RatedGame]

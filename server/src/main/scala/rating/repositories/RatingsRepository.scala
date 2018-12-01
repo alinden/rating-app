@@ -112,8 +112,8 @@ object RatingRepository extends Repository[Rating] {
         league_id = ${rating.entity.league_id},
         user_id = ${rating.entity.user_id},
         last_game_id = ${rating.entity.last_game_id},
-        new_rating = ${new_rating.entity.new_rating}
-        previous_rating = ${previous_rating.entity.previous_rating}
+        new_rating = ${rating.entity.new_rating}
+        previous_rating = ${rating.entity.previous_rating}
       where id = ${rating.id}
     """.update
       .run
