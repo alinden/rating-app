@@ -1,4 +1,4 @@
-<mat-grid-list cols="3" rowHeight="fit">
+<mat-grid-list #grid rowHeight="540px">
   <mat-grid-tile *ngFor="let leagueWithGames of client.leaguesWithGames">
     <app-games-card [leagueWithGames]="leagueWithGames">
     </app-games-card>
