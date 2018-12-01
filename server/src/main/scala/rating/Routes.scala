@@ -19,19 +19,6 @@ object Routes {
 
   val blockingEc = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(4))
 
-  def randomDataRoutes[F[_]: Sync](U: RandomDataController[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F]{}
-    import dsl._
-    import RandomDataController.Encoders._
-    HttpRoutes.of[F] {
-      case GET -> Root / "api" / "random-data" =>
-        for {
-          _ <- U.simulate
-          response <- Ok()
-        } yield response
-    }
-  }
-
   def userRoutes[F[_]: Sync](U: UserController[F]): HttpRoutes[F] = {
     val dsl = new Http4sDsl[F]{}
     import dsl._

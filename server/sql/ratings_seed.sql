@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS games (
     league_id integer NOT NULL,
     winner_id integer NOT NULL,
     loser_id integer NOT NULL,
-    date_played varchar NOT NULL
+    date_played timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ratings (
@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS ratings (
     league_id integer NOT NULL,
     user_id integer NOT NULL,
     last_game_id integer NOT NULL,
-    rating integer NOT NULL
+    previous_rating integer NOT NULL,
+    new_rating integer NOT NULL
 );
 
 BEGIN;

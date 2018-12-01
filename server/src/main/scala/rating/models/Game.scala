@@ -1,17 +1,16 @@
 package rating.models
 
-import rating.repositories.WithId
+import java.sql.Timestamp
 import io.circe.generic.JsonCodec, io.circe.syntax._
+import cats.syntax.either._
+
+import rating.repositories.WithId
+
+import TimestampEncoding._
 
 @JsonCodec case class Game(
   league_id: Int,
   winner_id:Int,
   loser_id: Int,
-  date_played: String
-)
-
-@JsonCodec case class GameWithRatings(
-  game: WithId[Game],
-  winner_rating: WithId[Rating],
-  loser_rating: WithId[Rating]
+  date_played: Option[Timestamp]
 )
