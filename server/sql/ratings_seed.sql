@@ -49,6 +49,9 @@ INSERT INTO leagues VALUES (DEFAULT, '301', '301_darts.png');
 INSERT INTO leagues VALUES (DEFAULT, 'Around the World', 'around_the_world.jpg');
 INSERT INTO leagues VALUES (DEFAULT, 'Snooker', 'snooker.jpg');
 
+INSERT INTO users VALUES (DEFAULT, 'Simba', 'simba.png');
+INSERT INTO users VALUES (DEFAULT, 'Brady', 'brady.png');
+
 COMMIT;
 
 ANALYZE;

@@ -70,6 +70,7 @@ object RatingRepository extends Repository[Rating] {
         a.user_image,
         ratings.id,
         ratings.league_id,
+        ratings.user_id,
         ratings.last_game_id,
         ratings.new_rating,
         ratings.previous_rating
@@ -100,7 +101,7 @@ object RatingRepository extends Repository[Rating] {
         ${newRating.league_id},
         ${newRating.user_id},
         ${newRating.last_game_id},
-        ${newRating.new_rating}
+        ${newRating.new_rating},
         ${newRating.previous_rating}
       ) returning id
     """.query[Int]
@@ -112,7 +113,7 @@ object RatingRepository extends Repository[Rating] {
         league_id = ${rating.entity.league_id},
         user_id = ${rating.entity.user_id},
         last_game_id = ${rating.entity.last_game_id},
-        new_rating = ${rating.entity.new_rating}
+        new_rating = ${rating.entity.new_rating},
         previous_rating = ${rating.entity.previous_rating}
       where id = ${rating.id}
     """.update

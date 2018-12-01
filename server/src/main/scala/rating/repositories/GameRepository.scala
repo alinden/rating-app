@@ -59,9 +59,17 @@ object GameRepository extends Repository[Game] {
       .to[List]
 
   override def addQuery(newGame: Game) =
-    sql"insert into games (league_id, winner_id, loser_id, date_played) values (${newGame.league_id}, ${newGame.winner_id}, ${newGame.loser_id}, ${newGame.date_played}) returning id"
-      .query[Int]
-      .option
+    sql"""
+      insert into games
+        (league_id, winner_id, loser_id, date_played)
+        values (
+          ${newGame.league_id},
+          ${newGame.winner_id},
+          ${newGame.loser_id},
+          CURRENT_TIMESTAMP
+        ) returning id
+      """.query[Int]
+        .option
 
   override def updateQuery(game: WithId[Game]) =
     sql"update games set league_id = ${game.entity.league_id}, winner_id = ${game.entity.winner_id}, loser_id = ${game.entity.loser_id}, date_played = ${game.entity.date_played}  where id = ${game.id}"
