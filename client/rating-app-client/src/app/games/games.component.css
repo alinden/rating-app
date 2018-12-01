@@ -1,10 +1,10 @@
 mat-grid-list {
-  height: calc(100% - 72px);
+  height: calc(100% - 64px);
 }
 
 app-games-card {
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
-  margin: 24px 12px 12px 24px;
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+  margin: 12px;
   padding: 0;
 }

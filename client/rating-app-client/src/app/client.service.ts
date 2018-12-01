@@ -26,7 +26,7 @@ export class ClientService {
 
   initialized = false;
 
-  refresh_frequency_seconds = 30;
+  refresh_frequency_seconds = 300;
 
   constructor(
     private gameService: GameService,
