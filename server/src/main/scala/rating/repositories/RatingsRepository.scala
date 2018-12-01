@@ -12,8 +12,16 @@ import rating.models.{Rating, RatedUser, League}
 
 object RatingRepository extends Repository[Rating] {
   override val getAllQuery =
-    sql"select id, league_id, user_id, last_game_id, rating from ratings"
-      .query[WithId[Rating]]
+    sql"""
+      select
+        id,
+        league_id,
+        user_id,
+        last_game_id,
+        new_rating,
+        previous_rating
+      from ratings
+    """.query[WithId[Rating]]
       .to[List]
 
   override def getQuery(id: Int) =
@@ -23,7 +31,8 @@ object RatingRepository extends Repository[Rating] {
         league_id,
         user_id,
         last_game_id,
-        rating
+        new_rating,
+        previous_rating
       from ratings where id = ${id}
     """.query[WithId[Rating]]
       .option
@@ -35,7 +44,8 @@ object RatingRepository extends Repository[Rating] {
         ratings.league_id,
         ratings.user_id,
         ratings.last_game_id,
-        ratings.rating
+        ratings.new_rating,
+        ratings.previous_rating
       from ratings
       inner join (
         select
@@ -58,7 +68,12 @@ object RatingRepository extends Repository[Rating] {
         a.user_id,
         a.user_name,
         a.user_image,
-        ratings.rating user_rating
+        ratings.id,
+        ratings.league_id,
+        ratings.user_id,
+        ratings.last_game_id,
+        ratings.new_rating,
+        ratings.previous_rating
       from (
         select
           users.id as user_id,
@@ -73,19 +88,21 @@ object RatingRepository extends Repository[Rating] {
       ) a
       inner join ratings
         on a.user_rating_id = ratings.id
-      order by ratings.rating desc;
+      order by ratings.new_rating desc;
     """
       .query[RatedUser]
       .to[List]
 
   override def addQuery(newRating: Rating) =
     sql"""
-      insert into ratings (league_id, user_id, last_game_id, rating)
+      insert into ratings
+        (league_id, user_id, last_game_id, new_rating, previous_rating)
       values (
         ${newRating.league_id},
         ${newRating.user_id},
         ${newRating.last_game_id},
-        ${newRating.rating}
+        ${newRating.new_rating},
+        ${newRating.previous_rating}
       ) returning id
     """.query[Int]
       .option
@@ -96,7 +113,8 @@ object RatingRepository extends Repository[Rating] {
         league_id = ${rating.entity.league_id},
         user_id = ${rating.entity.user_id},
         last_game_id = ${rating.entity.last_game_id},
-        rating = ${rating.entity.rating}
+        new_rating = ${rating.entity.new_rating},
+        previous_rating = ${rating.entity.previous_rating}
       where id = ${rating.id}
     """.update
       .run

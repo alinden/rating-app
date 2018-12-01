@@ -20,6 +20,7 @@ import { RatedUserCardItemComponent } from './rated-user-card-item/rated-user-ca
 import { RatedGameCardItemComponent } from './rated-game-card-item/rated-game-card-item.component';
 import { GamesCardComponent } from './games-card/games-card.component';
 import { RatingsCardComponent } from './ratings-card/ratings-card.component';
+import { RatingChangeComponent } from './rating-change/rating-change.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RatingsCardComponent } from './ratings-card/ratings-card.component';
     RatedUserCardItemComponent,
     RatedGameCardItemComponent,
     GamesCardComponent,
-    RatingsCardComponent
+    RatingsCardComponent,
+    RatingChangeComponent
   ],
   imports: [
     BrowserModule,

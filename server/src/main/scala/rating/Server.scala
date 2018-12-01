@@ -32,14 +32,12 @@ object Server {
       leagueController = LeagueController.impl[F]
       gameController = GameController.impl[F]
       ratingController = RatingController.impl[F]
-      randomDataController = RandomDataController.impl[F]
 
       // Combine Service Routes into an HttpApp
       // Can also be done via a Router if you
       // want to extract a segments not checked
       // in the underlying routes.
       httpApp = (
-        Routes.randomDataRoutes[F](randomDataController) <+>
         Routes.userRoutes[F](userController) <+>
         Routes.leagueRoutes[F](leagueController) <+>
         Routes.gameRoutes[F](gameController) <+>

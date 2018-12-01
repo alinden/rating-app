@@ -9,10 +9,17 @@ import { RatedGame } from '../rated-game';
 })
 export class RatedGameCardItemComponent implements OnInit {
   @Input() ratedGame: RatedGame;
+  winnerRatingChange: number;
+  loserRatingChange: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.winnerRatingChange = this.ratedGame.winner_rating.entity.new_rating -
+      this.ratedGame.winner_rating.entity.previous_rating;
+
+    this.loserRatingChange = this.ratedGame.loser_rating.entity.new_rating -
+      this.ratedGame.loser_rating.entity.previous_rating;
   }
 
 }

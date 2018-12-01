@@ -35,11 +35,3 @@
   width: auto;
 }
 
-.rating {
-  line-height: 50px;
-  float: right;
-  vertical-align: middle;
-  margin-right: 16px;
-  font-size: 18px;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-}
