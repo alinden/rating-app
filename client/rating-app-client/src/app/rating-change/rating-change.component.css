@@ -1,0 +1,24 @@
+.rating-container {
+  line-height: 50px;
+  float: right;
+  vertical-align: middle;
+  margin-right: 16px;
+  font-size: 18px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.rating-increase, .rating-decrease  {
+  margin: 0 16px;
+}
+
+.rating-increase {
+  color: #4CAF50;
+}
+
+.rating-decrease {
+  color: #FF5722;
+}
+
+mat-icon {
+  vertical-align: middle;
+}

@@ -1,0 +1,11 @@
+<span class="rating-container" >
+  <span class="rating-increase" *ngIf="isIncrease">
+    <mat-icon>arrow_drop_up</mat-icon>
+    {{ change }}
+  </span>
+  <span class="rating-decrease" *ngIf="!isIncrease">
+    <mat-icon>arrow_drop_down</mat-icon>
+    {{ change }}
+  </span>
+  <span class="rating">{{ rating.new_rating }}</span>
+</span>

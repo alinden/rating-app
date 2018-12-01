@@ -4,7 +4,8 @@
       <img class="avatar" src="/assets/{{ratedGame.winner.entity.image}}">
     </div>
     <span class="winner">{{ ratedGame.winner.entity.name | titlecase }}</span>
-    <span class="rating">{{ ratedGame.winner_rating.entity.new_rating }}</span>
+    <app-rating-change [rating]="ratedGame.winner_rating.entity">
+    </app-rating-change>
   </span>
 
   <span class="loser-container">
@@ -12,6 +13,7 @@
       <img class="avatar" src="/assets/{{ratedGame.loser.entity.image}}">
     </div>
     <span class="loser">{{ ratedGame.loser.entity.name | titlecase }}</span>
-    <span class="rating">{{ ratedGame.loser_rating.entity.new_rating }}</span>
+    <app-rating-change [rating]="ratedGame.loser_rating.entity">
+    </app-rating-change>
   </span>
 </div>
