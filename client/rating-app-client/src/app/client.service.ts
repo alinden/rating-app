@@ -99,12 +99,11 @@ export class ClientService {
         'league_id': leagueId,
         'winner_id': winnerId,
         'loser_id': loserId,
-        'date_played': ''
       } as Game;
     if (!winnerId || !loserId || !leagueId) { return; }
     this.gameService
       .addGame(newGame)
-      .subscribe( (gameWithRatings) => {
+      .subscribe( () => {
         this.loadGamesThen( () => {
           this.loadRatingsThen( () => {
           });
