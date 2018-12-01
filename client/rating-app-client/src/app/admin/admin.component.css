@@ -1,19 +1,7 @@
-app-users-card {
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
-  margin: 24px 12px 12px 24px;
-}
-
-app-leagues-card {
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
-  margin: 24px 24px 12px 12px;
-}
-
 mat-card {
   height: 100%;
 }
 
 mat-grid-list {
-  height: calc(100% - 72px);
+  height: calc(100% - 64px);
 }

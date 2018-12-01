@@ -1,9 +1,9 @@
 .rating-container {
-  line-height: 50px;
+  line-height: 45px;
   float: right;
   vertical-align: middle;
-  margin-right: 16px;
-  font-size: 18px;
+  margin-right: 8px;
+  font-size: 16px;
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
@@ -21,4 +21,10 @@
 
 mat-icon {
   vertical-align: middle;
+}
+
+@media only screen and (max-width: 500px) {
+  .rating-increase, .rating-decrease {
+    display: none;
+  }
 }

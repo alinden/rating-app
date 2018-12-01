@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MatGridList } from '@angular/material';
 
 import { ClientService } from '../client.service';
 
@@ -11,12 +14,28 @@ import { LeagueWithRatings } from '../league-with-ratings';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  constructor(public client: ClientService) { }
+ @ViewChild('grid') grid: MatGridList;
+
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 2,
+    md: 1,
+    sm: 1,
+    xs: 1
+  };
+
+  constructor(
+    public client: ClientService,
+    private observableMedia: ObservableMedia
+  ) { }
 
   ngOnInit() {
+    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    });
+
     if (!this.client.initialized) {
       this.client.loadAllData();
     }
   }
-
 }

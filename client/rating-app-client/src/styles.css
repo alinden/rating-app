@@ -5,8 +5,74 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.card {
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  margin: 12px;
+  padding: 0;
+}
+
 .action-button {
   color: #3f51b5;
   font-size: 16px;
   height: 100%
+}
+
+.card-header {
+  height: 45px;
+  border-bottom: 2px solid #e0e0e0;
+  background: #FFFF8D;
+}
+
+.title {
+  line-height: 45px;
+  margin: 0 16px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.avatar-container {
+  background-color: #9FA8DA;
+  width: 29px;
+  height: 29px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
+  top: 8px;
+  left: 8px;
+}
+
+.avatar {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+.subtitle {
+  line-height: 45px;
+  font-size: 16px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  margin-left: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.card-item-row {
+  height: 45px;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+@media only screen and (max-width: 1200px) {
+  .card {
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    margin: 4px;
+    padding: 0;
+  }
 }
