@@ -22,3 +22,9 @@
 mat-icon {
   vertical-align: middle;
 }
+
+@media only screen and (max-width: 500px) {
+  .rating-increase, .rating-decrease {
+    display: none;
+  }
+}

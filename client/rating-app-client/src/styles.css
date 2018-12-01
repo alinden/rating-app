@@ -5,6 +5,13 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.card {
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  margin: 12px;
+  padding: 0;
+}
+
 .action-button {
   color: #3f51b5;
   font-size: 16px;
@@ -61,3 +68,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-bottom: 1px solid #e0e0e0;
 }
 
+@media only screen and (max-width: 1200px) {
+  .card {
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    margin: 4px;
+    padding: 0;
+  }
+}

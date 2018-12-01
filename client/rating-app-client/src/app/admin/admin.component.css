@@ -1,15 +1,3 @@
-app-users-card {
-  width: calc(100% - 32px);
-  height: calc(100% - 32px);
-  margin: 12px;
-}
-
-app-leagues-card {
-  width: calc(100% - 32px);
-  height: calc(100% - 32px);
-  margin: 12px;
-}
-
 mat-card {
   height: 100%;
 }

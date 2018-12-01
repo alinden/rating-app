@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { MatGridList } from '@angular/material';
@@ -19,7 +19,7 @@ export class GamesComponent implements OnInit {
   gridByBreakpoint = {
     xl: 3,
     lg: 2,
-    md: 2,
+    md: 1,
     sm: 1,
     xs: 1
   };
@@ -38,5 +38,4 @@ export class GamesComponent implements OnInit {
       this.client.loadAllData();
     }
   }
-
 }
