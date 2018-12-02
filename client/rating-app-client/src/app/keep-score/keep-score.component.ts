@@ -64,16 +64,34 @@ export class KeepScoreComponent implements OnInit {
             image: 'alinden_github_image.png'
           }
         },
-        rating: 1874
+        rating: {
+          id: 14,
+          entity: {
+            league_id: 1,
+            user_id: 3,
+            last_game_id: 31,
+            new_rating: 1874,
+            previous_rating: 1856
+          }
+        }
       }, {
         user: {
-          id: 3,
+          id: 4,
           entity: {
             name: 'Robert',
             image: 'alinden_github_image.png'
           }
         },
-        rating: 2041
+        rating: {
+          id: 15,
+          entity: {
+            league_id: 1,
+            user_id: 4,
+            last_game_id: 31,
+            new_rating: 2008,
+            previous_rating: 1994
+          }
+        }
       }],
       state: state
     };

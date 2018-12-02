@@ -1,80 +1,360 @@
-<mat-card>
+<mat-card class="card">
   <div class="card-header">
     <div class="avatar-container">
       <img class="avatar" src="/assets/{{league.entity.image}}">
     </div>
     <span class="title">
-      {{ liveGame.league.entity.name | titlecase}}
+      {{ league.entity.name | titlecase}}
     </span>
     <span class="summary">{{ liveGame.summary }}</span>
   </div>
 
   <mat-card-content [ngSwitch]="rules">
 
-    <div *ngSwitchCase="'cricket'" class="ratings-list">
+    <div *ngSwitchCase="'cricket'" class="keep-score-content">
       <mat-grid-list cols="2" rowHeight="fit">
         <mat-grid-tile>
-          <div id="enter-score">
-            <div class="cricket-row">
+          <div id="scorecard">
+
+            <div class="card-item-row">
+              <div id="players">
+                <div class="player-one">
+                  <div class="avatar-container">
+                    <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
+                  </div>
+                  <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
+                  <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
+                </div>
+                <div class="player-two">
+                  <div class="avatar-container">
+                    <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
+                  </div>
+                  <span class="subtitle">{{liveGame.players[1].user.entity.name | titlecase}}</span>
+                  <span class="rating">{{liveGame.players[1].rating.entity.new_rating }}</span>
+                </div>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.twentyScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.twenties[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.twentyScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.twenties[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.nineteenScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.nineteens[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.nineteenScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.nineteens[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.eightteenScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.twenties[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.eightteenScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.twenties[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.seventeenScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.seventeens[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.seventeenScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.seventeens[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.sixteenScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.sixteens[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.sixteenScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.sixteens[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.fifteenScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.fifteens[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.fifteenScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.fifteens[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-score-cell-left">
+                <span class="cell-text">
+                  {{ liveGame.state.bullseyeScores[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.bullseyes[0] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.bullseyeScores[1] }}
+                </span>
+              </div>
+              <div class="cricket-score-cell">
+                <span class="cell-text">
+                  {{ liveGame.state.bullseyes[1] }}
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div id="players">
+                <div class="player-one">
+                  <span class="cell-text total-score">
+                    134
+                  </span>
+                </div>
+                <div class="player-two">
+                  <span class="cell-text total-score">
+                    86
+                  </span>
+                </div>
+              </div>
             </div>
+
           </div>
         </mat-grid-tile>
 
         <mat-grid-tile>
-          <div id="scorecard">
-            <div class="cricket-row">
-              <div id="miss">Miss</div>
-              <div id="players">
-                <div id="player-one">
-                  <div class="avatar-container">
-                    <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
-                  </div>
-                  <span class="player-title">{{liveGame.players[0].user.entity.name | titlecase}}</span>
-                  <span class="rating">{{liveGame.players[0].rating}}</span>
-                </div>
-                <div id="player-two">
-                  <div class="avatar-container">
-                    <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
-                  </div>
-                  <span class="player-title">{{liveGame.players[1].user.entity.name | titlecase}}</span>
-                  <span class="rating">{{liveGame.players[1].rating}}</span>
-                </div>
+          <div id="enter-score">
+
+            <div class="card-item-row">
+            </div>
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  20 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  20 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  20 * * *
+                </span>
               </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  19 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  19 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  19 * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  18 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  18 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  18 * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  17 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  17 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  17 * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  16 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  16 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  16 * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  15 *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  15 * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  15 * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <div class="cricket-enter-score-cell-left">
+                <span class="cell-text">
+                  Bull *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  Bull * *
+                </span>
+              </div>
+              <div class="cricket-enter-score-cell">
+                <span class="cell-text">
+                  Bull * * *
+                </span>
+              </div>
             </div>
-            <div class="cricket-row">
+
+            <div class="card-item-row">
+              <span class="cell-text">
+                Miss
+              </span>
             </div>
-            <div class="cricket-row">
-            </div>
+
           </div>
         </mat-grid-tile>
+
       </mat-grid-list>
     </div>
 
