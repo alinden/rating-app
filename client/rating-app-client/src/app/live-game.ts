@@ -8,4 +8,7 @@ export class LiveGame<S> {
   summary: string;
   players: RatedUser[];
   state: S;
+  isOver: boolean;
+  winner: WithId<User>;
+  loser: WithId<User>;
 }

@@ -89,7 +89,7 @@
               </div>
               <div class="cricket-score-cell">
                 <span class="cell-text">
-                  {{ liveGame.state.twenties[0] }}
+                  {{ liveGame.state.eightteens[0] }}
                 </span>
               </div>
               <div class="cricket-score-cell">
@@ -99,7 +99,7 @@
               </div>
               <div class="cricket-score-cell">
                 <span class="cell-text">
-                  {{ liveGame.state.twenties[1] }}
+                  {{ liveGame.state.eightteens[1] }}
                 </span>
               </div>
             </div>
@@ -200,12 +200,12 @@
               <div id="players">
                 <div class="player-one">
                   <span class="cell-text total-score">
-                    134
+                    {{ liveGame.state.scores[0] }}
                   </span>
                 </div>
                 <div class="player-two">
                   <span class="cell-text total-score">
-                    86
+                    {{ liveGame.state.scores[1] }}
                   </span>
                 </div>
               </div>
@@ -218,20 +218,27 @@
           <div id="enter-score">
 
             <div class="card-item-row">
+              <span class="cell-text" *ngIf="liveGame.isOver">
+                Game Over. {{ liveGame.winner.entity.name }} is the winner!
+              </span>
+
+              <span class="cell-text" *ngIf="!liveGame.isOver">
+                {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
+              </span>
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 20, count: 1})">
                 <span class="cell-text">
                   20 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 2})">
                 <span class="cell-text">
                   20 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 3})">
                 <span class="cell-text">
                   20 * * *
                 </span>
@@ -239,17 +246,17 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 19, count: 1})">
                 <span class="cell-text">
                   19 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 2})">
                 <span class="cell-text">
                   19 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 3})">
                 <span class="cell-text">
                   19 * * *
                 </span>
@@ -257,17 +264,17 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 18, count: 1})">
                 <span class="cell-text">
                   18 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 2})">
                 <span class="cell-text">
                   18 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 3})">
                 <span class="cell-text">
                   18 * * *
                 </span>
@@ -275,17 +282,17 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 17, count: 1})">
                 <span class="cell-text">
                   17 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 2})">
                 <span class="cell-text">
                   17 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 3})">
                 <span class="cell-text">
                   17 * * *
                 </span>
@@ -293,17 +300,17 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 16, count: 1})">
                 <span class="cell-text">
                   16 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 2})">
                 <span class="cell-text">
                   16 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 3})">
                 <span class="cell-text">
                   16 * * *
                 </span>
@@ -311,17 +318,17 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 15, count: 1})">
                 <span class="cell-text">
                   15 *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 2})">
                 <span class="cell-text">
                   15 * *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 3})">
                 <span class="cell-text">
                   15 * * *
                 </span>
@@ -329,28 +336,31 @@
             </div>
 
             <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left">
+              <div class="cricket-enter-bull-cell-left" (click)="recordShot({ value: 25, count: 1})">
                 <span class="cell-text">
                   Bull *
                 </span>
               </div>
-              <div class="cricket-enter-score-cell">
+              <div class="cricket-enter-bull-cell" (click)="recordShot({ value: 25, count: 2})">
                 <span class="cell-text">
                   Bull * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell">
-                <span class="cell-text">
-                  Bull * * *
                 </span>
               </div>
             </div>
 
             <div class="card-item-row">
-              <span class="cell-text">
-                Miss
-              </span>
+              <div class="cricket-enter-bull-cell-left" (click)="recordShot({ value: 0, count: 1})">
+                <span class="cell-text">
+                  Miss
+                </span>
+              </div>
+              <div class="cricket-enter-bull-cell" (click)="recordShot({ value: 0, count: 1})">
+                <span class="cell-text">
+                  Next Turn
+                </span>
+              </div>
             </div>
+
 
           </div>
         </mat-grid-tile>
@@ -370,9 +380,11 @@
 
   <mat-card-actions [ngSwitch]="mode" align="end">
 
-    <button mat-button class="action-button" (click)="saveGame()">
-      Save
-    </button>
+    <div *ngIf="liveGame.isOver">
+      <button mat-button class="action-button" (click)="saveGame()">
+        Save
+      </button>
+    </div>
     <button mat-button class="action-button" (click)="cancelGame()">
       Cancel
     </button>

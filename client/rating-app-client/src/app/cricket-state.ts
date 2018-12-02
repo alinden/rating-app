@@ -1,4 +1,6 @@
 export class CricketState {
+  turnIndex: number;
+  shotsRemaining: number;
   scores: number[];
   fifteens: C[];
   fifteenScores: number[];

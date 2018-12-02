@@ -107,6 +107,21 @@ mat-grid-tile {
   line-height: 100%;
 }
 
+.cricket-enter-bull-cell-left {
+  width: calc(50% - 1px);
+}
+
+.cricket-enter-bull-cell {
+  border-left: 1px solid #e0e0e0;
+  width: calc(50% - 1px);
+}
+
+.cricket-enter-bull-cell, .cricket-enter-bull-cell-left {
+  display: inline-block;
+  height: 100%;
+  line-height: 100%;
+}
+
 .total-score {
   font-weight: 500;
 }
