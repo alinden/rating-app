@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../league';
+import { RatedUser } from '../rated-user';
 import { WithId } from '../with-id';
 import { LiveGame } from '../live-game';
 import { GameType } from '../game-type';
@@ -154,74 +155,29 @@ export class KeepScoreComponent implements OnInit {
     }
   }
 
-  startGame(gameType: GameType, numPlayers: number) {
-    let state = {};
-    switch (gameType) {
-      case GameType.Cricket: {
-        state = {
-          turnIndex: 0,
-          shotsRemaining: 3,
-          scores: Array.from({ length : numPlayers },  k => 0),
-          fifteens: Array.from({ length : numPlayers },  k => C.Zero),
-          fifteenScores: Array.from({ length : numPlayers },  k => 0),
-          sixteens: Array.from({ length : numPlayers },  k => C.Zero),
-          sixteenScores: Array.from({ length : numPlayers },  k => 0),
-          seventeens: Array.from({ length : numPlayers },  k => C.Zero),
-          seventeenScores: Array.from({ length : numPlayers },  k => 0),
-          eightteens: Array.from({ length : numPlayers },  k => C.Zero),
-          eightteenScores: Array.from({ length : numPlayers },  k => 0),
-          nineteens: Array.from({ length : numPlayers },  k => C.Zero),
-          nineteenScores: Array.from({ length : numPlayers },  k => 0),
-          twenties: Array.from({ length : numPlayers },  k => C.Zero),
-          twentyScores: Array.from({ length : numPlayers },  k => 0),
-          bullseyes: Array.from({ length : numPlayers },  k => C.Zero),
-          bullseyeScores: Array.from({ length : numPlayers },  k => 0),
-        } as CricketState;
-        break;
-      }
-      case GameType.ThreeZeroOne: {
-        break;
-      }
-    }
+  startGame(gameType: GameType, players: RatedUser[]) {
+    const numPlayers = players.length;
+    const state = {
+      turnIndex: 0,
+      shotsRemaining: 3,
+      scores: Array.from({ length : numPlayers },  k => 0),
+      fifteens: Array.from({ length : numPlayers },  k => C.Zero),
+      fifteenScores: Array.from({ length : numPlayers },  k => 0),
+      sixteens: Array.from({ length : numPlayers },  k => C.Zero),
+      sixteenScores: Array.from({ length : numPlayers },  k => 0),
+      seventeens: Array.from({ length : numPlayers },  k => C.Zero),
+      seventeenScores: Array.from({ length : numPlayers },  k => 0),
+      eightteens: Array.from({ length : numPlayers },  k => C.Zero),
+      eightteenScores: Array.from({ length : numPlayers },  k => 0),
+      nineteens: Array.from({ length : numPlayers },  k => C.Zero),
+      nineteenScores: Array.from({ length : numPlayers },  k => 0),
+      twenties: Array.from({ length : numPlayers },  k => C.Zero),
+      twentyScores: Array.from({ length : numPlayers },  k => 0),
+      bullseyes: Array.from({ length : numPlayers },  k => C.Zero),
+      bullseyeScores: Array.from({ length : numPlayers },  k => 0),
+    } as CricketState;
     this.liveGame = {
-      summary: '0 - 0',
-      players: [{
-        user: {
-          id: 3,
-          entity: {
-            name: 'Alex',
-            image: 'alinden_github_image.png'
-          }
-        },
-        rating: {
-          id: 14,
-          entity: {
-            league_id: 1,
-            user_id: 3,
-            last_game_id: 31,
-            new_rating: 1874,
-            previous_rating: 1856
-          }
-        }
-      }, {
-        user: {
-          id: 4,
-          entity: {
-            name: 'Robert',
-            image: 'alinden_github_image.png'
-          }
-        },
-        rating: {
-          id: 15,
-          entity: {
-            league_id: 1,
-            user_id: 4,
-            last_game_id: 31,
-            new_rating: 2008,
-            previous_rating: 1994
-          }
-        }
-      }],
+      players: players,
       isOver: false,
       state: state,
       winner: null,
@@ -237,39 +193,16 @@ export class KeepScoreComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.leagueId = +params['leagueId']; // (+) converts string 'id' to a number
-      if (this.leagueId === 1) {
-        this.rules = 'cricket';
-        this.gameType = GameType.Cricket;
-        this.league = {
-          id: 1,
-          entity: {
-            name: 'Cricket',
-            image: 'dart_board.png'
-          }
-        };
-        this.startGame(GameType.Cricket, 2);
-      } else if (this.leagueId === 2) {
-        this.rules = '301';
-        this.gameType = GameType.ThreeZeroOne;
-        this.league = {
-          id: 2,
-          entity: {
-            name: '301',
-            image: '301_darts.png'
-          }
-        };
-      } else {
-        this.rules = '';
-        this.gameType = GameType.None;
-        this.league = {
-          id: 3,
-          entity: {
-            name: '8ball',
-            image: '8ball.png'
-          }
-        };
-      }
+      const leagueAndPlayers = JSON.parse(params['leagueAndPlayers']);
+      this.leagueId = leagueAndPlayers['league'];
+      const playerIds = leagueAndPlayers['players'];
+      this.rules = 'cricket';
+      this.gameType = GameType.Cricket;
+      this.league = this.client.getLeagueById(this.leagueId);
+      const players = playerIds.map((id) =>
+        this.client.getRatedUserById(id, this.leagueId)
+      );
+      this.startGame(GameType.Cricket, players);
     });
   }
 }

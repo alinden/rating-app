@@ -5,7 +5,6 @@ import { User } from './user';
 import { RatedUser } from './rated-user';
 
 export class LiveGame<S> {
-  summary: string;
   players: RatedUser[];
   state: S;
   isOver: boolean;

@@ -11,6 +11,7 @@ import { Game } from './game';
 import { Rating } from './rating';
 import { League } from './league';
 import { User } from './user';
+import { RatedUser } from './rated-user';
 import { WithId } from './with-id';
 import { LeagueWithGames } from './league-with-games';
 import { LeagueWithRatings } from './league-with-ratings';
@@ -139,5 +140,34 @@ export class ClientService {
   updateUser(user: WithId<User>) {
     this.userService.updateUser(user).subscribe(() => {
     });
+  }
+
+  getUserById(id: number): WithId<User> {
+    for (const user of this.users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+  }
+
+  getRatedUserById(userId: number, leagueId: number): RatedUser {
+    for (const leagueWithRatings of this.leaguesWithRatings) {
+      if (leagueWithRatings.league.id === leagueId) {
+        for (const ratedUser of leagueWithRatings.ratedUsers) {
+          if (ratedUser.user.id === userId) {
+            return ratedUser;
+          }
+        }
+      }
+    }
+  }
+
+
+  getLeagueById(id: number): WithId<League> {
+    for (const league of this.leagues) {
+      if (league.id === id) {
+        return league;
+      }
+    }
   }
 }
