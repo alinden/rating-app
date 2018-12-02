@@ -26,7 +26,7 @@ export class ClientService {
 
   initialized = false;
 
-  refresh_frequency_seconds = 30;
+  refresh_frequency_seconds = 300;
 
   constructor(
     private gameService: GameService,
@@ -99,12 +99,11 @@ export class ClientService {
         'league_id': leagueId,
         'winner_id': winnerId,
         'loser_id': loserId,
-        'date_played': ''
       } as Game;
     if (!winnerId || !loserId || !leagueId) { return; }
     this.gameService
       .addGame(newGame)
-      .subscribe( (gameWithRatings) => {
+      .subscribe( () => {
         this.loadGamesThen( () => {
           this.loadRatingsThen( () => {
           });

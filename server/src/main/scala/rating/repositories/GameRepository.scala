@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import doobie._
 import doobie.implicits._
@@ -8,7 +8,7 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models.{RatedGame, Game, League}
+import rating.models.{RatedGame, Game, League}
 
 object GameRepository extends Repository[Game] {
   override val getAllQuery =
@@ -24,60 +24,52 @@ object GameRepository extends Repository[Game] {
   def getByLeagueQuery(league: WithId[League]) =
     sql"""
       select
-        winners.id as winner_id,
-        winners.name as winner_name,
-        winners.image as winner_image,
-        winner_ratings.rating as winner_rating,
-        losers.id as loser_id,
-        losers.name as loser_name,
-        losers.image as loser_image,
-        loser_ratings.rating as loser_rating
+        winners.id,
+        winners.name,
+        winners.image,
+        winner_ratings.id,
+        winner_ratings.league_id,
+        winner_ratings.user_id,
+        winner_ratings.last_game_id,
+        winner_ratings.new_rating,
+        winner_ratings.previous_rating,
+        losers.id,
+        losers.name,
+        losers.image,
+        loser_ratings.id,
+        loser_ratings.league_id,
+        loser_ratings.user_id,
+        loser_ratings.last_game_id,
+        loser_ratings.new_rating,
+        loser_ratings.previous_rating,
+        games.date_played
       from
         (select * from games where league_id = ${league.id}) games
         inner join users winners
           on games.winner_id = winners.id
-        inner join (
-          select
-            recent_ratings.id id,
-            recent_ratings.user_id user_id,
-            ratings.rating
-          from (
-            select
-              max(ratings.id) id,
-              ratings.user_id
-            from ratings
-            group by ratings.user_id
-          ) recent_ratings
-          inner join ratings
-          on recent_ratings.id = ratings.id
-        ) winner_ratings
-          on winner_ratings.user_id = games.winner_id
         inner join users losers
           on games.loser_id = losers.id
-        inner join (
-          select
-            recent_ratings.id id,
-            recent_ratings.user_id user_id,
-            ratings.rating
-          from (
-            select
-              max(ratings.id) id,
-              ratings.user_id
-            from ratings
-            group by ratings.user_id
-          ) recent_ratings
-          inner join ratings
-          on recent_ratings.id = ratings.id
-        ) loser_ratings
-          ON losers.id = loser_ratings.user_id;
+        inner join ratings winner_ratings
+          on games.id = winner_ratings.last_game_id and winners.id = winner_ratings.user_id
+        inner join ratings loser_ratings
+          on games.id = loser_ratings.last_game_id and losers.id = loser_ratings.user_id
+      order by games.id desc;
     """
       .query[RatedGame]
       .to[List]
 
   override def addQuery(newGame: Game) =
-    sql"insert into games (league_id, winner_id, loser_id, date_played) values (${newGame.league_id}, ${newGame.winner_id}, ${newGame.loser_id}, ${newGame.date_played}) returning id"
-      .query[Int]
-      .option
+    sql"""
+      insert into games
+        (league_id, winner_id, loser_id, date_played)
+        values (
+          ${newGame.league_id},
+          ${newGame.winner_id},
+          ${newGame.loser_id},
+          CURRENT_TIMESTAMP
+        ) returning id
+      """.query[Int]
+        .option
 
   override def updateQuery(game: WithId[Game]) =
     sql"update games set league_id = ${game.entity.league_id}, winner_id = ${game.entity.winner_id}, loser_id = ${game.entity.loser_id}, date_played = ${game.entity.date_played}  where id = ${game.id}"

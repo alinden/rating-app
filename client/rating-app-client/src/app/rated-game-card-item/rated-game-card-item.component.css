@@ -1,16 +1,8 @@
-.rated-game-row {
-  height: 50px;
-  width: 100%;
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .winner-container {
   width: 50%;
   height: 100%;
   float: left;
-  line-height: 50px;
-  font-size: 18px;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
+  line-height: 100%;
   border-right: 1px solid #e0e0e0;
 }
 
@@ -18,51 +10,6 @@
   width: 49%;
   height: 100%;
   float: right;
-  line-height: 50px;
-  font-size: 18px;
+  line-height: 100%;
   color: grey;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-}
-
-.winner {
-  margin-left: 16px;
-  display: inline-block;
-}
-
-.loser {
-  margin-left: 16px;
-  display: inline-block;
-}
-
-.delete {
-  margin: 8px;
-  float: right;
-}
-
-.avatar-container {
-  background-color: #9FA8DA;
-  width: 32px;
-  height: 32px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  display: inline-block;
-  top: 8px;
-  left: 8px;
-}
-
-.avatar {
-  display: inline;
-  margin: 0 auto;
-  height: 100%;
-  width: auto;
-}
-
-.rating {
-  line-height: 50px;
-  float: right;
-  vertical-align: middle;
-  margin-right: 16px;
-  font-size: 18px;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
 }

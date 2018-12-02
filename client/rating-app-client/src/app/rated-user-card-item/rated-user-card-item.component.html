@@ -1,7 +1,10 @@
-<div class="rated-user-row">
-  <div class="avatar-container">
-    <img class="avatar" src="/assets/{{ratedUser.user.entity.image}}">
+<div class="card-item-row">
+  <div class="rated-user-container">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/{{ratedUser.user.entity.image}}">
+    </div>
+    <span class="subtitle">{{ ratedUser.user.entity.name | titlecase }}</span>
+    <app-rating-change [rating]="ratedUser.rating.entity">
+    </app-rating-change>
   </div>
-  <span class="title">{{ ratedUser.user.entity.name | titlecase }}</span>
-  <span class="rating">{{ ratedUser.rating }}</span>
 </div>

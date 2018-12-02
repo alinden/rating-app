@@ -9,10 +9,13 @@ import { RatedUser } from '../rated-user';
 })
 export class RatedUserCardItemComponent implements OnInit {
   @Input() ratedUser: RatedUser;
+  ratingChange: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.ratingChange = this.ratedUser.rating.entity.new_rating -
+      this.ratedUser.rating.entity.previous_rating;
   }
 
 }

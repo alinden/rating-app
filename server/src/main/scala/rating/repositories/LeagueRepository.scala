@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import doobie._
 import doobie.implicits._
@@ -8,12 +8,21 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models.League
+import rating.models.League
 
 object LeagueRepository extends Repository[League] {
   override val getAllQuery =
-    sql"select id, name, image from leagues"
-      .query[WithId[League]]
+    sql"""
+      select league_id, league_name, league_image from (
+        select
+          leagues.id league_id, leagues.name league_name, leagues.image league_image, max(ratings.id) rating_id
+        from leagues
+        left join ratings
+          on ratings.league_id = leagues.id
+        group by leagues.id, leagues.name, leagues.image
+      ) leagues_with_max_rating_id
+      order by case when rating_id is null then 1 else 0 end, rating_id desc;
+    """.query[WithId[League]]
       .to[List]
 
   override def getQuery(id: Int) =

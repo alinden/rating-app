@@ -1,4 +1,4 @@
-package com.raybeam.rating.controllers
+package rating.controllers
 
 import cats.effect.Sync
 import cats.Applicative
@@ -7,8 +7,8 @@ import io.circe.{Encoder, Decoder, Json}
 import org.http4s.{EntityEncoder, EntityDecoder}
 import org.http4s.circe._
 
-import com.raybeam.rating.models.League
-import com.raybeam.rating.repositories.{WithId, LeagueRepository}
+import rating.models.League
+import rating.repositories.{WithId, LeagueRepository}
 
 import doobie._
 import doobie.implicits._

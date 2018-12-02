@@ -1,4 +1,4 @@
-package com.raybeam.rating.repositories
+package rating.repositories
 
 import cats.effect.{ExitCode, IO, IOApp}
 
@@ -10,12 +10,21 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models.User
+import rating.models.User
 
 object UserRepository extends Repository[User] {
   override val getAllQuery =
-    sql"select id, name, image from users"
-      .query[WithId[User]]
+    sql"""
+      select user_id, user_name, user_image from (
+        select
+          users.id user_id, users.name user_name, users.image user_image, max(ratings.id) rating_id
+        from users
+        left join ratings
+          on ratings.user_id = users.id
+        group by users.id, users.name, users.image
+      ) users_with_max_rating_id
+      order by case when rating_id is null then 1 else 0 end, rating_id desc;
+    """.query[WithId[User]]
       .to[List]
 
   override def getQuery(id: Int) =

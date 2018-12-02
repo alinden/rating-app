@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Game } from './game';
 import { WithId } from './with-id';
-import { GameWithRatings } from './game-with-ratings';
 import { Observable, of } from 'rxjs';
 import { RatingService } from './rating.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -55,9 +54,9 @@ export class GameService {
     );
   }
 
-  addGame(game: Game): Observable<GameWithRatings> {
-    return this.http.post<GameWithRatings>(this.gamesUrl, game, httpOptions).pipe(
-      catchError(this.handleError<GameWithRatings>('addGame'))
+  addGame(game: Game): Observable<any> {
+    return this.http.post<any>(this.gamesUrl, game, httpOptions).pipe(
+      catchError(this.handleError<any>('addGame'))
     );
   }
 

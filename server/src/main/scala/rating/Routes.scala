@@ -1,4 +1,4 @@
-package com.raybeam.rating
+package rating
 
 import cats.effect.{Sync, ContextShift, IO}
 import cats.implicits._
@@ -11,26 +11,13 @@ import java.io.File
 import java.util.concurrent._
 import scala.concurrent.ExecutionContext
 
-import com.raybeam.rating.models._
-import com.raybeam.rating.repositories.WithId
-import com.raybeam.rating.controllers._
+import rating.models._
+import rating.repositories.WithId
+import rating.controllers._
 
 object Routes {
 
   val blockingEc = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(4))
-
-  def randomDataRoutes[F[_]: Sync](U: RandomDataController[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F]{}
-    import dsl._
-    import RandomDataController.Encoders._
-    HttpRoutes.of[F] {
-      case GET -> Root / "api" / "random-data" =>
-        for {
-          _ <- U.simulate
-          response <- Ok()
-        } yield response
-    }
-  }
 
   def userRoutes[F[_]: Sync](U: UserController[F]): HttpRoutes[F] = {
     val dsl = new Http4sDsl[F]{}

@@ -1,4 +1,4 @@
-package com.raybeam.rating
+package rating
 
 import cats.effect.{ConcurrentEffect, Effect, ExitCode, IO, IOApp, Timer, ContextShift}
 import cats.implicits._
@@ -8,7 +8,7 @@ import org.http4s.implicits._
 import fs2.Stream
 import scala.concurrent.ExecutionContext.global
 
-import com.raybeam.rating.controllers._
+import rating.controllers._
 
 import org.http4s.server.middleware.Logger
 
@@ -32,14 +32,12 @@ object Server {
       leagueController = LeagueController.impl[F]
       gameController = GameController.impl[F]
       ratingController = RatingController.impl[F]
-      randomDataController = RandomDataController.impl[F]
 
       // Combine Service Routes into an HttpApp
       // Can also be done via a Router if you
       // want to extract a segments not checked
       // in the underlying routes.
       httpApp = (
-        Routes.randomDataRoutes[F](randomDataController) <+>
         Routes.userRoutes[F](userController) <+>
         Routes.leagueRoutes[F](leagueController) <+>
         Routes.gameRoutes[F](gameController) <+>

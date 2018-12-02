@@ -1,4 +1,4 @@
-package com.raybeam.rating.models
+package rating.models
 
 import io.circe.generic.JsonCodec, io.circe.syntax._
 
@@ -6,5 +6,6 @@ import io.circe.generic.JsonCodec, io.circe.syntax._
   league_id: Int,
   user_id: Int,
   last_game_id: Int,
-  rating: Int
+  new_rating: Int,
+  previous_rating: Int,
 )

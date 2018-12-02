@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatOptionModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatCardModule, MatPaginatorModule, MatSortModule, MatGridListModule } from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { RatedGameCardItemComponent } from './rated-game-card-item/rated-game-ca
 import { GamesCardComponent } from './games-card/games-card.component';
 import { RatingsCardComponent } from './ratings-card/ratings-card.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
+import { RatingChangeComponent } from './rating-change/rating-change.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { KeepScoreComponent } from './keep-score/keep-score.component';
     RatedGameCardItemComponent,
     GamesCardComponent,
     RatingsCardComponent,
-    KeepScoreComponent
+    KeepScoreComponent,
+    RatingChangeComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { KeepScoreComponent } from './keep-score/keep-score.component';
     MatPaginatorModule,
     MatSortModule,
     MatGridListModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

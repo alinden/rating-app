@@ -3,37 +3,8 @@ mat-card {
   padding: 0;
 }
 
-.card-header {
-  height: 50px;
-  border-bottom: 2px solid #e0e0e0;
-  background: #FFFF8D;
-}
-
-.title {
-  margin: 8px 16px 8px 16px;
-  font-size: 24px;
-  font-weight: 500;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-  display: inline-block;
-}
-
-.avatar-container {
-  background-color: #9FA8DA;
-  width: 32px;
-  height: 32px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  display: inline-block;
-  top: 8px;
-  left: 8px;
-}
-
-.avatar {
-  display: inline;
-  margin: 0 auto;
-  height: 100%;
-  width: auto;
+#add-rating-form {
+  margin-top: 8px;
 }
 
 mat-card-content {
@@ -48,10 +19,6 @@ mat-card-actions {
   bottom: 0px;
   border-top: 1px solid #e0e0e0;
   padding: 0px 8px 0px 0px;
-}
-
-#add-rating-form {
-  margin-top: 8px;
 }
 
 mat-form-field {
