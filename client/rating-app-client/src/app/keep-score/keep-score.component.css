@@ -48,7 +48,6 @@ mat-grid-tile {
 }
 
 .player-one {
-  display: inline-block;
   width: 50%;
   height: 100%;
   float: left;
@@ -57,11 +56,19 @@ mat-grid-tile {
 }
 
 .player-two {
-  display: inline-block;
   width: 49%;
   height: 100%;
   float: right;
   line-height: 100%;
+}
+
+.player-one-score, .player-two-score {
+  display: inline-block;
+  line-height: 45px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 18px;
+  font-weight: 400px;
 }
 
 .rating {
@@ -69,27 +76,6 @@ mat-grid-tile {
   margin-right: 12px;
   line-height: 45px;
   vertical-align: middle;
-}
-
-.cricket-score-cell {
-  width: calc(25% - 1px);
-  border-left: 1px solid #e0e0e0;
-}
-
-.cricket-score-cell-left {
-  width: 25%;
-}
-
-.cricket-score-cell, .cricket-score-cell-left {
-  display: inline-block;
-  height: 100%;
-  line-height: 100%;
-}
-
-.cell-text {
-  position: relative;
-  left: 36px;
-  top: 14px;
 }
 
 .cricket-enter-score-cell-left {
@@ -103,8 +89,9 @@ mat-grid-tile {
 
 .cricket-enter-score-cell, .cricket-enter-score-cell-left {
   display: inline-block;
-  height: 100%;
-  line-height: 100%;
+  line-height: 45px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .cricket-enter-bull-cell-left {
@@ -116,12 +103,20 @@ mat-grid-tile {
   width: calc(50% - 1px);
 }
 
-.cricket-enter-bull-cell, .cricket-enter-bull-cell-left {
+.cricket-enter-bull-cell, .cricket-enter-bull-cell-left, #enter-score-summary {
   display: inline-block;
-  height: 100%;
-  line-height: 100%;
+  line-height: 45px;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.total-score {
-  font-weight: 500;
+#enter-score-summary {
+  font-size: 18px;
+  font-weight: 400px;
+}
+
+.cricket-enter-score-cell, .cricket-enter-score-cell-left,
+.cricket-enter-bull-cell, .cricket-enter-bull-cell-left {
+  font-weight: 500px;
+  color: #3f51b5;
 }
