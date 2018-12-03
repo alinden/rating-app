@@ -1,0 +1,25 @@
+<div class="card-item-row">
+  <div id="score-left">
+    <span class="cell-text">
+      {{ scores[0] }}
+    </span>
+  </div>
+  <div id="shot-left" [ngSwitch]="shots[0]">
+    <span class="cell-text" *ngSwitchCase="1"> \ </span>
+    <span class="cell-text" *ngSwitchCase="2"> X </span>
+    <span class="cell-text" *ngSwitchCase="3"> (X) </span>
+    <span class="cell-text" *ngSwitchCase="0">   </span>
+  </div>
+  <div id="shot-right" [ngSwitch]="shots[1]">
+    <span class="cell-text" *ngSwitchCase="1"> \ </span>
+    <span class="cell-text" *ngSwitchCase="2"> X </span>
+    <span class="cell-text" *ngSwitchCase="3"> (X) </span>
+    <span class="cell-text" *ngSwitchCase="0">   </span>
+  </div>
+  <div id="score-right">
+    <span class="cell-text">
+      {{ scores[1] }}
+    </span>
+  </div>
+</div>
+

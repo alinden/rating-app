@@ -34,166 +34,33 @@
               </div>
             </div>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.twentyScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.twenties[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.twentyScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.twenties[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.twentyScores"
+                                        [shots]="liveGame.state.twenties">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.nineteenScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.nineteens[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.nineteenScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.nineteens[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.nineteenScores"
+                                        [shots]="liveGame.state.nineteens">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.eightteenScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.eightteens[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.eightteenScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.eightteens[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.eightteenScores"
+                                        [shots]="liveGame.state.eightteens">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.seventeenScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.seventeens[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.seventeenScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.seventeens[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.seventeenScores"
+                                        [shots]="liveGame.state.seventeens">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.sixteenScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.sixteens[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.sixteenScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.sixteens[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.sixteenScores"
+                                        [shots]="liveGame.state.sixteens">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.fifteenScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.fifteens[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.fifteenScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.fifteens[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.fifteenScores"
+                                        [shots]="liveGame.state.fifteens">
+            </app-cricket-scoreboard-row>
 
-            <div class="card-item-row">
-              <div class="cricket-score-cell-left">
-                <span class="cell-text">
-                  {{ liveGame.state.bullseyeScores[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.bullseyes[0] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.bullseyeScores[1] }}
-                </span>
-              </div>
-              <div class="cricket-score-cell">
-                <span class="cell-text">
-                  {{ liveGame.state.bullseyes[1] }}
-                </span>
-              </div>
-            </div>
+            <app-cricket-scoreboard-row [scores]="liveGame.state.bullseyeScores"
+                                        [shots]="liveGame.state.bullseyes">
+            </app-cricket-scoreboard-row>
 
             <div class="card-item-row">
               <div id="players">

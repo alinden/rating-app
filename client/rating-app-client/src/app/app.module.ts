@@ -23,6 +23,7 @@ import { GamesCardComponent } from './games-card/games-card.component';
 import { RatingsCardComponent } from './ratings-card/ratings-card.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
 import { RatingChangeComponent } from './rating-change/rating-change.component';
+import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-scoreboard-row.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RatingChangeComponent } from './rating-change/rating-change.component';
     GamesCardComponent,
     RatingsCardComponent,
     KeepScoreComponent,
-    RatingChangeComponent
+    RatingChangeComponent,
+    CricketScoreboardRowComponent
   ],
   imports: [
     BrowserModule,

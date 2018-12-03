@@ -1,0 +1,20 @@
+#score-right, #shot-left, #shot-right {
+  width: calc(25% - 1px);
+  border-left: 1px solid #e0e0e0;
+}
+
+#score-left {
+  width: 25%;
+}
+
+#score-right, #shot-left, #shot-right, #score-left {
+  display: inline-block;
+  line-height: 100%;
+}
+
+.cell-text {
+  position: relative;
+  left: 36px;
+  top: 14px;
+}
+
