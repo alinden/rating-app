@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'games', component: GamesComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'ratings', component: RatingsComponent },
-  { path: 'keep-score/:leagueAndPlayers', component: KeepScoreComponent },
+  { path: 'keep-score/:leagueId', component: KeepScoreComponent },
 ];
 
 @NgModule({

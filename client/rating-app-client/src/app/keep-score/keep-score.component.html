@@ -8,9 +8,9 @@
     </span>
   </div>
 
-  <mat-card-content [ngSwitch]="rules">
+  <mat-card-content [ngSwitch]="mode">
 
-    <div *ngSwitchCase="'cricket'" class="keep-score-content">
+    <div *ngSwitchCase="'game'" class="keep-score-content">
       <mat-grid-list cols="2" rowHeight="fit">
         <mat-grid-tile>
           <div id="scorecard">
@@ -367,26 +367,45 @@
       </mat-grid-list>
     </div>
 
-    <div *ngSwitchCase="'301'">
-      <h2>301 Rules</h2>
-    </div>
-
-    <div *ngSwitchDefault>
-      <h2>N/A</h2>
+    <div *ngSwitchCase="'lag'">
+      <form id="lag-form">
+        <mat-form-field>
+          <mat-select placeholder="Player One" [(ngModel)]="playerOneId" name="playerOne">
+            <mat-option *ngFor="let user of client.users" [value]="user.id">
+              {{user.entity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Player Two" [(ngModel)]="playerTwoId" name="playerTwo">
+            <mat-option *ngFor="let user of client.users" [value]="user.id">
+              {{user.entity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
     </div>
 
   </mat-card-content>
 
   <mat-card-actions [ngSwitch]="mode" align="end">
 
-    <div *ngIf="liveGame.isOver">
-      <button mat-button class="action-button" (click)="saveGame()">
-        Save
+    <div *ngSwitchCase="'game'">
+      <div *ngIf="liveGame.isOver">
+        <button mat-button class="action-button" (click)="saveGame()">
+          Save
+        </button>
+      </div>
+      <button mat-button class="action-button" (click)="cancelGame()">
+        Cancel
       </button>
     </div>
-    <button mat-button class="action-button" (click)="cancelGame()">
-      Cancel
-    </button>
+
+    <div *ngSwitchCase="'lag'">
+      <button mat-button class="action-button" (click)="recordLag()">
+        Start
+      </button>
+    </div>
 
   </mat-card-actions>
 </mat-card>

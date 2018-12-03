@@ -22,8 +22,10 @@ import { LeagueWithRatings } from './league-with-ratings';
 export class ClientService {
   users: WithId<User>[];
   leagues: WithId<League>[];
+  leagueById: Map<number, League>;
   leaguesWithGames: LeagueWithGames[];
   leaguesWithRatings: LeagueWithRatings[];
+  ratedUsers: Map<number, Map<number, RatedUser>>;
 
   initialized = false;
 
@@ -56,6 +58,11 @@ export class ClientService {
   loadLeaguesThen(fn) {
     this.leagueService.getLeagues().subscribe(leagues => {
       this.leagues = leagues;
+      const leagueById = new Map();
+      for (const league of leagues) {
+        leagueById.set(league.id, league.entity);
+      }
+      this.leagueById = leagueById;
       fn();
     });
   }
@@ -70,6 +77,22 @@ export class ClientService {
   loadRatingsThen(fn) {
     this.ratingService.getLeaguesWithRatings().subscribe(leaguesWithRatings => {
       this.leaguesWithRatings = leaguesWithRatings;
+      console.log('set leaguewWithRatings');
+      const ratedUsers = new Map();
+      console.log('ratedUsers');
+      console.log(ratedUsers);
+      for (const leagueWithRatings of leaguesWithRatings) {
+        const ratedUsersInLeague = new Map();
+        console.log('ratedUsersInLeague');
+        console.log(ratedUsersInLeague);
+        for (const ratedUser of leagueWithRatings.ratedUsers) {
+          console.log('ratedUsersInLeague');
+          console.log(ratedUsersInLeague);
+          ratedUsersInLeague.set(ratedUser.user.id, ratedUser);
+        }
+        ratedUsers.set(leagueWithRatings.league.id, ratedUsersInLeague);
+      }
+      this.ratedUsers = ratedUsers;
       fn();
     });
   }
@@ -151,23 +174,23 @@ export class ClientService {
   }
 
   getRatedUserById(userId: number, leagueId: number): RatedUser {
-    for (const leagueWithRatings of this.leaguesWithRatings) {
-      if (leagueWithRatings.league.id === leagueId) {
-        for (const ratedUser of leagueWithRatings.ratedUsers) {
-          if (ratedUser.user.id === userId) {
-            return ratedUser;
-          }
-        }
+    if (this.initialized) {
+      const existingRatedUser = this.ratedUsers.get(leagueId).get(userId);
+      if (existingRatedUser) {
+        return existingRatedUser;
+      } else {
+        // TODO(alinden): add a rating for that
       }
+    } else {
+      // TODO(alinden): handle uninitialized
     }
   }
 
-
   getLeagueById(id: number): WithId<League> {
-    for (const league of this.leagues) {
-      if (league.id === id) {
-        return league;
-      }
+    if (this.initialized) {
+      return { id: id, entity: this.leagueById.get(id) } as WithId<League>;
+    } else {
+      // TODO(alinden): handle uninitialized
     }
   }
 }

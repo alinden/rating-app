@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../league';
 import { RatedUser } from '../rated-user';
@@ -16,12 +16,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./keep-score.component.css']
 })
 export class KeepScoreComponent implements OnInit {
+  @Input() playerOneId: number;
+  @Input() playerTwoId: number;
+
   leagueId: number;
   liveGame: LiveGame<any>;
   gameType: GameType;
   league: WithId<League>;
   rules: string;
+  mode: string;
+
   private sub: any;
+
+  enterGameMode() {
+    this.mode = 'game';
+  }
+
+  enterLagMode() {
+    this.mode = 'lag';
+  }
+
+  recordLag() {
+    console.log('recordLag');
+    console.log('this.playerOneId');
+    console.log(this.playerOneId);
+    console.log('this.playerTwoId');
+    console.log(this.playerTwoId);
+    const playerOne = this.client.getRatedUserById(this.playerOneId, this.leagueId);
+    const playerTwo = this.client.getRatedUserById(this.playerTwoId, this.leagueId);
+    console.log('JSON.stringify(this.playerOne)');
+    console.log(JSON.stringify(playerOne));
+    console.log('JSON.stringify(this.playerTwo)');
+    console.log(JSON.stringify(playerTwo));
+    this.startGame([playerOne, playerTwo]);
+    this.enterGameMode();
+  }
 
   saveGame() {
     this.client.addGame(
@@ -155,7 +184,7 @@ export class KeepScoreComponent implements OnInit {
     }
   }
 
-  startGame(gameType: GameType, players: RatedUser[]) {
+  startGame(players: RatedUser[]) {
     const numPlayers = players.length;
     const state = {
       turnIndex: 0,
@@ -193,16 +222,20 @@ export class KeepScoreComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      const leagueAndPlayers = JSON.parse(params['leagueAndPlayers']);
-      this.leagueId = leagueAndPlayers['league'];
-      const playerIds = leagueAndPlayers['players'];
-      this.rules = 'cricket';
-      this.gameType = GameType.Cricket;
-      this.league = this.client.getLeagueById(this.leagueId);
-      const players = playerIds.map((id) =>
-        this.client.getRatedUserById(id, this.leagueId)
-      );
-      this.startGame(GameType.Cricket, players);
+      this.leagueId = +params['leagueId'];
     });
+    if (!this.client.initialized) {
+      this.client.loadAllData();
+      console.log('client loaded all data');
+      this.league = this.client.getLeagueById(this.leagueId);
+      console.log('found league');
+      console.log('JSON.stringify(this.league)');
+      console.log(JSON.stringify(this.league));
+    } else {
+      console.log('client already loaded all data');
+      this.league = this.client.getLeagueById(this.leagueId);
+      console.log('found league');
+    }
+    this.enterLagMode();
   }
 }
