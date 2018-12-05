@@ -16,6 +16,7 @@ const httpOptions = {
 })
 export class GameService {
   private leaguesWithGamesUrl = 'api/leagues-with-games';
+  private leagueWithGamesUrl = 'api/league-with-games';
   private gamesUrl = 'api/games';
   private gameUrlBase = 'api/game/';
   private gameById = {};
@@ -29,6 +30,14 @@ export class GameService {
     return this.http.get<LeagueWithGames[]>(this.leaguesWithGamesUrl)
       .pipe(
         catchError(this.handleError('getLeaguesWithGames', [])),
+      );
+  }
+
+  reloadLeagueWithGames(leagueId: number): Observable<LeagueWithGames> {
+    const fullUrl = this.leagueWithGamesUrl + '/' + leagueId;
+    return this.http.get<LeagueWithGames>(fullUrl)
+      .pipe(
+        catchError(this.handleError('getLeaguesWithGames', null)),
       );
   }
 

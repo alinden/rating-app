@@ -24,6 +24,11 @@ export class ClientService {
   leaguesWithGames: LeagueWithGames[];
   leaguesWithRatings: LeagueWithRatings[];
 
+  userById: Map<number, WithId<User>>;
+  leagueById: Map<number, WithId<League>>;
+  leagueWithGamesById: Map<number, LeagueWithGames>;
+  leagueWithRatingsById: Map<number, LeagueWithRatings>;
+
   initialized = false;
 
   refresh_frequency_seconds = 300;
@@ -62,6 +67,10 @@ export class ClientService {
   loadLeaguesThen(fn) {
     this.leagueService.getLeagues().subscribe(leagues => {
       this.leagues = leagues;
+      this.leagueById = new Map();
+      for (const league of leagues) {
+        this.leagueById.set(league.id, league);
+      }
       fn();
     });
   }
@@ -69,6 +78,10 @@ export class ClientService {
   loadGamesThen(fn) {
     this.gameService.getLeaguesWithGames().subscribe(leaguesWithGames => {
       this.leaguesWithGames = leaguesWithGames;
+      this.leagueWithGamesById = new Map();
+      for (const leagueWithGames of leaguesWithGames) {
+        this.leagueWithGamesById.set(leagueWithGames.league.id, leagueWithGames);
+      }
       fn();
     });
   }
@@ -76,6 +89,10 @@ export class ClientService {
   loadRatingsThen(fn) {
     this.ratingService.getLeaguesWithRatings().subscribe(leaguesWithRatings => {
       this.leaguesWithRatings = leaguesWithRatings;
+      this.leagueWithRatingsById = new Map();
+      for (const leagueWithRatings of leaguesWithRatings) {
+        this.leagueWithRatingsById.set(leagueWithRatings.league.id, leagueWithRatings);
+      }
       fn();
     });
   }
@@ -84,6 +101,10 @@ export class ClientService {
   loadUsersThen(fn) {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
+      this.userById = new Map();
+      for (const user of users) {
+        this.userById.set(user.id, user);
+      }
       fn();
     });
   }
@@ -98,6 +119,7 @@ export class ClientService {
       .addUser({ 'name': name, 'image': image } as User)
       .subscribe( (user) => {
         this.users.push(user);
+        this.userById.set(user.id, user);
       });
   }
 
@@ -111,8 +133,27 @@ export class ClientService {
     this.gameService
       .addGame(newGame)
       .subscribe( () => {
-        this.reloadGamesAndRatings();
+        this.reloadGamesForLeagueId(leagueId);
+        this.reloadRatingsForLeagueId(leagueId);
       });
+  }
+
+  reloadGamesForLeagueId(leagueId: number) {
+    this.gameService.reloadLeagueWithGames(leagueId).subscribe( (leagueWithGames) => {
+      this.leagueWithGamesById.set(leagueId, leagueWithGames);
+      this.leaguesWithGames = this.leagues.map( (league) => {
+        return this.leagueWithGamesById.get(league.id);
+      });
+    });
+  }
+
+  reloadRatingsForLeagueId(leagueId: number) {
+    this.ratingService.reloadLeagueWithRatings(leagueId).subscribe( (leagueWithRatings) => {
+      this.leagueWithRatingsById.set(leagueId, leagueWithRatings);
+      this.leaguesWithRatings = this.leagues.map( (league) => {
+        return this.leagueWithRatingsById.get(league.id);
+      });
+    });
   }
 
   deleteUser(user: WithId<User>) {
@@ -131,6 +172,7 @@ export class ClientService {
       .addLeague({ 'name': name, 'image': image } as League)
       .subscribe(league => {
         this.leagues.push(league);
+        this.leagueById.set(league.id, league);
       });
   }
 
