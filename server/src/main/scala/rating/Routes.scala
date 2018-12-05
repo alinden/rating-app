@@ -84,6 +84,11 @@ object Routes {
           leaguesWithGames <- U.leaguesWithGames
           response <- Ok(leaguesWithGames)
         } yield response
+      case GET -> Root / "api" / "league-with-games" / id =>
+        for {
+          leagueWithGames <- U.leagueWithGames(id.toInt)
+          response <- Ok(leagueWithGames)
+        } yield response
       case GET -> Root / "api" / "games" / id => Ok(U.get(id.toInt))
       case req @ POST -> Root / "api" / "games" => for {
         newGame <- req.as[Game]
@@ -114,6 +119,11 @@ object Routes {
         for {
           leaguesWithRatings <- U.leaguesWithRatings
           response <- Ok(leaguesWithRatings)
+        } yield response
+      case GET -> Root / "api" / "league-with-ratings" / id =>
+        for {
+          leagueWithRatings <- U.leagueWithRatings(id.toInt)
+          response <- Ok(leagueWithRatings)
         } yield response
     }
   }

@@ -20,6 +20,7 @@ trait RatingController[F[_]]{
   def all: F[List[WithId[Rating]]]
   def get(id: Int): F[WithId[Rating]]
   def leaguesWithRatings: F[List[LeagueWithRatings]]
+  def leagueWithRatings(id: Int): F[LeagueWithRatings]
 }
 
 object RatingController {
@@ -34,8 +35,10 @@ object RatingController {
       jsonOf[F, Rating]
     implicit def ratingEntityDecoder[F[_]: Sync]: EntityDecoder[F, WithId[Rating]] =
       jsonOf[F, WithId[Rating]]
-    implicit def leagueWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[LeagueWithRatings]] =
+    implicit def leaguesWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[LeagueWithRatings]] =
       jsonEncoderOf[F, List[LeagueWithRatings]]
+    implicit def leagueWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, LeagueWithRatings] =
+      jsonEncoderOf[F, LeagueWithRatings]
   }
 
   def impl[F[_]: Applicative](implicit xb: Transactor[IO]): RatingController[F] = new RatingController[F]{
@@ -44,6 +47,10 @@ object RatingController {
       val leaguesWithRatings = leagues
         .map(x => LeagueWithRatings(x, RatingRepository.getByLeague(x)))
       leaguesWithRatings.pure[F]
+    }
+    def leagueWithRatings(id: Int): F[LeagueWithRatings] = {
+      val league = LeagueRepository.get(id).get
+      LeagueWithRatings(league, RatingRepository.getByLeague(league)).pure[F]
     }
     def all: F[List[WithId[Rating]]] = RatingRepository.getAll.pure[F]
     def get(id: Int): F[WithId[Rating]] = RatingRepository.get(id).get.pure[F]
