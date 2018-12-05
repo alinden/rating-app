@@ -1,10 +1,10 @@
 <div class="card-item-row">
-  <div id="score-left">
+  <div id="score-left" [ngClass]="{active: turnIndex === 0}">
     <span>
       {{ scores[0] }}
     </span>
   </div>
-  <div id="shot-left" [ngSwitch]="shots[0]">
+  <div id="shot-left" [ngSwitch]="shots[0]" [ngClass]="{active: turnIndex === 0}">
     <span *ngSwitchCase="1">
       <mat-icon>check</mat-icon>
     </span>
@@ -14,9 +14,9 @@
     <span *ngSwitchCase="3">
       <mat-icon>cancel</mat-icon>
     </span>
-    <span *ngSwitchCase="0">   </span>
+    <span *ngSwitchCase="0">.</span>
   </div>
-  <div id="shot-right" [ngSwitch]="shots[1]">
+  <div id="shot-right" [ngSwitch]="shots[1]" [ngClass]="{active: turnIndex === 1}">
     <span *ngSwitchCase="1">
       <mat-icon>check</mat-icon>
     </span>
@@ -26,9 +26,9 @@
     <span *ngSwitchCase="3">
       <mat-icon>cancel</mat-icon>
     </span>
-    <span *ngSwitchCase="0">   </span>
+    <span *ngSwitchCase="0">.</span>
   </div>
-  <div id="score-right">
+  <div id="score-right"  [ngClass]="{active: turnIndex === 1}">
     <span>
       {{ scores[1] }}
     </span>

@@ -15,65 +15,61 @@
         <mat-grid-tile>
           <div id="scorecard">
 
-            <div class="card-item-row">
-              <div id="players">
-                <div class="player-one">
-                  <div class="avatar-container">
-                    <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
-                  </div>
-                  <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
-                  <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
+            <div class="short-card-item-row">
+              <div class="player-one" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                <div class="avatar-container">
+                  <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
                 </div>
-                <div class="player-two">
-                  <div class="avatar-container">
-                    <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
-                  </div>
-                  <span class="subtitle">{{liveGame.players[1].user.entity.name | titlecase}}</span>
-                  <span class="rating">{{liveGame.players[1].rating.entity.new_rating }}</span>
+                <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
+                <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
+              </div>
+              <div class="player-two" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                <div class="avatar-container">
+                  <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
                 </div>
+                <span class="subtitle">{{liveGame.players[1].user.entity.name | titlecase}}</span>
+                <span class="rating">{{liveGame.players[1].rating.entity.new_rating }}</span>
               </div>
             </div>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.twentyScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.twentyScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.twenties">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.nineteenScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.nineteenScores"  [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.nineteens">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.eightteenScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.eightteenScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.eightteens">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.seventeenScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.seventeenScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.seventeens">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.sixteenScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.sixteenScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.sixteens">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.fifteenScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.fifteenScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.fifteens">
             </app-cricket-scoreboard-row>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.bullseyeScores"
+            <app-cricket-scoreboard-row [scores]="liveGame.state.bullseyeScores" [turnIndex]="liveGame.state.turnIndex"
                                         [shots]="liveGame.state.bullseyes">
             </app-cricket-scoreboard-row>
 
             <div class="card-item-row">
-              <div id="players">
-                <div class="player-one-score">
-                  <span class="total-score">
-                    {{ liveGame.state.scores[0] }}
-                  </span>
-                </div>
-                <div class="player-two-score">
-                  <span class="total-score">
-                    {{ liveGame.state.scores[1] }}
-                  </span>
-                </div>
+              <div class="player-one-score" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                <span class="total-score">
+                  {{ liveGame.state.scores[0] }}
+                </span>
+              </div>
+              <div class="player-two-score" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                <span class="total-score">
+                  {{ liveGame.state.scores[1] }}
+                </span>
               </div>
             </div>
 
@@ -83,14 +79,16 @@
         <mat-grid-tile>
           <div id="enter-score">
 
-            <div id="enter-score-summary" class="card-item-row">
-              <span  *ngIf="liveGame.isOver">
-                Game Over. {{ liveGame.winner.entity.name }} is the winner!
-              </span>
+            <div class="short-card-item-row">
+              <div id="enter-score-summary">
+                <span  *ngIf="liveGame.isOver">
+                  Game Over. {{ liveGame.winner.entity.name }} is the winner!
+                </span>
 
-              <span  *ngIf="!liveGame.isOver">
-                {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
-              </span>
+                <span  *ngIf="!liveGame.isOver">
+                  {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
+                </span>
+              </div>
             </div>
 
             <div class="card-item-row">
