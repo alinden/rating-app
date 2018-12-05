@@ -96,6 +96,7 @@ object GameController {
      */
     def add(newGame: Game): F[Unit] = {
       for {
+        _ <- if (newGame.winner_id == newGame.loser_id) None else Some(())
         game <- GameRepository.add(newGame)
         WithId(winnerRatingId, oldWinnerRating) <- RatingRepository
           .getByUserIdAndLeagueId(newGame.winner_id, newGame.league_id)
