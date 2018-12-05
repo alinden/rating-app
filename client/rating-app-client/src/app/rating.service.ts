@@ -15,6 +15,7 @@ const httpOptions = {
 })
 export class RatingService {
   private leaguesWithRatingsUrl = 'api/leagues-with-ratings';
+  private leagueWithRatingsUrl = 'api/league-with-ratings';
   private ratingsUrl = 'api/ratings';
   private ratingUrlBase = 'api/rating/';
 
@@ -26,6 +27,14 @@ export class RatingService {
     return this.http.get<LeagueWithRatings[]>(this.leaguesWithRatingsUrl)
       .pipe(
         catchError(this.handleError('getLeaguesWithRatings', [])),
+      );
+  }
+
+  reloadLeagueWithRatings(leagueId: number): Observable<LeagueWithRatings> {
+    const fullUrl = this.leagueWithRatingsUrl + '/' + leagueId;
+    return this.http.get<LeagueWithRatings>(fullUrl)
+      .pipe(
+        catchError(this.handleError('getLeaguesWithRatings', null)),
       );
   }
 
