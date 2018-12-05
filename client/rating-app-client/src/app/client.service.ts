@@ -36,7 +36,14 @@ export class ClientService {
   ) {
 
     interval(1000 * this.refresh_frequency_seconds).subscribe(x => {
-      this.loadAllData();
+      this.reloadGamesAndRatings();
+    });
+  }
+
+  reloadGamesAndRatings() {
+    this.loadGamesThen( () => {
+      this.loadRatingsThen( () => {
+      });
     });
   }
 
@@ -104,10 +111,7 @@ export class ClientService {
     this.gameService
       .addGame(newGame)
       .subscribe( () => {
-        this.loadGamesThen( () => {
-          this.loadRatingsThen( () => {
-          });
-        });
+        this.reloadGamesAndRatings();
       });
   }
 
