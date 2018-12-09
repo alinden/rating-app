@@ -21,6 +21,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 trait GameController[F[_]]{
   def all: F[List[WithId[Game]]]
   def leaguesWithGames: F[List[LeagueWithGames]]
+  def leagueWithGames(id: Int): F[LeagueWithGames]
   def get(id: Int): F[WithId[Game]]
   def add(newGame: Game): F[Unit]
   def update(game: WithId[Game]): F[Unit]
@@ -37,8 +38,10 @@ object GameController {
       jsonEncoderOf[F, WithId[Game]]
     implicit def gameWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, Game] =
       jsonEncoderOf[F, Game]
-    implicit def leagueWithGamesEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[LeagueWithGames]] =
+    implicit def leaguesWithGamesEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[LeagueWithGames]] =
       jsonEncoderOf[F, List[LeagueWithGames]]
+    implicit def leagueWithGamesEntityEncoder[F[_]: Applicative]: EntityEncoder[F, LeagueWithGames] =
+      jsonEncoderOf[F, LeagueWithGames]
     implicit def newGameEntityDecoder[F[_]: Sync]: EntityDecoder[F, Game] =
       jsonOf[F, Game]
     implicit def gameEntityDecoder[F[_]: Sync]: EntityDecoder[F, WithId[Game]] =
@@ -77,6 +80,11 @@ object GameController {
       leaguesWithGames.pure[F]
     }
 
+    def leagueWithGames(id: Int): F[LeagueWithGames] = {
+      val league = LeagueRepository.get(id).get
+      LeagueWithGames(league, GameRepository.getByLeague(league)).pure[F]
+    }
+
     def all: F[List[WithId[Game]]] = GameRepository.getAll.pure[F]
 
     def get(id: Int): F[WithId[Game]] = GameRepository.get(id).get.pure[F]
@@ -88,6 +96,7 @@ object GameController {
      */
     def add(newGame: Game): F[Unit] = {
       for {
+        _ <- if (newGame.winner_id == newGame.loser_id) None else Some(())
         game <- GameRepository.add(newGame)
         WithId(winnerRatingId, oldWinnerRating) <- RatingRepository
           .getByUserIdAndLeagueId(newGame.winner_id, newGame.league_id)
