@@ -9,7 +9,7 @@
 
 #score-right, #shot-left, #shot-right, #score-left {
   display: inline-block;
-  line-height: 90px;
+  line-height: 100px;
   text-align: center;
   vertical-align: middle;
 }
@@ -26,5 +26,5 @@ mat-icon {
 
 .card-item-row {
   border-color: #9E9E9E;
-  height: 90px;
+  height: 100px;
 }

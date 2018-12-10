@@ -1,29 +1,25 @@
 mat-card {
-  height: 855px;
+  height: 900px;
   padding: 0;
+  margin: 16px;
 }
 
 mat-card-content {
   overflow-y: scroll;
-  height: calc(100% - 90px);
   margin: 0;
-}
-
-mat-card-actions {
-  height: 45px;
-  position: relative;
-  bottom: 0px;
-  border-top: 1px solid #e0e0e0;
-  padding: 0px 8px 0px 0px;
+  height: 100%;
 }
 
 mat-form-field {
-  margin: 8px;
+  margin: 16px;
+  display: block;
 }
 
 .keep-score-content {
   height: 100%;
   width: 100%;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 mat-grid-list {
@@ -47,20 +43,6 @@ mat-grid-tile {
   width: 100%;
 }
 
-.player-one {
-  width: calc(50% - 1px);
-  height: 100%;
-  float: left;
-  line-height: 100%;
-  border-right: 1px solid #9E9E9E;
-}
-
-.player-two {
-  width: calc(50% - 1px);
-  height: 100%;
-  float: right;
-  line-height: 100%;
-}
 
 #scorecard {
   border-color: #9e9E9e !important;
@@ -77,75 +59,93 @@ mat-grid-tile {
 
 .player-one-score, .player-two-score {
   display: inline-block;
-  line-height: 90px;
+  line-height: 100px;
   text-align: center;
   vertical-align: middle;
-  font-size: 18px;
-  font-weight: 400px;
 }
 
 .rating {
-  float: right;
-  margin-right: 12px;
-  line-height: 45px;
+  margin: 0 48px;
   vertical-align: middle;
 }
 
-.cricket-enter-score-cell-left {
-  width: calc(34% - 1px);
+.cricket-enter-score-cell-half-left {
+  width: calc(50% - 2px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  color: #3f51b5;
+}
+
+.cricket-enter-score-cell-half {
+  width: calc(50% - 1px);
+  display: inline-block;
+  border-left: 1px solid #e0e0e0;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  color: #3f51b5;
 }
 
 .cricket-enter-score-cell {
   border-left: 1px solid #e0e0e0;
   width: calc(33% - 1px);
-}
-
-.cricket-enter-score-cell, .cricket-enter-score-cell-left {
   display: inline-block;
-  line-height: 90px;
+  line-height: 100px;
   text-align: center;
   vertical-align: middle;
-}
-
-.cricket-enter-bull-cell-left {
-  width: calc(50% - 2px);
-}
-
-.cricket-enter-bull-cell {
-  border-left: 1px solid #e0e0e0;
-  width: calc(50% - 1px);
-}
-
-.cricket-enter-bull-cell, .cricket-enter-bull-cell-left, {
-  display: inline-block;
-  line-height: 90px;
-  text-align: center;
-  vertical-align: middle;
-  margin: 0;
-}
-
-#enter-score-summary {
-  display: inline-block;
-  line-height: 45px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-#enter-score-summary {
-  font-size: 18px;
-  font-weight: 400px;
-}
-
-.short-card-item-row {
-  height: 45px;
-  width: 100%;
-  border-bottom: 1px solid #9E9E9E;
-}
-
-.cricket-enter-score-cell, .cricket-enter-score-cell-left,
-.cricket-enter-bull-cell, .cricket-enter-bull-cell-left {
-  font-weight: 500px;
   color: #3f51b5;
+}
+
+.cricket-enter-score-cell-left {
+  width: calc(33% - 1px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  color: #3f51b5;
+}
+
+#enter-score-summary {
+  width: calc(100% - 1px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 2px solid #9E9E9E;
+  font-size: 24px;
+}
+
+.player-one {
+  width: calc(50% - 1px);
+  height: 100%;
+  line-height: 100px;
+  margin: 0;
+  vertical-align: middle;
+  text-align: center;
+  border-right: 1px solid #9E9E9E;
+  border-bottom: 2px solid #9E9E9E;
+  display: inline-block;
+  font-size: 24px;
+}
+
+.player-two {
+  width: calc(50% - 1px);
+  height: 100%;
+  margin: 0;
+  line-height: 100px;
+  vertical-align: middle;
+  text-align: center;
+  border-bottom: 2px solid #9E9E9E;
+  display: inline-block;
+  font-size: 24px;
 }
 
 .active {
@@ -153,5 +153,9 @@ mat-grid-tile {
 }
 
 .card-item-row {
-  height: 90px;
+  height: 100px;
+}
+
+.save-game {
+  background-color: green;
 }

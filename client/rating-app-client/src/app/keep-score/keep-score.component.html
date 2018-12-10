@@ -1,276 +1,260 @@
-<mat-card class="card">
-  <div class="card-header">
-    <div class="avatar-container">
-      <img class="avatar" src="/assets/{{league.entity.image}}">
-    </div>
-    <span class="title">
-      {{ league.entity.name | titlecase}}
-    </span>
-  </div>
+<mat-grid-list cols="1" rowHeight="932px">
+  <mat-grid-tile>
 
-  <mat-card-content [ngSwitch]="mode">
+    <mat-card class="card">
+      <mat-card-content [ngSwitch]="mode">
 
-    <div *ngSwitchCase="'game'" class="keep-score-content">
-      <mat-grid-list cols="2" rowHeight="fit">
-        <mat-grid-tile>
-          <div id="scorecard">
+        <div *ngSwitchCase="'game'" class="keep-score-content">
+          <mat-grid-list cols="2" rowHeight="fit">
+            <mat-grid-tile>
+              <div id="scorecard">
 
-            <div class="short-card-item-row">
-              <div class="player-one" [ngClass]="{active: liveGame.state.turnIndex === 0}">
-                <div class="avatar-container">
-                  <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
+                <div class="card-item-row">
+                  <div class="player-one" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                    <div class="avatar-container">
+                      <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
+                    </div>
+                    <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
+                    <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
+                  </div>
+                  <div class="player-two" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                    <div class="avatar-container">
+                      <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
+                    </div>
+                    <span class="subtitle">{{liveGame.players[1].user.entity.name | titlecase}}</span>
+                    <span class="rating">{{liveGame.players[1].rating.entity.new_rating }}</span>
+                  </div>
                 </div>
-                <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
-                <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
-              </div>
-              <div class="player-two" [ngClass]="{active: liveGame.state.turnIndex === 1}">
-                <div class="avatar-container">
-                  <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.twentyScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.twenties">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.nineteenScores"  [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.nineteens">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.eightteenScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.eightteens">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.seventeenScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.seventeens">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.sixteenScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.sixteens">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.fifteenScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.fifteens">
+                </app-cricket-scoreboard-row>
+
+                <app-cricket-scoreboard-row [scores]="liveGame.state.bullseyeScores" [turnIndex]="liveGame.state.turnIndex"
+                                            [shots]="liveGame.state.bullseyes">
+                </app-cricket-scoreboard-row>
+
+                <div class="card-item-row">
+                  <div class="player-one-score" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                    <span class="total-score">
+                      {{ liveGame.state.scores[0] }}
+                    </span>
+                  </div>
+                  <div class="player-two-score" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                    <span class="total-score">
+                      {{ liveGame.state.scores[1] }}
+                    </span>
+                  </div>
                 </div>
-                <span class="subtitle">{{liveGame.players[1].user.entity.name | titlecase}}</span>
-                <span class="rating">{{liveGame.players[1].rating.entity.new_rating }}</span>
+
               </div>
-            </div>
+            </mat-grid-tile>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.twentyScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.twenties">
-            </app-cricket-scoreboard-row>
+            <mat-grid-tile>
+              <div id="enter-score">
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.nineteenScores"  [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.nineteens">
-            </app-cricket-scoreboard-row>
+                <div class="card-item-row">
+                  <div id="enter-score-summary">
+                    <span  *ngIf="liveGame.isOver">
+                      Game Over. {{ liveGame.winner.entity.name }} is the winner!
+                    </span>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.eightteenScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.eightteens">
-            </app-cricket-scoreboard-row>
+                    <span  *ngIf="!liveGame.isOver">
+                      {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
+                    </span>
+                  </div>
+                </div>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.seventeenScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.seventeens">
-            </app-cricket-scoreboard-row>
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 20, count: 1})">
+                    <span >
+                      20 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 2})">
+                    <span >
+                      20 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 3})">
+                    <span >
+                      20 * * *
+                    </span>
+                  </div>
+                </div>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.sixteenScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.sixteens">
-            </app-cricket-scoreboard-row>
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 19, count: 1})">
+                    <span >
+                      19 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 2})">
+                    <span >
+                      19 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 3})">
+                    <span >
+                      19 * * *
+                    </span>
+                  </div>
+                </div>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.fifteenScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.fifteens">
-            </app-cricket-scoreboard-row>
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 18, count: 1})">
+                    <span >
+                      18 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 2})">
+                    <span >
+                      18 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 3})">
+                    <span >
+                      18 * * *
+                    </span>
+                  </div>
+                </div>
 
-            <app-cricket-scoreboard-row [scores]="liveGame.state.bullseyeScores" [turnIndex]="liveGame.state.turnIndex"
-                                        [shots]="liveGame.state.bullseyes">
-            </app-cricket-scoreboard-row>
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 17, count: 1})">
+                    <span >
+                      17 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 2})">
+                    <span >
+                      17 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 3})">
+                    <span >
+                      17 * * *
+                    </span>
+                  </div>
+                </div>
 
-            <div class="card-item-row">
-              <div class="player-one-score" [ngClass]="{active: liveGame.state.turnIndex === 0}">
-                <span class="total-score">
-                  {{ liveGame.state.scores[0] }}
-                </span>
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 16, count: 1})">
+                    <span >
+                      16 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 2})">
+                    <span >
+                      16 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 3})">
+                    <span >
+                      16 * * *
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 15, count: 1})">
+                    <span >
+                      15 *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 2})">
+                    <span >
+                      15 * *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 3})">
+                    <span >
+                      15 * * *
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-item-row">
+                  <div class="cricket-enter-score-cell-half-left" (click)="recordShot({ value: 25, count: 1})">
+                    <span >
+                      Bull *
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell-half" (click)="recordShot({ value: 25, count: 2})">
+                    <span >
+                      Bull * *
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-item-row">
+                  <div *ngIf="!liveGame.isOver" class="cricket-enter-score-cell-half-left" (click)="nextTurn()">
+                    <span>
+                      Next Turn
+                    </span>
+                  </div>
+                  <div *ngIf="liveGame.isOver" class="cricket-enter-score-cell-half-left save-game" (click)="saveGame()">
+                    <span>
+                      Save
+                    </span>
+                  </div>
+                  <div class="cricket-enter-score-cell-half" (click)="undo()">
+                    <span >
+                      Undo
+                    </span>
+                  </div>
+                </div>
+
+
               </div>
-              <div class="player-two-score" [ngClass]="{active: liveGame.state.turnIndex === 1}">
-                <span class="total-score">
-                  {{ liveGame.state.scores[1] }}
-                </span>
-              </div>
-            </div>
+            </mat-grid-tile>
 
-          </div>
-        </mat-grid-tile>
+          </mat-grid-list>
+        </div>
 
-        <mat-grid-tile>
-          <div id="enter-score">
+        <div *ngSwitchCase="'lag'">
+          <form id="lag-form">
+            <mat-form-field>
+              <mat-select placeholder="Player One" [(ngModel)]="playerOneId" name="playerOne">
+                <mat-option *ngFor="let user of client.users" [value]="user.id">
+                  {{user.entity.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Player Two" [(ngModel)]="playerTwoId" name="playerTwo">
+                <mat-option *ngFor="let user of client.users" [value]="user.id">
+                  {{user.entity.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-button class="action-button" (click)="recordLag()">
+              Start
+            </button>
+          </form>
+        </div>
 
-            <div class="short-card-item-row">
-              <div id="enter-score-summary">
-                <span  *ngIf="liveGame.isOver">
-                  Game Over. {{ liveGame.winner.entity.name }} is the winner!
-                </span>
+      </mat-card-content>
 
-                <span  *ngIf="!liveGame.isOver">
-                  {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 20, count: 1})">
-                <span >
-                  20 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 2})">
-                <span >
-                  20 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 20, count: 3})">
-                <span >
-                  20 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 19, count: 1})">
-                <span >
-                  19 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 2})">
-                <span >
-                  19 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 19, count: 3})">
-                <span >
-                  19 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 18, count: 1})">
-                <span >
-                  18 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 2})">
-                <span >
-                  18 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 18, count: 3})">
-                <span >
-                  18 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 17, count: 1})">
-                <span >
-                  17 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 2})">
-                <span >
-                  17 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 17, count: 3})">
-                <span >
-                  17 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 16, count: 1})">
-                <span >
-                  16 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 2})">
-                <span >
-                  16 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 16, count: 3})">
-                <span >
-                  16 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-score-cell-left" (click)="recordShot({ value: 15, count: 1})">
-                <span >
-                  15 *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 2})">
-                <span >
-                  15 * *
-                </span>
-              </div>
-              <div class="cricket-enter-score-cell" (click)="recordShot({ value: 15, count: 3})">
-                <span >
-                  15 * * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-bull-cell-left" (click)="recordShot({ value: 25, count: 1})">
-                <span >
-                  Bull *
-                </span>
-              </div>
-              <div class="cricket-enter-bull-cell" (click)="recordShot({ value: 25, count: 2})">
-                <span >
-                  Bull * *
-                </span>
-              </div>
-            </div>
-
-            <div class="card-item-row">
-              <div class="cricket-enter-bull-cell-left" (click)="recordShot({ value: 0, count: 1})">
-                <span >
-                  Miss
-                </span>
-              </div>
-              <div class="cricket-enter-bull-cell" (click)="recordShot({ value: 0, count: 1})">
-                <span >
-                  Next Turn
-                </span>
-              </div>
-            </div>
-
-
-          </div>
-        </mat-grid-tile>
-
-      </mat-grid-list>
-    </div>
-
-    <div *ngSwitchCase="'lag'">
-      <form id="lag-form">
-        <mat-form-field>
-          <mat-select placeholder="Player One" [(ngModel)]="playerOneId" name="playerOne">
-            <mat-option *ngFor="let user of client.users" [value]="user.id">
-              {{user.entity.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Player Two" [(ngModel)]="playerTwoId" name="playerTwo">
-            <mat-option *ngFor="let user of client.users" [value]="user.id">
-              {{user.entity.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </div>
-
-  </mat-card-content>
-
-  <mat-card-actions [ngSwitch]="mode" align="end">
-
-    <div *ngSwitchCase="'game'">
-      <div *ngIf="liveGame.isOver">
-        <button mat-button class="action-button" (click)="saveGame()">
-          Save
-        </button>
-      </div>
-      <button mat-button class="action-button" (click)="cancelGame()">
-        Cancel
-      </button>
-    </div>
-
-    <div *ngSwitchCase="'lag'">
-      <button mat-button class="action-button" (click)="recordLag()">
-        Start
-      </button>
-    </div>
-
-  </mat-card-actions>
-</mat-card>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
