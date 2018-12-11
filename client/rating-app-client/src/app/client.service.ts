@@ -11,6 +11,7 @@ import { Game } from './game';
 import { Rating } from './rating';
 import { League } from './league';
 import { User } from './user';
+import { RatedUser } from './rated-user';
 import { WithId } from './with-id';
 import { LeagueWithGames } from './league-with-games';
 import { LeagueWithRatings } from './league-with-ratings';
@@ -28,6 +29,7 @@ export class ClientService {
   leagueById: Map<number, WithId<League>>;
   leagueWithGamesById: Map<number, LeagueWithGames>;
   leagueWithRatingsById: Map<number, LeagueWithRatings>;
+  ratedUsers: Map<number, Map<number, RatedUser>>;
 
   initialized = false;
 
@@ -90,13 +92,18 @@ export class ClientService {
     this.ratingService.getLeaguesWithRatings().subscribe(leaguesWithRatings => {
       this.leaguesWithRatings = leaguesWithRatings;
       this.leagueWithRatingsById = new Map();
+      this.ratedUsers = new Map();
       for (const leagueWithRatings of leaguesWithRatings) {
         this.leagueWithRatingsById.set(leagueWithRatings.league.id, leagueWithRatings);
+        const ratedUsersForLeague = new Map();
+        for (const ratedUser of leagueWithRatings.ratedUsers) {
+          ratedUsersForLeague.set(ratedUser.user.id, ratedUser);
+        }
+        this.ratedUsers.set(leagueWithRatings.league.id, ratedUsersForLeague);
       }
       fn();
     });
   }
-
 
   loadUsersThen(fn) {
     this.userService.getUsers().subscribe(users => {
@@ -186,4 +193,34 @@ export class ClientService {
     this.userService.updateUser(user).subscribe(() => {
     });
   }
+
+  getUserById(id: number): WithId<User> {
+    for (const user of this.users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+  }
+
+  getRatedUserById(userId: number, leagueId: number): RatedUser {
+    if (this.initialized) {
+      const existingRatedUser = this.ratedUsers.get(leagueId).get(userId);
+      if (existingRatedUser) {
+        return existingRatedUser;
+      } else {
+        // TODO(alinden): add a rating for that
+      }
+    } else {
+      // TODO(alinden): handle uninitialized
+    }
+  }
+
+  getLeagueById(id: number): WithId<League> {
+    if (this.initialized) {
+      return this.leagueById.get(id);
+    } else {
+      // TODO(alinden): handle uninitialized
+    }
+  }
+
 }

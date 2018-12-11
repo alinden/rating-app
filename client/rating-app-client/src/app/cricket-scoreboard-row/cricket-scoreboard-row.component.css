@@ -1,0 +1,30 @@
+#score-right, #shot-left, #shot-right {
+  width: calc(25% - 1px);
+  border-left: 1px solid #9E9E9E;
+}
+
+#score-left {
+  width: 25%;
+}
+
+#score-right, #shot-left, #shot-right, #score-left {
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+mat-icon {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+}
+
+.active {
+  background-color: #ffde03;
+}
+
+.card-item-row {
+  border-color: #9E9E9E;
+  height: 100px;
+}

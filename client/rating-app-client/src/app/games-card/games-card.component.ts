@@ -37,6 +37,10 @@ export class GamesCardComponent implements OnInit {
     this.enterListMode();
   }
 
+  isCricket(): boolean {
+    return this.leagueWithGames.league.id === 3;
+  }
+
   constructor(
     private client: ClientService,
   ) { }

@@ -1,0 +1,161 @@
+mat-card {
+  height: 900px;
+  padding: 0;
+  margin: 16px;
+}
+
+mat-card-content {
+  margin: 0;
+  height: 100%;
+}
+
+mat-form-field {
+  margin: 16px;
+  display: block;
+}
+
+.keep-score-content {
+  height: 100%;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+mat-grid-list {
+  width: 100%;
+  height: 100%;
+}
+
+mat-grid-tile {
+  height: 100%;
+  width: 100%;
+}
+
+#scorecard {
+  height: 100%;
+  width: 100%;
+  background-color: #eeeeee;
+}
+
+#enter-score {
+  height: 100%;
+  width: 100%;
+}
+
+
+#scorecard {
+  border-color: #9e9E9e !important;
+}
+
+.player-one-score {
+  width: calc(50% - 1px);
+  border-right: 1px solid #9E9E9E;
+}
+
+.player-two-score {
+  width: calc(50% - 1px);
+}
+
+.player-one-score, .player-two-score {
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.rating {
+  margin: 0 48px;
+  vertical-align: middle;
+}
+
+.cricket-enter-score-cell-half-left {
+  width: calc(50% - 2px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  color: #3f51b5;
+}
+
+.cricket-enter-score-cell-half {
+  width: calc(50% - 1px);
+  display: inline-block;
+  border-left: 1px solid #e0e0e0;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  color: #3f51b5;
+}
+
+.cricket-enter-score-cell {
+  border-left: 1px solid #e0e0e0;
+  width: calc(33% - 1px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  color: #3f51b5;
+}
+
+.cricket-enter-score-cell-left {
+  width: calc(33% - 1px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  color: #3f51b5;
+}
+
+#enter-score-summary {
+  width: calc(100% - 1px);
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 3px solid #9E9E9E;
+  font-size: 20px;
+}
+
+.player-one {
+  width: calc(50% - 1px);
+  height: 100%;
+  line-height: 100px;
+  margin: 0;
+  vertical-align: middle;
+  text-align: center;
+  border-right: 1px solid #9E9E9E;
+  border-bottom: 3px solid #9E9E9E;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.player-two {
+  width: calc(50% - 1px);
+  height: 100%;
+  margin: 0;
+  line-height: 100px;
+  vertical-align: middle;
+  text-align: center;
+  border-bottom: 3px solid #9E9E9E;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.active {
+  background-color: #ffde03;
+}
+
+.card-item-row {
+  height: 100px;
+}
+
+.save-game {
+  background-color: #00E676;
+  color: black;
+}

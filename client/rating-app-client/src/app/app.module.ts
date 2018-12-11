@@ -21,7 +21,9 @@ import { RatedUserCardItemComponent } from './rated-user-card-item/rated-user-ca
 import { RatedGameCardItemComponent } from './rated-game-card-item/rated-game-card-item.component';
 import { GamesCardComponent } from './games-card/games-card.component';
 import { RatingsCardComponent } from './ratings-card/ratings-card.component';
+import { KeepScoreComponent } from './keep-score/keep-score.component';
 import { RatingChangeComponent } from './rating-change/rating-change.component';
+import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-scoreboard-row.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { RatingChangeComponent } from './rating-change/rating-change.component';
     RatedGameCardItemComponent,
     GamesCardComponent,
     RatingsCardComponent,
-    RatingChangeComponent
+    KeepScoreComponent,
+    RatingChangeComponent,
+    CricketScoreboardRowComponent
   ],
   imports: [
     BrowserModule,
