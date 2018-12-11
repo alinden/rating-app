@@ -159,3 +159,36 @@ mat-grid-tile {
   background-color: #00E676;
   color: black;
 }
+
+@media screen and (max-width: 1050px) {
+  mat-card {
+    height: 702px;
+    margin: 1px;
+  }
+
+  .player-one-score, .player-two-score,
+  .cricket-enter-score-cell-half-left,
+  .cricket-enter-score-cell-half,
+  .cricket-enter-score-cell,
+  .cricket-enter-score-cell-left,
+  #enter-score-summary,
+  .player-one, .player-two {
+    line-height: 78px;
+  }
+
+  .card-item-row {
+    height: 78px;
+  }
+
+  #enter-score-summary, .player-one, .player-two {
+    font-size: 16px !important;
+  }
+
+  .rating {
+    display: none;
+  }
+
+  .whose-turn {
+    display: none;
+  }
+}

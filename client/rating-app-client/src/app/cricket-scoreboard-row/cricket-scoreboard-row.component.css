@@ -28,3 +28,13 @@ mat-icon {
   border-color: #9E9E9E;
   height: 100px;
 }
+
+@media only screen and (max-width: 1050px) {
+  #score-right, #shot-left, #shot-right, #score-left {
+    line-height: 78px;
+  }
+
+  .card-item-row {
+    height: 78px;
+  }
+}
