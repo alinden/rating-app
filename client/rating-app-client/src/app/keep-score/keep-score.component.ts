@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MatGridList } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../league';
 import { RatedUser } from '../rated-user';
@@ -16,6 +18,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./keep-score.component.css']
 })
 export class KeepScoreComponent implements OnInit {
+  @ViewChild('grid') grid: MatGridList;
   @Input() playerOneId: number;
   @Input() playerTwoId: number;
 
@@ -26,6 +29,14 @@ export class KeepScoreComponent implements OnInit {
   rules: string;
   mode: string;
   shotHistory: DartShot[] = [];
+
+  gridRowHeightByBreakpoint = {
+    xl: 'fit',
+    lg: 'fit',
+    md: '704px',
+    sm: '704px',
+    xs: '540px'
+  };
 
   private sub: any;
 
@@ -93,10 +104,15 @@ export class KeepScoreComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private client: ClientService,
+    private observableMedia: ObservableMedia,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+      this.grid.rowHeight = this.gridRowHeightByBreakpoint[change.mqAlias];
+    });
+
     this.sub = this.route.params.subscribe(params => {
       this.leagueId = +params['leagueId'];
     });

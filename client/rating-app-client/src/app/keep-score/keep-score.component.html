@@ -1,4 +1,4 @@
-<mat-grid-list cols="1" rowHeight="932px">
+<mat-grid-list cols="1" #grid>
   <mat-grid-tile>
 
     <mat-card class="card">
@@ -76,11 +76,15 @@
                 <div class="card-item-row">
                   <div id="enter-score-summary">
                     <span  *ngIf="liveGame.state.isOver">
-                      Game Over. {{ liveGame.winner.entity.name }} is the winner!
+                      Game Over. {{ liveGame.winner.entity.name }} wins!
                     </span>
-
                     <span  *ngIf="!liveGame.state.isOver">
-                      {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn: {{ liveGame.state.shotsRemaining }} darts remaining
+                      <span class="whose-turn">
+                        {{ liveGame.players[liveGame.state.turnIndex].user.entity.name }} 's Turn:
+                      </span>
+                      <span>
+                        {{ liveGame.state.shotsRemaining }} darts remaining
+                      </span>
                     </span>
                   </div>
                 </div>
