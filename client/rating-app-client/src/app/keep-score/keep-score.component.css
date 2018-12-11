@@ -5,7 +5,6 @@ mat-card {
 }
 
 mat-card-content {
-  overflow-y: scroll;
   margin: 0;
   height: 100%;
 }
@@ -120,7 +119,7 @@ mat-grid-tile {
   text-align: center;
   vertical-align: middle;
   border-bottom: 3px solid #9E9E9E;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .player-one {
@@ -133,7 +132,7 @@ mat-grid-tile {
   border-right: 1px solid #9E9E9E;
   border-bottom: 3px solid #9E9E9E;
   display: inline-block;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .player-two {
@@ -145,7 +144,7 @@ mat-grid-tile {
   text-align: center;
   border-bottom: 3px solid #9E9E9E;
   display: inline-block;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .active {

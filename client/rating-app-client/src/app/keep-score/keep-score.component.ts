@@ -85,17 +85,30 @@ export class KeepScoreComponent implements OnInit {
         // Player had closed that number - undo points first.
         if (scoresBefore > prevShot.count) {
           // Player has points in that number from before the dart being undone.
+          console.log('player has points in that number from before the dart being undone');
           scoresAfter = scoresBefore - prevShot.count;
         } else {
-          // Player only scored on this number in the dart begin undone.
+          // Player only scored on this number in the dart being undone.
+          console.log('player only scored on this number in the dart being undone');
           scoresAfter = 0;
           marksAfter = 3 - (prevShot.count - scoresBefore);
         }
       } else {
         // Player has not closed that number.
+        console.log('player has not closed that number');
         marksAfter = marksBefore - prevShot.count;
       }
       this.updateMarksAndScores(prevShot, newTurnIndex, marksAfter, scoresAfter);
+      console.log('marksBefore');
+      console.log(marksBefore);
+      console.log('scoresBefore');
+      console.log(scoresBefore);
+      console.log('prevShot');
+      console.log(prevShot);
+      console.log('marksAfter');
+      console.log(marksAfter);
+      console.log('scoresAfter');
+      console.log(scoresAfter);
     }
     // Update game state.
     this.liveGame.isOver = false;

@@ -19,16 +19,13 @@ export class CricketScoreboardRowComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('onChanges');
     const newActivePlayer = this.turnIndex;
     if (newActivePlayer !== this.activePlayer) {
       this.activePlayer = newActivePlayer;
       if (newActivePlayer === 0) {
-        console.log('setting left to active');
         this.leftActive = true;
         this.rightActive = false;
       } else {
-        console.log('setting right to active');
         this.leftActive = true;
         this.rightActive = false;
       }
