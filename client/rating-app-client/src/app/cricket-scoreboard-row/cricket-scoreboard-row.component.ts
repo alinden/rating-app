@@ -11,6 +11,7 @@ export class CricketScoreboardRowComponent implements OnChanges {
   @Input() scores: number[];
   @Input() shots: C[];
   @Input() turnIndex: number;
+  @Input() isOver: boolean;
   activePlayer = 0;
   leftActive = true;
   rightActive = false;

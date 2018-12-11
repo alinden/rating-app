@@ -49,10 +49,13 @@ export class KeepScoreComponent implements OnInit {
     this.liveGame.state.shotsRemaining = 3;
     this.liveGame.state.turnIndex = (this.liveGame.state.turnIndex + 1) % 2;
     this.shotHistory.push({ value: -1, count: shotsSkipped });
-    console.log(this.liveGame.state);
   }
 
   undo() {
+    if (!this.shotHistory) {
+      // Can't undo at the beginning of the game.
+      return;
+    }
     const prevShot = this.shotHistory.pop();
     const prevShotsRemaining = this.liveGame.state.shotsRemaining;
     const prevTurnIndex = this.liveGame.state.turnIndex;
@@ -80,14 +83,13 @@ export class KeepScoreComponent implements OnInit {
       let scoresAfter = scoresBefore;
       if (marksBefore === 3) {
         // Player had closed that number - undo points first.
-        const numberOfScores = scoresBefore / prevShot.value;
-        if (numberOfScores > prevShot.count) {
+        if (scoresBefore > prevShot.count) {
           // Player has points in that number from before the dart being undone.
-          scoresAfter = (numberOfScores - prevShot.count) * prevShot.value;
+          scoresAfter = scoresBefore - prevShot.count;
         } else {
           // Player only scored on this number in the dart begin undone.
           scoresAfter = 0;
-          marksAfter = 3 - (prevShot.count - numberOfScores);
+          marksAfter = 3 - (prevShot.count - scoresBefore);
         }
       } else {
         // Player has not closed that number.
@@ -149,13 +151,13 @@ export class KeepScoreComponent implements OnInit {
       }
     }
     this.liveGame.state.scores[turnIndex] =
-      this.liveGame.state.twentyScores[turnIndex] +
-      this.liveGame.state.nineteenScores[turnIndex] +
-      this.liveGame.state.eightteenScores[turnIndex] +
-      this.liveGame.state.seventeenScores[turnIndex] +
-      this.liveGame.state.sixteenScores[turnIndex] +
-      this.liveGame.state.fifteenScores[turnIndex] +
-      this.liveGame.state.bullseyeScores[turnIndex];
+      this.liveGame.state.twentyScores[turnIndex] * 20 +
+      this.liveGame.state.nineteenScores[turnIndex] * 19 +
+      this.liveGame.state.eightteenScores[turnIndex] * 18 +
+      this.liveGame.state.seventeenScores[turnIndex] * 17 +
+      this.liveGame.state.sixteenScores[turnIndex] * 16  +
+      this.liveGame.state.fifteenScores[turnIndex]  * 15 +
+      this.liveGame.state.bullseyeScores[turnIndex] * 25;
   }
 
   getMarksAndScores(shot: DartShot) {
@@ -223,7 +225,7 @@ export class KeepScoreComponent implements OnInit {
           const otherPlayerIndex = (this.liveGame.state.turnIndex + 1) % 2;
           const otherPlayerClosed = (marks[otherPlayerIndex] === C.Closed);
           if (!otherPlayerClosed) {
-            scores[this.liveGame.state.turnIndex] += shotScore;
+            scores[this.liveGame.state.turnIndex] += remainingCount;
             this.liveGame.state.scores[this.liveGame.state.turnIndex] += shotScore;
           }
         }

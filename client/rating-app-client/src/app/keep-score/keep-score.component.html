@@ -10,14 +10,14 @@
               <div id="scorecard">
 
                 <div class="card-item-row">
-                  <div class="player-one" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                  <div class="player-one" [ngClass]="{active: (liveGame.state.turnIndex === 0) && (!liveGame.state.isOver)}">
                     <div class="avatar-container">
                       <img class="avatar" src="/assets/{{ liveGame.players[0].user.entity.image }}">
                     </div>
                     <span class="subtitle">{{liveGame.players[0].user.entity.name | titlecase}}</span>
                     <span class="rating">{{liveGame.players[0].rating.entity.new_rating }}</span>
                   </div>
-                  <div class="player-two" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                  <div class="player-two" [ngClass]="{active: (liveGame.state.turnIndex === 1) && (!liveGame.state.isOver)}">
                     <div class="avatar-container">
                       <img class="avatar" src="/assets/{{liveGame.players[1].user.entity.image}}">
                     </div>
@@ -55,12 +55,12 @@
                 </app-cricket-scoreboard-row>
 
                 <div class="card-item-row">
-                  <div class="player-one-score" [ngClass]="{active: liveGame.state.turnIndex === 0}">
+                  <div class="player-one-score" [ngClass]="{active: (liveGame.state.turnIndex === 0) && (!liveGame.state.isOver)}">
                     <span class="total-score">
                       {{ liveGame.state.scores[0] }}
                     </span>
                   </div>
-                  <div class="player-two-score" [ngClass]="{active: liveGame.state.turnIndex === 1}">
+                  <div class="player-two-score" [ngClass]="{active: (liveGame.state.turnIndex === 1) && (!liveGame.state.isOver)}">
                     <span class="total-score">
                       {{ liveGame.state.scores[1] }}
                     </span>
