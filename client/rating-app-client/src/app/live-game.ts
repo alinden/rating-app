@@ -7,7 +7,6 @@ import { RatedUser } from './rated-user';
 export class LiveGame<S> {
   players: RatedUser[];
   state: S;
-  isOver: boolean;
   winner: WithId<User>;
   loser: WithId<User>;
 }
