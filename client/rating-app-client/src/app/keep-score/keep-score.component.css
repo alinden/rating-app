@@ -42,6 +42,9 @@ mat-grid-tile {
   width: 100%;
 }
 
+.round-number {
+  margin-right: 8px;
+}
 
 #scorecard {
   border-color: #9e9E9e !important;

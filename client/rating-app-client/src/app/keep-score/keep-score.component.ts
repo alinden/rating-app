@@ -73,20 +73,27 @@ export class KeepScoreComponent implements OnInit {
   }
 
   saveGame() {
-    this.client.addGame(
-      this.league.id,
-      this.liveGame.winner.id,
-      this.liveGame.loser.id
-    );
-    this.router.navigate(['/games']);
-  }
-
-  recordShot(shot: DartShot) {
-    this.liveGame.state.run(shot, this.liveGame.players.length);
-    this.shotHistory.push(shot);
     if (this.liveGame.state.isOver) {
       this.liveGame.winner = this.liveGame.players[this.liveGame.state.turnIndex].user;
       this.liveGame.loser = this.liveGame.players[((this.liveGame.state.turnIndex + 1) % 2)].user;
+      this.client.addGame(
+        this.league.id,
+        this.liveGame.winner.id,
+        this.liveGame.loser.id
+      );
+      this.router.navigate(['/games']);
+    }
+  }
+
+  recordShot(shot: DartShot) {
+    if (!this.liveGame.state.isOver) {
+      this.liveGame.state.run(shot, this.liveGame.players.length);
+      this.shotHistory.push(shot);
+      if (this.liveGame.state.isOver) {
+        // Game ended on this turn.
+        this.liveGame.winner = this.liveGame.players[this.liveGame.state.turnIndex].user;
+        this.liveGame.loser = this.liveGame.players[((this.liveGame.state.turnIndex + 1) % 2)].user;
+      }
     }
   }
 
