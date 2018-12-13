@@ -162,8 +162,8 @@ mat-grid-tile {
 
 @media screen and (max-width: 1050px) {
   mat-card {
-    height: 702px;
-    margin: 1px;
+    height: 693px;
+    margin: 2px;
   }
 
   .player-one-score, .player-two-score,
@@ -173,11 +173,11 @@ mat-grid-tile {
   .cricket-enter-score-cell-left,
   #enter-score-summary,
   .player-one, .player-two {
-    line-height: 78px;
+    line-height: 77px;
   }
 
   .card-item-row {
-    height: 78px;
+    height: 77px;
   }
 
   #enter-score-summary, .player-one, .player-two {

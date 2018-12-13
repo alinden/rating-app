@@ -1,42 +1,44 @@
 <div class="card-item-row">
-  <div id="score-left" [ngClass]="{active: (turnIndex === 0) && (!isOver)}">
-    <span *ngIf="scores[0] > 0">
-      {{ scores[0] }}
-    </span>
-    <span *ngIf="!(scores[0] > 0)">
+  <div id="score-left" [ngClass]="{active: (turnIndex === 0) && (!isOver)}"
+                       [ngSwitch]="scores[0]">
+    <span *ngSwitchCase="0">
       .
+    </span>
+    <span *ngSwitchDefault>
+      {{ scores[0] }}
     </span>
   </div>
   <div id="shot-left" [ngSwitch]="shots[0]" [ngClass]="{active: (turnIndex === 0) && (!isOver)}">
     <span *ngSwitchCase="1">
-      <mat-icon>check</mat-icon>
+      <mat-icon>add</mat-icon>
     </span>
     <span *ngSwitchCase="2">
-      <mat-icon>close</mat-icon>
+      <mat-icon>add_circle_outline</mat-icon>
     </span>
     <span *ngSwitchCase="3">
-      <mat-icon>cancel</mat-icon>
+      <mat-icon>fiber_manual_record</mat-icon>
     </span>
     <span *ngSwitchCase="0">.</span>
   </div>
   <div id="shot-right" [ngSwitch]="shots[1]" [ngClass]="{active: (turnIndex === 1) && (!isOver)}">
     <span *ngSwitchCase="1">
-      <mat-icon>check</mat-icon>
+      <mat-icon>add</mat-icon>
     </span>
     <span *ngSwitchCase="2">
-      <mat-icon>close</mat-icon>
+      <mat-icon>add_circle_outline</mat-icon>
     </span>
     <span *ngSwitchCase="3">
-      <mat-icon>cancel</mat-icon>
+      <mat-icon>fiber_manual_record</mat-icon>
     </span>
     <span *ngSwitchCase="0">.</span>
   </div>
-  <div id="score-right"  [ngClass]="{active: (turnIndex === 1) && (!isOver)}">
-    <span *ngIf="scores[1] > 0">
-      {{ scores[1] }}
-    </span>
-    <span *ngIf="!(scores[1] > 0)">
+  <div id="score-right"  [ngClass]="{active: (turnIndex === 1) && (!isOver)}"
+                         [ngSwitch]="scores[1]">
+    <span *ngSwitchCase="0">
       .
+    </span>
+    <span *ngSwitchDefault>
+      {{ scores[1] }}
     </span>
   </div>
 </div>

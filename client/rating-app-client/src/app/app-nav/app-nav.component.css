@@ -10,7 +10,7 @@
   background: inherit;
 }
 
-.mat-toolbar.mat-primary {
+.mat-toolbar {
   position: sticky;
   top: 0;
   z-index: 1;
@@ -27,4 +27,15 @@
   #logo {
     display: none;
   }
+
+  .mat-toolbar {
+    display: none;
+  }
+
+  .sidenav {
+    width: 150px;
+  }
+
 }
+
+

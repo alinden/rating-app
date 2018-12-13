@@ -150,7 +150,7 @@ export class CricketState {
     );
     const playerScore = this.scores[this.turnIndex];
     let playerIsWinning = true;
-    for (let i = 0; i++; i < numPlayers) {
+    for (let i = 0; i < numPlayers; i++) {
       if (i !== this.turnIndex) {
         playerIsWinning = playerIsWinning && (this.scores[i] < playerScore);
       }
