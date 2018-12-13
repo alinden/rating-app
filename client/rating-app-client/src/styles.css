@@ -53,6 +53,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: auto;
 }
 
+.large-avatar-container {
+  background-color: #9FA8DA;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
+  top: 12px;
+}
+
+.large-avatar {
+  display: inline;
+  margin: 0 auto;
+  height: 110%;
+  width: auto;
+  position: relative;
+  top: -9px;
+  left: -2px;
+}
+
 .subtitle {
   line-height: 45px;
   font-size: 16px;

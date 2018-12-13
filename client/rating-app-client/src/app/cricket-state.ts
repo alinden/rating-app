@@ -2,6 +2,7 @@ import { DartShot } from './dart-shot';
 
 export class CricketState {
   turnIndex: number;
+  turnCount: number;
   isOver: boolean;
   shotsRemaining: number;
   numPlayers: number;
@@ -23,6 +24,7 @@ export class CricketState {
 
   constructor(numPlayers: number) {
     this.turnIndex = 0;
+    this.turnCount = 1;
     this.isOver = false;
     this.shotsRemaining = 3;
     this.numPlayers = numPlayers;
@@ -150,7 +152,7 @@ export class CricketState {
     );
     const playerScore = this.scores[this.turnIndex];
     let playerIsWinning = true;
-    for (let i = 0; i++; i < numPlayers) {
+    for (let i = 0; i < numPlayers; i++) {
       if (i !== this.turnIndex) {
         playerIsWinning = playerIsWinning && (this.scores[i] < playerScore);
       }
@@ -161,8 +163,13 @@ export class CricketState {
   updateTurnIndexAndShotsRemaining(numPlayers) {
     // decrement shotsRemaining and switch turns if time
     if (this.shotsRemaining === 1) {
-      this.turnIndex = (this.turnIndex + 1) % numPlayers;
+      const beforeTurnIndex = this.turnIndex;
+      const afterTurnIndex = (beforeTurnIndex + 1) % numPlayers;
+      this.turnIndex = afterTurnIndex;
       this.shotsRemaining = 3;
+      if (beforeTurnIndex > afterTurnIndex) {
+        this.turnCount++;
+      }
     } else {
       this.shotsRemaining = this.shotsRemaining - 1;
     }

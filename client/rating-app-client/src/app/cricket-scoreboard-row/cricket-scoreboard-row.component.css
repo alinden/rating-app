@@ -31,10 +31,10 @@ mat-icon {
 
 @media only screen and (max-width: 1050px) {
   #score-right, #shot-left, #shot-right, #score-left {
-    line-height: 78px;
+    line-height: 77px;
   }
 
   .card-item-row {
-    height: 78px;
+    height: 77px;
   }
 }
