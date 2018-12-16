@@ -112,12 +112,19 @@ export class ClientService {
   }
 
   loadStatsThen(fn) {
+    console.log('loading stats');
     this.statsService.getStats().subscribe(stats => {
-      const winLossRecordsByLeagueId = new Map();
+      console.log('stats service returned');
+      console.log(stats);
+      this.winLossRecordsByLeagueId = new Map();
       for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
-        winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords.leagueId,  leagueIdAndWinLossRecords.winLossRecords);
+        console.log('leagueIdAndWinLossRecords');
+        console.log(leagueIdAndWinLossRecords);
+        this.winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
+          leagueIdAndWinLossRecords[1]);
       }
-      this.winLossRecordsByLeagueId = winLossRecordsByLeagueId;
+      console.log('this.winLossRecordsByLeagueId');
+      console.log(this.winLossRecordsByLeagueId);
       fn();
     });
   }
@@ -241,8 +248,12 @@ export class ClientService {
   }
 
   getWinLossRecords(league: WithId<League>): WinLossRecord[] {
+    console.log('getWinLossRecords');
     if (this.initialized) {
-      return this.winLossRecordsByLeagueId.get(league.id);
+      const records = this.winLossRecordsByLeagueId.get(league.id);
+      console.log('records');
+      console.log(records);
+      return records;
     } else {
       // TODO(alinden): handle unitialized
     }

@@ -22,12 +22,8 @@ export class StatsService {
   ) { }
 
   getStats(): Observable<Stats> {
-    return this.http.get<Stats>(this.statsUrl)
-      .pipe(
-        catchError(this.handleError('getStats',
-          { leagueIdAndWinLossRecords: [] }
-        )),
-      );
+    console.log('get stats');
+    return this.http.get<Stats>(this.statsUrl);
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
