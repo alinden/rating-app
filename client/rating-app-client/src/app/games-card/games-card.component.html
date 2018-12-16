@@ -4,6 +4,11 @@
       <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
     </div>
     <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+    <span *ngIf="mode == 'details'" class="record-container">
+      <span class="num-wins">W</span>
+      <span class="num-losses">L</span>
+      <span class="win-percentage">Pct</span>
+    </span>
   </div>
 
   <mat-card-content [ngSwitch]="mode">

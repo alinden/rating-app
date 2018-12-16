@@ -15,7 +15,7 @@ export class WinLossRecordComponent implements OnInit {
 
   ngOnInit() {
     this.winPercentage =
-      (this.winLossRecord.wins * 100) / this.winLossRecord.losses;
+      this.winLossRecord.wins / (this.winLossRecord.wins + this.winLossRecord.losses);
   }
 
 }

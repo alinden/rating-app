@@ -1,0 +1,21 @@
+.user-container {
+  width: 50%;
+  height: 100%;
+  line-height: 100%;
+  vertical-align: center;
+}
+
+.record-container {
+  width: 50%;
+  height: 45px;
+  line-height: 45px;
+  vertical-align: middle;
+  text-align: right;
+  float: right;
+}
+
+
+.num-wins, .num-losses, .win-percentage {
+  margin: 0 8px;
+}
+
