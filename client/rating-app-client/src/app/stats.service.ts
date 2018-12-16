@@ -22,7 +22,6 @@ export class StatsService {
   ) { }
 
   getStats(): Observable<Stats> {
-    console.log('get stats');
     return this.http.get<Stats>(this.statsUrl);
   }
 

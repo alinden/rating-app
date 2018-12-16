@@ -112,19 +112,12 @@ export class ClientService {
   }
 
   loadStatsThen(fn) {
-    console.log('loading stats');
     this.statsService.getStats().subscribe(stats => {
-      console.log('stats service returned');
-      console.log(stats);
       this.winLossRecordsByLeagueId = new Map();
       for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
-        console.log('leagueIdAndWinLossRecords');
-        console.log(leagueIdAndWinLossRecords);
         this.winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
           leagueIdAndWinLossRecords[1]);
       }
-      console.log('this.winLossRecordsByLeagueId');
-      console.log(this.winLossRecordsByLeagueId);
       fn();
     });
   }
@@ -248,12 +241,8 @@ export class ClientService {
   }
 
   getWinLossRecords(league: WithId<League>): WinLossRecord[] {
-    console.log('getWinLossRecords');
     if (this.initialized) {
-      const records = this.winLossRecordsByLeagueId.get(league.id);
-      console.log('records');
-      console.log(records);
-      return records;
+      return this.winLossRecordsByLeagueId.get(league.id);
     } else {
       // TODO(alinden): handle unitialized
     }
