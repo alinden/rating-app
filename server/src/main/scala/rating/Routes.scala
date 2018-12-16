@@ -127,4 +127,18 @@ object Routes {
         } yield response
     }
   }
+
+  def statsRoutes[F[_]: Sync](U: StatsController[F]): HttpRoutes[F] = {
+    val dsl = new Http4sDsl[F]{}
+    import dsl._
+    import StatsController.Encoders._
+    HttpRoutes.of[F] {
+      case GET -> Root / "api" / "stats" =>
+        for {
+          stats <- U.getStats
+          response <- Ok(stats)
+        } yield response
+    }
+  }
+
 }
