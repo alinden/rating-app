@@ -9,7 +9,6 @@ from
 inner join (
   select
     users.id as user_id,
-    count(1) as num_winS
   from
     users
   left outer join games
