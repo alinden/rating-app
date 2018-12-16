@@ -33,7 +33,8 @@
     </div>
 
     <div *ngSwitchCase="'details'">
-      <h2>Stats</h2>
+      <app-win-loss-record *ngFor="let winLossRecord of getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord">
+      </app-win-loss-record>
     </div>
 
   </mat-card-content>

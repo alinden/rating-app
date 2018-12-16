@@ -4,8 +4,10 @@ import { ClientService } from '../client.service';
 
 import { Game } from '../game';
 import { User } from '../user';
+import { League } from '../league';
 import { WithId } from '../with-id';
 import { LeagueWithGames } from '../league-with-games';
+import { WinLossRecord } from '../win-loss-record';
 
 @Component({
   selector: 'app-games-card',
@@ -14,7 +16,6 @@ import { LeagueWithGames } from '../league-with-games';
 })
 export class GamesCardComponent implements OnInit {
   @Input() leagueWithGames: LeagueWithGames;
-
   @Input() winnerId: number;
   @Input() loserId: number;
 
@@ -35,6 +36,10 @@ export class GamesCardComponent implements OnInit {
   saveGame(): void {
     this.client.addGame(this.leagueWithGames.league.id, this.winnerId, this.loserId);
     this.enterListMode();
+  }
+
+  getWinLossRecords(league: WithId<League>): WinLossRecord[] {
+    return this.client.getWinLossRecords(league);
   }
 
   isCricket(): boolean {

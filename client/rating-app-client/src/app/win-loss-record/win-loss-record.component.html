@@ -1,0 +1,16 @@
+<div class="card-item-row">
+  <span class="user-container">
+    <div class="avatar-container">
+      <img class="avatar" src="/assets/{{ winLossRecord.user.entity.image }}">
+    </div>
+    <span class="subtitle">{{ winLossRecord.user.entity.name | titlecase }}</span>
+  <span class="num-wins">
+    {{ winLossRecord.wins }}
+  </span>
+  <span class="num-losses">
+    {{ winLossRecord.losses }}
+  </span>
+  <span class="win-percentage">
+    {{ winPercentage }}
+  </span>
+</div>

@@ -6,6 +6,7 @@ import { GameService } from './game.service';
 import { LeagueService } from './league.service';
 import { RatingService } from './rating.service';
 import { UserService } from './user.service';
+import { StatsService } from './stats.service';
 
 import { Game } from './game';
 import { Rating } from './rating';
@@ -15,6 +16,7 @@ import { RatedUser } from './rated-user';
 import { WithId } from './with-id';
 import { LeagueWithGames } from './league-with-games';
 import { LeagueWithRatings } from './league-with-ratings';
+import { WinLossRecord } from './win-loss-record';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,7 @@ export class ClientService {
 
   userById: Map<number, WithId<User>>;
   leagueById: Map<number, WithId<League>>;
+  winLossRecordsByLeagueId: Map<number, WinLossRecord[]>;
   leagueWithGamesById: Map<number, LeagueWithGames>;
   leagueWithRatingsById: Map<number, LeagueWithRatings>;
   ratedUsers: Map<number, Map<number, RatedUser>>;
@@ -40,6 +43,7 @@ export class ClientService {
     private leagueService: LeagueService,
     private userService: UserService,
     private ratingService: RatingService,
+    private statsService: StatsService,
   ) {
 
     interval(1000 * this.refresh_frequency_seconds).subscribe(x => {
@@ -59,7 +63,9 @@ export class ClientService {
       this.loadLeaguesThen( () => {
         this.loadGamesThen( () => {
           this.loadRatingsThen( () => {
-            this.initialized = true;
+            this.loadStatsThen( () => {
+              this.initialized = true;
+            });
           });
         });
       });
@@ -101,6 +107,17 @@ export class ClientService {
         }
         this.ratedUsers.set(leagueWithRatings.league.id, ratedUsersForLeague);
       }
+      fn();
+    });
+  }
+
+  loadStatsThen(fn) {
+    this.statsService.getStats().subscribe(stats => {
+      const winLossRecordsByLeagueId = new Map();
+      for (const leagueIdAndWinLossRecords of stats.winLossRecordsByLeagueId) {
+        winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords.leagueId,  leagueIdAndWinLossRecords.winLossRecords);
+      }
+      this.winLossRecordsByLeagueId = winLossRecordsByLeagueId;
       fn();
     });
   }
@@ -220,6 +237,14 @@ export class ClientService {
       return this.leagueById.get(id);
     } else {
       // TODO(alinden): handle uninitialized
+    }
+  }
+
+  getWinLossRecords(league: WithId<League>): WinLossRecord[] {
+    if (this.initialized) {
+      return this.winLossRecordsByLeagueId.get(league.id);
+    } else {
+      // TODO(alinden): handle unitialized
     }
   }
 
