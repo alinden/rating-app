@@ -24,24 +24,26 @@ object StatsRepository {
       inner join (
         select
           users.id as user_id,
-          count(1) as num_wins
+          count(games.id) as num_wins
         from
           users
-        left outer join games
+        left outer join (
+          select * from games where games.league_id = ${league_id}
+        ) games
           on users.id = games.winner_id
-        where games.league_id = ${leagueId}
         group by users.id
       ) wins
         on users.id = wins.user_id
       inner join (
         select
           users.id as user_id,
-          count(1) as num_losses
+          count(games.id) as num_losses
         from
           users
-        left outer join games
+        left outer join (
+          select * from games where games.league_id = ${league_id}
+        ) games
           on users.id = games.loser_id
-        where games.league_id = ${leagueId}
         group by users.id
       ) losses
         on users.id = losses.user_id
