@@ -4,6 +4,11 @@
       <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
     </div>
     <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+    <span *ngIf="mode == 'details'" class="record-container">
+      <span class="num-wins">W</span>
+      <span class="num-losses">L</span>
+      <span class="win-percentage">Pct</span>
+    </span>
   </div>
 
   <mat-card-content [ngSwitch]="mode">
@@ -33,7 +38,8 @@
     </div>
 
     <div *ngSwitchCase="'details'">
-      <h2>Stats</h2>
+      <app-win-loss-record *ngFor="let winLossRecord of getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord">
+      </app-win-loss-record>
     </div>
 
   </mat-card-content>
@@ -66,7 +72,7 @@
         Add Game
       </button>
       <button mat-button class="action-button" (click)="enterListMode()">
-        List
+        Recent Games
       </button>
     </div>
 

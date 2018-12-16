@@ -24,6 +24,7 @@ import { RatingsCardComponent } from './ratings-card/ratings-card.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
 import { RatingChangeComponent } from './rating-change/rating-change.component';
 import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-scoreboard-row.component';
+import { WinLossRecordComponent } from './win-loss-record/win-loss-record.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-
     RatingsCardComponent,
     KeepScoreComponent,
     RatingChangeComponent,
-    CricketScoreboardRowComponent
+    CricketScoreboardRowComponent,
+    WinLossRecordComponent
   ],
   imports: [
     BrowserModule,
