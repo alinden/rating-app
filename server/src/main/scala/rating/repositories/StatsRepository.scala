@@ -28,7 +28,7 @@ object StatsRepository {
         from
           users
         left outer join (
-          select * from games where games.league_id = ${league_id}
+          select * from games where games.league_id = ${leagueId}
         ) games
           on users.id = games.winner_id
         group by users.id
@@ -41,7 +41,7 @@ object StatsRepository {
         from
           users
         left outer join (
-          select * from games where games.league_id = ${league_id}
+          select * from games where games.league_id = ${leagueId}
         ) games
           on users.id = games.loser_id
         group by users.id
