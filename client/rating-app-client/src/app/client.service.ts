@@ -114,7 +114,7 @@ export class ClientService {
   loadStatsThen(fn) {
     this.statsService.getStats().subscribe(stats => {
       const winLossRecordsByLeagueId = new Map();
-      for (const leagueIdAndWinLossRecords of stats.winLossRecordsByLeagueId) {
+      for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
         winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords.leagueId,  leagueIdAndWinLossRecords.winLossRecords);
       }
       this.winLossRecordsByLeagueId = winLossRecordsByLeagueId;
