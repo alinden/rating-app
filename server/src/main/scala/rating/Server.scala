@@ -32,6 +32,7 @@ object Server {
       leagueController = LeagueController.impl[F]
       gameController = GameController.impl[F]
       ratingController = RatingController.impl[F]
+      statsController = StatsController.impl[F]
 
       // Combine Service Routes into an HttpApp
       // Can also be done via a Router if you
@@ -41,7 +42,8 @@ object Server {
         Routes.userRoutes[F](userController) <+>
         Routes.leagueRoutes[F](leagueController) <+>
         Routes.gameRoutes[F](gameController) <+>
-        Routes.ratingRoutes[F](ratingController)
+        Routes.ratingRoutes[F](ratingController) <+>
+        Routes.statsRoutes[F](statsController)
       ).orNotFound
 
       // With Middlewares in place
