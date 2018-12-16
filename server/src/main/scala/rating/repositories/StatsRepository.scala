@@ -18,7 +18,7 @@ object StatsRepository {
         users.name,
         users.image,
         wins.num_wins,
-        losses.num_losseS
+        losses.num_losses
       from
         users
       inner join (
@@ -47,6 +47,7 @@ object StatsRepository {
         group by users.id
       ) losses
         on users.id = losses.user_id
+      where (wins.num_wins + losses.num_losses > 0)
       order by (wins.num_wins - losses.num_losses) desc;
       """.query[WinLossRecord]
       .to[List]
