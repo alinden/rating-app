@@ -5,5 +5,4 @@ export class WinLossRecord {
   user: WithId<User>;
   wins: number;
   losses: number;
-  winPercentage: number;
 }
