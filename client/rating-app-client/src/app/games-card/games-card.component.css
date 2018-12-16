@@ -31,8 +31,8 @@ mat-form-field {
   vertical-align: bottom;
   text-align: right;
   float: right;
+  margin-right: 16px;
 }
-
 
 .num-wins, .num-losses {
   margin: 0 8px;
