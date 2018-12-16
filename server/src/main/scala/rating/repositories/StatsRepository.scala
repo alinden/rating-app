@@ -44,7 +44,8 @@ object StatsRepository {
         where games.league_id = ${leagueId}
         group by users.id
       ) losses
-        on users.id = losses.user_id;
+        on users.id = losses.user_id
+      order by (wins.num_wins - losses.num_losses) desc;
       """.query[WinLossRecord]
       .to[List]
 

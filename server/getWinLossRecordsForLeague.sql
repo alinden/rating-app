@@ -27,4 +27,6 @@ inner join (
     on users.id = games.loser_id
   group by users.id
 ) losses
-  on users.id = losses.user_id;
+  on users.id = losses.user_id
+order by (wins.num_wins - losses.num_losses) desc;
+
