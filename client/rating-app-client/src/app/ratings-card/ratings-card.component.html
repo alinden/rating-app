@@ -15,8 +15,9 @@
       </app-rated-user-card-item>
     </div>
 
-    <div *ngSwitchCase="'details'">
-      <h2>Stats</h2>
+    <div *ngSwitchCase="'details'" class="ratings-distribution">
+      <app-ratings-distribution [leagueWithRatings]="leagueWithRatings">
+      </app-ratings-distribution>
     </div>
 
   </mat-card-content>
