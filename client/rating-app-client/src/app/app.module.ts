@@ -3,8 +3,25 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatOptionModule, MatSelectModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatCardModule, MatPaginatorModule, MatSortModule, MatGridListModule } from '@angular/material';
+import {
+  MatOptionModule,
+  MatSelectModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatTableModule,
+  MatCardModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatGridListModule
+} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +42,7 @@ import { KeepScoreComponent } from './keep-score/keep-score.component';
 import { RatingChangeComponent } from './rating-change/rating-change.component';
 import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-scoreboard-row.component';
 import { WinLossRecordComponent } from './win-loss-record/win-loss-record.component';
+import { RatingsDistributionComponent } from './ratings-distribution/ratings-distribution.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +62,11 @@ import { WinLossRecordComponent } from './win-loss-record/win-loss-record.compon
     KeepScoreComponent,
     RatingChangeComponent,
     CricketScoreboardRowComponent,
-    WinLossRecordComponent
+    WinLossRecordComponent,
+    RatingsDistributionComponent
   ],
   imports: [
+    NgxChartsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
