@@ -73,14 +73,7 @@ export class RatingsDistributionComponent implements OnInit {
         value: barCount
       });
     }
-    this.histogramData = histogramData.sort( (x, y) => {
-      // Order the data by name ascending. + converts the string back to a number.
-      if (+x.name > +y.name) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
+    this.histogramData = histogramData;
     this.setYAxisTicks();
   }
 
