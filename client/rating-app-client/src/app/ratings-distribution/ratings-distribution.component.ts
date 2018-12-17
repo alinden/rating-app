@@ -42,11 +42,18 @@ export class RatingsDistributionComponent implements OnInit {
 
   setHistogramData() {
     const buckets: Map<number, number> = new Map();
-    const bucketSize = 100;
+    const bucketSize = 50;
+    let minBucket, maxBucket;
     for (const ratedUser of this.leagueWithRatings.ratedUsers) {
       const rating = ratedUser.rating.entity.new_rating;
       const roundAmount = rating % bucketSize;
       const bucketedRating = rating - roundAmount;
+      if (!minBucket || (minBucket > bucketedRating)) {
+        minBucket = bucketedRating;
+      }
+      if (!maxBucket || (maxBucket < bucketedRating)) {
+        maxBucket = bucketedRating;
+      }
       let newBucketCount = 1;
       if (buckets.has(bucketedRating)) {
         newBucketCount = buckets.get(bucketedRating) + 1;
@@ -54,14 +61,18 @@ export class RatingsDistributionComponent implements OnInit {
       buckets.set(bucketedRating, newBucketCount);
     }
     const histogramData = [];
-    buckets.forEach( (v, k) => {
-      const barName = '' + k;
-      const barCount = v;
+    for (let lowerBound = minBucket; lowerBound <= maxBucket; lowerBound = lowerBound + bucketSize) {
+      const upperBound = lowerBound + bucketSize;
+      const barName = '' + lowerBound + ' - ' + upperBound;
+      let barCount = 0;
+      if (buckets.has(lowerBound)) {
+        barCount = buckets.get(lowerBound);
+      }
       histogramData.push({
         name: barName,
         value: barCount
       });
-    });
+    }
     this.histogramData = histogramData.sort( (x, y) => {
       // Order the data by name ascending. + converts the string back to a number.
       if (+x.name > +y.name) {
