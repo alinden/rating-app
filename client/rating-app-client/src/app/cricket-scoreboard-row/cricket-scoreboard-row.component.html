@@ -10,13 +10,13 @@
   </div>
   <div id="shot-left" [ngSwitch]="shots[0]" [ngClass]="{active: (turnIndex === 0) && (!isOver)}">
     <span *ngSwitchCase="1">
-      <mat-icon>add</mat-icon>
+      <img src="/assets/cricket_single.png"></img>
     </span>
     <span *ngSwitchCase="2">
-      <mat-icon>add_circle_outline</mat-icon>
+      <img src="/assets/cricket_double.png"></img>
     </span>
     <span *ngSwitchCase="3">
-      <mat-icon>fiber_manual_record</mat-icon>
+      <img src="/assets/cricket_triple.png"></img>
     </span>
     <span *ngSwitchCase="0">.</span>
   </div>
