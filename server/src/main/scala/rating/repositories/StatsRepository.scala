@@ -101,7 +101,7 @@ object StatsRepository {
       INNER JOIN users
       ON users.id = scores.player_id
       GROUP BY users.id
-      ORDER BY 1;
+      ORDER BY 15 desc;
     """.query[MonthTotal]
     .to[List]
 
