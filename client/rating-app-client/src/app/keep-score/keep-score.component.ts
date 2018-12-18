@@ -58,7 +58,12 @@ export class KeepScoreComponent implements OnInit {
   nextTurn() {
     const shotsSkipped = 3 - this.liveGame.state.shotsRemaining;
     this.liveGame.state.shotsRemaining = 3;
-    this.liveGame.state.turnIndex = (this.liveGame.state.turnIndex + 1) % 2;
+    const beforeTurnIndex = this.liveGame.state.turnIndex;
+    const afterTurnIndex = (this.liveGame.state.turnIndex + 1) % 2;
+    if (afterTurnIndex < beforeTurnIndex) {
+      this.liveGame.state.turnCount++;
+    }
+    this.liveGame.state.turnIndex = afterTurnIndex;
     this.shotHistory.push({ value: -1, count: shotsSkipped , appliedCount: shotsSkipped});
   }
 
