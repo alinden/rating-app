@@ -34,7 +34,7 @@ mat-form-field {
   margin-right: 16px;
 }
 
-.num-wins, .num-losses {
+.num-wins, .num-losses, .month-label {
   margin: 0 8px;
   color: #757575;
 }

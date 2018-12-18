@@ -17,6 +17,7 @@ import { WithId } from './with-id';
 import { LeagueWithGames } from './league-with-games';
 import { LeagueWithRatings } from './league-with-ratings';
 import { WinLossRecord } from './win-loss-record';
+import { MonthTotal } from './month-total';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class ClientService {
   userById: Map<number, WithId<User>>;
   leagueById: Map<number, WithId<League>>;
   winLossRecordsByLeagueId: Map<number, WinLossRecord[]>;
+  monthTotalsByLeagueId: Map<number, MonthTotal[]>;
   leagueWithGamesById: Map<number, LeagueWithGames>;
   leagueWithRatingsById: Map<number, LeagueWithRatings>;
   ratedUsers: Map<number, Map<number, RatedUser>>;
@@ -113,10 +115,17 @@ export class ClientService {
 
   loadStatsThen(fn) {
     this.statsService.getStats().subscribe(stats => {
+      console.log('stats parsing');
+      console.log(stats);
       this.winLossRecordsByLeagueId = new Map();
       for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
         this.winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
           leagueIdAndWinLossRecords[1]);
+      }
+      this.monthTotalsByLeagueId = new Map();
+      for (const leagueIdAndMonthTotals of stats.leagueIdAndMonthTotals) {
+        this.monthTotalsByLeagueId.set(leagueIdAndMonthTotals[0],
+          leagueIdAndMonthTotals[1]);
       }
       fn();
     });
@@ -243,6 +252,14 @@ export class ClientService {
   getWinLossRecords(league: WithId<League>): WinLossRecord[] {
     if (this.initialized) {
       return this.winLossRecordsByLeagueId.get(league.id);
+    } else {
+      // TODO(alinden): handle unitialized
+    }
+  }
+
+  getMonthTotals(league: WithId<League>): MonthTotal[] {
+    if (this.initialized) {
+      return this.monthTotalsByLeagueId.get(league.id);
     } else {
       // TODO(alinden): handle unitialized
     }
