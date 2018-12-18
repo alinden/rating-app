@@ -56,6 +56,8 @@ export class ClientService {
   reloadGamesAndRatings() {
     this.loadGamesThen( () => {
       this.loadRatingsThen( () => {
+        this.loadStatsThen( () => {
+        });
       });
     });
   }
@@ -115,8 +117,6 @@ export class ClientService {
 
   loadStatsThen(fn) {
     this.statsService.getStats().subscribe(stats => {
-      console.log('stats parsing');
-      console.log(stats);
       this.winLossRecordsByLeagueId = new Map();
       for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
         this.winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
