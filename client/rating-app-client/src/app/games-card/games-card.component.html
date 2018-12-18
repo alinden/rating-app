@@ -4,10 +4,24 @@
       <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
     </div>
     <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
-    <span *ngIf="mode == 'details'" class="record-container">
+    <span *ngIf="mode == 'standings'" class="record-container">
       <span class="num-wins">W</span>
       <span class="num-losses">L</span>
       <span class="win-percentage">Pct</span>
+    </span>
+    <span *ngIf="mode == 'months'" class="record-container">
+      <span class="month-label">Jan</span>
+      <span class="month-label">Feb</span>
+      <span class="month-label">Mar</span>
+      <span class="month-label">Apr</span>
+      <span class="month-label">May</span>
+      <span class="month-label">Jun</span>
+      <span class="month-label">Jul</span>
+      <span class="month-label">Aug</span>
+      <span class="month-label">Sep</span>
+      <span class="month-label">Oct</span>
+      <span class="month-label">Nov</span>
+      <span class="month-label">Dec</span>
     </span>
   </div>
 
@@ -37,9 +51,14 @@
       </form>
     </div>
 
-    <div *ngSwitchCase="'details'">
-      <app-win-loss-record *ngFor="let winLossRecord of getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord">
+    <div *ngSwitchCase="'standings'">
+      <app-win-loss-record *ngFor="let winLossRecord of client.getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord">
       </app-win-loss-record>
+    </div>
+
+    <div *ngSwitchCase="'months'">
+      <app-month-total *ngFor="let monthTotal of client.getMonthTotals(leagueWithGames.league)" [monthTotal]="monthTotal">
+      </app-month-total>
     </div>
 
   </mat-card-content>
@@ -53,8 +72,11 @@
       <button mat-button class="action-button" (click)="enterAddMode()">
         Add Game
       </button>
-      <button mat-button class="action-button" (click)="enterDetailsMode()">
-        Stats
+      <button mat-button class="action-button" (click)="enterStandingsMode()">
+        Standings
+      </button>
+      <button mat-button class="action-button" (click)="enterMonthsMode()">
+        Months
       </button>
     </div>
 

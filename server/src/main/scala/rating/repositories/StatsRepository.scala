@@ -8,7 +8,7 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import rating.models.{WinLossRecord}
+import rating.models.{WinLossRecord, MonthTotal}
 
 object StatsRepository {
   def getWinLossRecordsQuery(leagueId: Int) =
@@ -82,21 +82,25 @@ object StatsRepository {
         AND w.month = l.month
       )
       SELECT
-        player_id,
-        sum(CASE WHEN month = 1 THEN score ELSE NULL END) AS "January",
-        sum(CASE WHEN month = 2 THEN score ELSE NULL END) AS "February",
-        sum(CASE WHEN month = 3 THEN score ELSE NULL END) AS "March",
-        sum(CASE WHEN month = 4 THEN score ELSE NULL END) AS "April",
-        sum(CASE WHEN month = 5 THEN score ELSE NULL END) AS "May",
-        sum(CASE WHEN month = 6 THEN score ELSE NULL END) AS "June",
-        sum(CASE WHEN month = 7 THEN score ELSE NULL END) AS "July",
-        sum(CASE WHEN month = 8 THEN score ELSE NULL END) AS "August",
-        sum(CASE WHEN month = 9 THEN score ELSE NULL END) AS "September",
-        sum(CASE WHEN month = 10 THEN score ELSE NULL END) AS "October",
-        sum(CASE WHEN month = 11 THEN score ELSE NULL END) AS "November",
-        sum(CASE WHEN month = 12 THEN score ELSE NULL END) AS "December"
+        users.id,
+        max(users.name),
+        max(users.image),
+        sum(CASE WHEN month = 1 THEN score ELSE 0 END) AS "January",
+        sum(CASE WHEN month = 2 THEN score ELSE 0 END) AS "February",
+        sum(CASE WHEN month = 3 THEN score ELSE 0 END) AS "March",
+        sum(CASE WHEN month = 4 THEN score ELSE 0 END) AS "April",
+        sum(CASE WHEN month = 5 THEN score ELSE 0 END) AS "May",
+        sum(CASE WHEN month = 6 THEN score ELSE 0 END) AS "June",
+        sum(CASE WHEN month = 7 THEN score ELSE 0 END) AS "July",
+        sum(CASE WHEN month = 8 THEN score ELSE 0 END) AS "August",
+        sum(CASE WHEN month = 9 THEN score ELSE 0 END) AS "September",
+        sum(CASE WHEN month = 10 THEN score ELSE 0 END) AS "October",
+        sum(CASE WHEN month = 11 THEN score ELSE 0 END) AS "November",
+        sum(CASE WHEN month = 12 THEN score ELSE 0 END) AS "December"
       FROM scores
-      GROUP BY player_id
+      INNER JOIN users
+      ON users.id = scores.player_id
+      GROUP BY users.id
       ORDER BY 1;
     """.query[MonthTotal]
     .to[List]

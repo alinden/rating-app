@@ -29,17 +29,17 @@ export class GamesCardComponent implements OnInit {
     this.mode = 'list';
   }
 
-  enterDetailsMode(): void {
-    this.mode = 'details';
+  enterStandingsMode(): void {
+    this.mode = 'standings';
+  }
+
+  enterMonthsMode(): void {
+    this.mode = 'months';
   }
 
   saveGame(): void {
     this.client.addGame(this.leagueWithGames.league.id, this.winnerId, this.loserId);
     this.enterListMode();
-  }
-
-  getWinLossRecords(league: WithId<League>): WinLossRecord[] {
-    return this.client.getWinLossRecords(league);
   }
 
   isCricket(): boolean {

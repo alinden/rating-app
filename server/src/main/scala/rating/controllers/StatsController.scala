@@ -7,7 +7,7 @@ import io.circe.{Encoder, Decoder, Json}
 import org.http4s.{EntityEncoder, EntityDecoder}
 import org.http4s.circe._
 
-import rating.models.{Stats}
+import rating.models.{Stats, WinLossRecord, MonthTotal}
 import rating.repositories.{StatsRepository, LeagueRepository}
 
 import doobie._
@@ -31,9 +31,16 @@ object StatsController {
   def impl[F[_]: Applicative](implicit xb: Transactor[IO]): StatsController[F] = new StatsController[F]{
     def getStats: F[Stats] = {
       val leagues = LeagueRepository.getAll
-      Stats(leagues.map(league => {
-        (league.id, StatsRepository.getWinLossRecords(league.id))
-      })).pure[F]
+      val leagueIdAndWinLossRecords: List[(Int, List[WinLossRecord])] = leagues.map(league => {
+        (league.id, StatsRepository.getWinLossRecords(league.id)),
+      })
+      val leagueIdAndMonthTotals: List[(Int, List[MonthTotal])] = leagues.map(league => {
+        (league.id, StatsRepository.getMonthTotals(league.id)),
+      })
+      Stats(
+        leagueIdAndWinLossRecords,
+        leagueIdAndMonthTotals
+      ).pure[F]
     }
   }
 

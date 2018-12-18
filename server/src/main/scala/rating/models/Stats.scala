@@ -5,5 +5,5 @@ import io.circe.generic.JsonCodec, io.circe.syntax._
 
 @JsonCodec case class Stats(
   leagueIdAndWinLossRecords: List[(Int, List[WinLossRecord])],
-  monthTotals: List[(Int, List[MonthTotal])]
+  leagueIdAndMonthTotals: List[(Int, List[MonthTotal])]
 )
