@@ -52,6 +52,59 @@ object StatsRepository {
       """.query[WinLossRecord]
       .to[List]
 
+  def getMonthTotalsQuery(leagueId: Int) =
+    sql"""
+      WITH scores as
+        (SELECT
+          COALESCE(w.player_id, l.player_id) as player_id,
+          COALESCE(w.month, l.month) as month,
+          COALESCE(w.count, 0)-COALESCE(l.count,0) AS score
+        FROM
+          (SELECT
+            winner_id AS player_id,
+            EXTRACT(MONTH FROM date_played) AS month,
+            COUNT(*)
+          FROM games
+          WHERE extract(year FROM date_played) = 2018
+          AND league_id = ${leagueId}
+          GROUP BY 1,2
+        ) w
+        FULL OUTER JOIN
+          (SELECT
+            loser_id AS player_id,
+            EXTRACT(MONTH FROM date_played) AS month,
+            COUNT(*) FROM games
+            WHERE extract(year FROM date_played) = 2018
+            AND league_id = ${leagueId}
+            GROUP BY 1,2
+          ) l
+        ON w.player_id = l.player_id
+        AND w.month = l.month
+      )
+      SELECT
+        player_id,
+        sum(CASE WHEN month = 1 THEN score ELSE NULL END) AS "January",
+        sum(CASE WHEN month = 2 THEN score ELSE NULL END) AS "February",
+        sum(CASE WHEN month = 3 THEN score ELSE NULL END) AS "March",
+        sum(CASE WHEN month = 4 THEN score ELSE NULL END) AS "April",
+        sum(CASE WHEN month = 5 THEN score ELSE NULL END) AS "May",
+        sum(CASE WHEN month = 6 THEN score ELSE NULL END) AS "June",
+        sum(CASE WHEN month = 7 THEN score ELSE NULL END) AS "July",
+        sum(CASE WHEN month = 8 THEN score ELSE NULL END) AS "August",
+        sum(CASE WHEN month = 9 THEN score ELSE NULL END) AS "September",
+        sum(CASE WHEN month = 10 THEN score ELSE NULL END) AS "October",
+        sum(CASE WHEN month = 11 THEN score ELSE NULL END) AS "November",
+        sum(CASE WHEN month = 12 THEN score ELSE NULL END) AS "December"
+      FROM scores
+      GROUP BY player_id
+      ORDER BY 1;
+    """.query[MonthTotal]
+    .to[List]
+
+
   def getWinLossRecords(leagueId: Int)(implicit xb: Transactor[IO]): List[WinLossRecord] =
     getWinLossRecordsQuery(leagueId).transact(xb).unsafeRunSync
+
+  def getMonthTotals(leagueId: Int)(implicit xb: Transactor[IO]): List[MonthTotal] =
+    getMonthTotalsQuery(leagueId).transact(xb).unsafeRunSync
 }
