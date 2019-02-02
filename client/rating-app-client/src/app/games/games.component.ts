@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatGridList } from '@angular/material';
 
 import { ClientService } from '../client.service';
@@ -26,11 +26,11 @@ export class GamesComponent implements OnInit {
 
   constructor(
     public client: ClientService,
-    private observableMedia: ObservableMedia
+    private mediaObserver: MediaObserver
   ) { }
 
   ngOnInit() {
-    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+    this.mediaObserver.media$.subscribe((change: MediaChange) => {
       this.grid.cols = this.gridByBreakpoint[change.mqAlias];
     });
 
