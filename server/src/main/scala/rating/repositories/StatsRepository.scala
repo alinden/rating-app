@@ -65,7 +65,7 @@ object StatsRepository {
             EXTRACT(MONTH FROM date_played) AS month,
             COUNT(*)
           FROM games
-          WHERE extract(year FROM date_played) = 2018
+          WHERE extract(year FROM date_played) = 2019
           AND league_id = ${leagueId}
           GROUP BY 1,2
         ) w
@@ -74,7 +74,7 @@ object StatsRepository {
             loser_id AS player_id,
             EXTRACT(MONTH FROM date_played) AS month,
             COUNT(*) FROM games
-            WHERE extract(year FROM date_played) = 2018
+            WHERE extract(year FROM date_played) = 2019
             AND league_id = ${leagueId}
             GROUP BY 1,2
           ) l
