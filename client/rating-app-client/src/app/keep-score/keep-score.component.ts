@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatGridList } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../league';
@@ -116,12 +116,12 @@ export class KeepScoreComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private client: ClientService,
-    private observableMedia: ObservableMedia,
+    private mediaObserver: MediaObserver,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+    this.mediaObserver.media$.subscribe((change: MediaChange) => {
       this.grid.rowHeight = this.gridRowHeightByBreakpoint[change.mqAlias];
     });
 
