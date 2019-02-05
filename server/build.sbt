@@ -22,7 +22,8 @@ lazy val root = (project in file("."))
       "org.tpolecat"    %% "doobie-hikari"       % DoobieVersion,
       "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
-      "com.github.esap120" %% "scala-elo" % "1.0.1"
+      "com.github.esap120" %% "scala-elo" % "1.0.1",
+      "com.github.nscala-time" %% "nscala-time" % "2.22.0",
     ),
     addCompilerPlugin("org.spire-math" %% "kind-projector"     % "0.9.6"),
     addCompilerPlugin("com.olegpy"     %% "better-monadic-for" % "0.2.4"),

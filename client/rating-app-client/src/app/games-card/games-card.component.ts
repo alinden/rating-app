@@ -19,6 +19,8 @@ export class GamesCardComponent implements OnInit {
   @Input() winnerId: number;
   @Input() loserId: number;
 
+  monthNames: string[] = [];
+
   mode: String = 'list';
 
   enterAddMode(): void {
@@ -46,9 +48,23 @@ export class GamesCardComponent implements OnInit {
     return this.leagueWithGames.league.id === 3;
   }
 
+  setMonthNames(): void {
+    const monthNames = [];
+    let now;
+    for (let i = 0; i <= 11; i++) {
+      now = new Date(Date.now());
+      now.setMonth(now.getMonth() - i);
+      const monthName = now.toLocaleString( 'en-us', { month: 'short' });
+      monthNames.push(monthName);
+    }
+    this.monthNames = monthNames.reverse();
+  }
+
   constructor(
     private client: ClientService,
-  ) { }
+    ) {
+      this.setMonthNames();
+    }
 
 
   ngOnInit() {
