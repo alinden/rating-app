@@ -64,8 +64,6 @@ export class GamesCardComponent implements OnInit {
     private client: ClientService,
     ) {
       this.setMonthNames();
-      console.log('this.monthNames');
-      console.log(this.monthNames);
     }
 
 
