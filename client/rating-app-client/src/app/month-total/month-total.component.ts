@@ -10,8 +10,6 @@ import { MonthTotal } from '../month-total';
 export class MonthTotalComponent implements OnInit {
   @Input() monthTotal: MonthTotal;
 
-  constructor() { }
-
   ngOnInit() {
     console.log('init');
     console.log('this.monthTotal');
