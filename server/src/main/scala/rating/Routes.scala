@@ -138,6 +138,8 @@ object Routes {
           stats <- U.getStats
           response <- Ok(stats)
         } yield response
+      case GET -> Root / "api" / "conditional-standings" / leagueId / userId =>
+        Ok(U.getConditionalWinLossRecords(leagueId.toInt, userId.toInt))
     }
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { ClientService } from '../client.service';
+import { UserService } from '../user.service';
+import { StatsService } from '../stats.service';
 
 import { Game } from '../game';
 import { User } from '../user';
@@ -21,7 +23,10 @@ export class GamesCardComponent implements OnInit {
 
   monthNames: string[] = [];
 
-  mode: String = 'list';
+  selectedUser: WithId<User>;
+  conditionalWinLossRecords: WinLossRecord[];
+
+  mode: 'list' | 'add' | 'standings' | 'months' | 'conditional-standings' = 'list';
 
   enterAddMode(): void {
     this.mode = 'add';
@@ -37,6 +42,10 @@ export class GamesCardComponent implements OnInit {
 
   enterMonthsMode(): void {
     this.mode = 'months';
+  }
+
+  enterConditionalStandingsMode(): void {
+    this.mode = 'conditional-standings';
   }
 
   saveGame(): void {
@@ -62,12 +71,25 @@ export class GamesCardComponent implements OnInit {
 
   constructor(
     private client: ClientService,
+    private userService: UserService,
+    private statsService: StatsService,
     ) {
       this.setMonthNames();
     }
 
 
   ngOnInit() {
+  }
+
+  onUserSelected(selectedUserId) {
+    const leagueId = this.leagueWithGames.league.id;
+    this.userService.getUser(selectedUserId).subscribe(user => {
+      this.selectedUser = user;
+      this.statsService.getConditionalStandings(leagueId, selectedUserId).subscribe(winLossRecords => {
+        this.conditionalWinLossRecords = winLossRecords;
+        this.enterConditionalStandingsMode();
+      });
+    });
   }
 
 }
