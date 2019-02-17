@@ -19,7 +19,7 @@ object Main extends IOApp {
       "org.postgresql.Driver",                        // driver classname
       "jdbc:postgresql:ratings",                     // connect URL
       "postgres",                                   // username
-      "",                                     // password
+      "ratings",                                     // password
       ce,                                     // await connection here
       te                                      // execute JDBC operations here
     )
