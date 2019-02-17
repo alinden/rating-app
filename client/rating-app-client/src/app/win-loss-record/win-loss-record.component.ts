@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { WinLossRecord } from '../win-loss-record';
 
@@ -11,11 +11,19 @@ export class WinLossRecordComponent implements OnInit {
   @Input() winLossRecord: WinLossRecord;
   winPercentage: number;
 
+  @Output() userSelected = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
     this.winPercentage =
       this.winLossRecord.wins / (this.winLossRecord.wins + this.winLossRecord.losses);
   }
+
+  selectUser(userId: number) {
+    this.userSelected.emit(userId);
+  }
+
+
 
 }

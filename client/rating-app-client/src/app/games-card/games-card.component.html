@@ -4,7 +4,19 @@
       <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
     </div>
     <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+    <ng-container *ngIf="mode == 'conditional-standings'">
+      <span class="divider">></span>
+      <div class="avatar-container">
+        <img class="avatar" src="/assets/{{selectedUser.entity.image}}">
+      </div>
+      <span class="title">{{selectedUser.entity.name | titlecase}}</span>
+    </ng-container>
     <span *ngIf="mode == 'standings'" class="record-container">
+      <span class="num-wins">W</span>
+      <span class="num-losses">L</span>
+      <span class="win-percentage">Pct</span>
+    </span>
+    <span *ngIf="mode == 'conditional-standings'" class="record-container">
       <span class="num-wins">W</span>
       <span class="num-losses">L</span>
       <span class="win-percentage">Pct</span>
@@ -52,7 +64,14 @@
     </div>
 
     <div *ngSwitchCase="'standings'">
-      <app-win-loss-record *ngFor="let winLossRecord of client.getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord">
+      <app-win-loss-record *ngFor="let winLossRecord of client.getWinLossRecords(leagueWithGames.league)" [winLossRecord]="winLossRecord"
+                           (userSelected)="onUserSelected($event)">
+      </app-win-loss-record>
+    </div>
+
+    <div *ngSwitchCase="'conditional-standings'">
+      <app-win-loss-record *ngFor="let winLossRecord of conditionalWinLossRecords" [winLossRecord]="winLossRecord"
+                           (userSelected)="onUserSelected($event)">
       </app-win-loss-record>
     </div>
 
@@ -90,6 +109,18 @@
     </div>
 
     <div *ngSwitchCase="'standings'">
+      <button mat-button class="action-button" (click)="enterAddMode()">
+        Add Game
+      </button>
+      <button mat-button class="action-button" (click)="enterListMode()">
+        Recent Games
+      </button>
+      <button mat-button class="action-button" (click)="enterMonthsMode()">
+        Months
+      </button>
+    </div>
+
+    <div *ngSwitchCase="'conditional-standings'">
       <button mat-button class="action-button" (click)="enterAddMode()">
         Add Game
       </button>
