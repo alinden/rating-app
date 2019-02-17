@@ -11,9 +11,6 @@ export class MonthTotalComponent implements OnInit {
   @Input() monthTotal: MonthTotal;
 
   ngOnInit() {
-    console.log('init');
-    console.log('this.monthTotal');
-    console.log(this.monthTotal);
   }
 
 }

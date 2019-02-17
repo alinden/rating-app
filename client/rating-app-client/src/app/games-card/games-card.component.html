@@ -22,12 +22,12 @@
       <span class="win-percentage">Pct</span>
     </span>
     <span *ngIf="mode == 'months'" class="record-container">
-      <span class="month-label">{{monthNames[0]}}</span>
-      <span class="month-label">{{monthNames[1]}}</span>
-      <span class="month-label">{{monthNames[2]}}</span>
-      <span class="month-label">{{monthNames[3]}}</span>
-      <span class="month-label">{{monthNames[4]}}</span>
-      <span class="month-label">{{monthNames[5]}}</span>
+      <span class="month-label historical">{{monthNames[0]}}</span>
+      <span class="month-label historical">{{monthNames[1]}}</span>
+      <span class="month-label historical">{{monthNames[2]}}</span>
+      <span class="month-label historical">{{monthNames[3]}}</span>
+      <span class="month-label historical">{{monthNames[4]}}</span>
+      <span class="month-label historical">{{monthNames[5]}}</span>
       <span class="month-label">{{monthNames[6]}}</span>
       <span class="month-label">{{monthNames[7]}}</span>
       <span class="month-label">{{monthNames[8]}}</span>
@@ -76,7 +76,8 @@
     </div>
 
     <div *ngSwitchCase="'months'">
-      <app-month-total *ngFor="let monthTotal of client.getMonthTotals(leagueWithGames.league)" [monthTotal]="monthTotal">
+      <app-month-total *ngFor="let monthTotal of client.getMonthTotals(leagueWithGames.league); let i = index"
+                       [monthTotal]="monthTotal">
       </app-month-total>
     </div>
 
