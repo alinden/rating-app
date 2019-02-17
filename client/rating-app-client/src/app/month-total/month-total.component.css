@@ -19,3 +19,8 @@
   margin: 0 15px;
 }
 
+@media screen and (max-width: 1050px) {
+  .historical {
+    display: none;
+   }
+}
