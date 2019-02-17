@@ -13,6 +13,50 @@ import rating.models.{WinLossRecord, MonthTotal}
 
 object StatsRepository {
 
+  def getConditionalWinLossRecordsQuery(leagueId: Int, userId: Int) =
+    sql"""
+      select
+        users.id,
+        users.name,
+        users.image,
+        wins.num_wins,
+        losses.num_losses
+      from
+        users
+      inner join (
+        select
+          users.id as user_id,
+          count(games.id) as num_wins
+        from
+          users
+        left outer join (
+          select * from games where games.league_id = ${leagueId}
+          and games.loser_id = ${userId}
+        ) games
+          on users.id = games.winner_id
+        group by users.id
+      ) wins
+        on users.id = wins.user_id
+      inner join (
+        select
+          users.id as user_id,
+          count(games.id) as num_losses
+        from
+          users
+        left outer join (
+          select * from games where games.league_id = ${leagueId}
+          and games.winner_id = ${userId}
+        ) games
+          on users.id = games.loser_id
+        group by users.id
+      ) losses
+        on users.id = losses.user_id
+      where (wins.num_wins + losses.num_losses > 0)
+      order by (wins.num_wins - losses.num_losses) desc;
+      """.query[WinLossRecord]
+      .to[List]
+
+
   def getWinLossRecordsQuery(leagueId: Int) =
     sql"""
       select
@@ -110,6 +154,8 @@ object StatsRepository {
     """.query[MonthTotal]
     .to[List]
 
+  def getConditionalWinLossRecords(leagueId: Int, userId: Int)(implicit xb: Transactor[IO]): List[WinLossRecord] =
+    getConditionalWinLossRecordsQuery(leagueId, userId).transact(xb).unsafeRunSync
 
   def getWinLossRecords(leagueId: Int)(implicit xb: Transactor[IO]): List[WinLossRecord] =
     getWinLossRecordsQuery(leagueId).transact(xb).unsafeRunSync

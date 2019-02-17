@@ -25,6 +25,11 @@ export class StatsService {
     return this.http.get<Stats>(this.statsUrl);
   }
 
+  getConditionalStandings(leagueId: number, userId: number): Observable<WinLossRecord[]> {
+    const url = `api/conditional-standings/${leagueId}/${userId}`;
+    return this.http.get<WinLossRecord[]>(url);
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T);
