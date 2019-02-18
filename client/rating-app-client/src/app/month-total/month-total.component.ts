@@ -16,6 +16,9 @@ export class MonthTotalComponent implements OnInit {
   }
 
   selectUser(userId: number) {
+    console.log('month total select user');
+    console.log('userId');
+    console.log(userId);
     this.userSelected.emit(userId);
   }
 

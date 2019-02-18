@@ -72,6 +72,7 @@
 
     <div *ngSwitchCase="'months'">
       <app-month-total *ngFor="let monthTotal of client.getMonthTotals(leagueWithGames.league); let i = index"
+                       (userSelected)="onMonthsUserSelected($event)"
                        [monthTotal]="monthTotal">
       </app-month-total>
     </div>

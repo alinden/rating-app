@@ -101,6 +101,11 @@ export class GamesCardComponent implements OnInit {
 
   onMonthsUserSelected(selectedUserId) {
     const leagueId = this.leagueWithGames.league.id;
+    console.log('onMonthsUserSelected');
+    console.log('selectedUserId');
+    console.log(selectedUserId);
+    console.log('leagueId');
+    console.log(leagueId);
     this.userService.getUser(selectedUserId).subscribe(user => {
       this.selectedUser = user;
       this.statsService.getConditionalMonths(leagueId, selectedUserId).subscribe(monthTotals => {
