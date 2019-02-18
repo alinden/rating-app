@@ -154,7 +154,7 @@ object StatsRepository {
     """.query[MonthTotal]
     .to[List]
 
-  def getConditionalMonthsQuery(leagueId: Int, months: List[Int], years: List[Int]) =
+  def getConditionalMonthsQuery(leagueId: Int, months: List[Int], years: List[Int], userId: Int) =
     sql"""
       WITH scores as
         (SELECT
@@ -170,6 +170,7 @@ object StatsRepository {
             COUNT(*)
           FROM games
           WHERE league_id = ${leagueId}
+          AND loser_id = ${userId}
           GROUP BY 1,2,3
         ) w
         FULL OUTER JOIN
@@ -180,6 +181,7 @@ object StatsRepository {
             COUNT(*)
           FROM games
           WHERE league_id = ${leagueId}
+          AND winner_id = ${userId}
           GROUP BY 1,2,3
         ) l
         ON w.player_id = l.player_id
@@ -231,6 +233,6 @@ object StatsRepository {
       val date = now.plusMonths((-1)*n)
       (date.month.get::months, date.year.get::years)
     }
-    getConditionalMonthsQuery(leagueId, months.reverse, years.reverse).transact(xb).unsafeRunSync
+    getConditionalMonthsQuery(leagueId, months.reverse, years.reverse, userId).transact(xb).unsafeRunSync
   }
 }
