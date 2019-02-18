@@ -140,6 +140,8 @@ object Routes {
         } yield response
       case GET -> Root / "api" / "conditional-standings" / leagueId / userId =>
         Ok(U.getConditionalWinLossRecords(leagueId.toInt, userId.toInt))
+      case GET -> Root / "api" / "conditional-months" / leagueId / userId =>
+        Ok(U.getConditionalMonths(leagueId.toInt, userId.toInt))
     }
   }
 

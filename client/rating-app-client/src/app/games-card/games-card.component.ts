@@ -10,6 +10,7 @@ import { League } from '../league';
 import { WithId } from '../with-id';
 import { LeagueWithGames } from '../league-with-games';
 import { WinLossRecord } from '../win-loss-record';
+import { MonthTotal } from '../month-total';
 
 @Component({
   selector: 'app-games-card',
@@ -25,8 +26,9 @@ export class GamesCardComponent implements OnInit {
 
   selectedUser: WithId<User>;
   conditionalWinLossRecords: WinLossRecord[];
+  conditionalMonths: MonthTotal[];
 
-  mode: 'list' | 'add' | 'standings' | 'months' | 'conditional-standings' = 'list';
+  mode: 'list' | 'add' | 'standings' | 'months' | 'conditional-standings' | 'conditional-months'  = 'list';
 
   enterAddMode(): void {
     this.mode = 'add';
@@ -47,6 +49,11 @@ export class GamesCardComponent implements OnInit {
   enterConditionalStandingsMode(): void {
     this.mode = 'conditional-standings';
   }
+
+  enterConditionalMonthsMode(): void {
+    this.mode = 'conditional-months';
+  }
+
 
   saveGame(): void {
     this.client.addGame(this.leagueWithGames.league.id, this.winnerId, this.loserId);
@@ -81,7 +88,7 @@ export class GamesCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onUserSelected(selectedUserId) {
+  onStandingsUserSelected(selectedUserId) {
     const leagueId = this.leagueWithGames.league.id;
     this.userService.getUser(selectedUserId).subscribe(user => {
       this.selectedUser = user;
@@ -92,4 +99,14 @@ export class GamesCardComponent implements OnInit {
     });
   }
 
+  onMonthsUserSelected(selectedUserId) {
+    const leagueId = this.leagueWithGames.league.id;
+    this.userService.getUser(selectedUserId).subscribe(user => {
+      this.selectedUser = user;
+      this.statsService.getConditionalMonths(leagueId, selectedUserId).subscribe(monthTotals => {
+        this.conditionalMonths = monthTotals;
+        this.enterConditionalMonthsMode();
+      });
+    });
+  }
 }
