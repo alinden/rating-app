@@ -117,7 +117,7 @@ export class KeepScoreComponent implements OnInit {
     private route: ActivatedRoute,
     private client: ClientService,
     private mediaObserver: MediaObserver,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {

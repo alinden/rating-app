@@ -3,8 +3,12 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LeagueService } from '../league.service';
+import { UserService } from '../user.service';
 import { WithId } from '../with-id';
 import { League } from '../league';
+import { User } from '../user';
+import { MatSelectChange } from '@angular/material/select';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-app-nav',
@@ -13,12 +17,7 @@ import { League } from '../league';
 })
 export class AppNavComponent {
   leagues: WithId<League>[] = [];
-  views: string[] = [
-    'Standings',
-    'Months',
-    'Ratings',
-    'Recent Games',
-  ];
+  users: WithId<User>[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -28,15 +27,24 @@ export class AppNavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private leagueService: LeagueService,
+    private userService: UserService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.leagueService.getLeagues().subscribe(leagues => {
-      console.log('app-nav ngOnInit');
-      console.log('leagues');
-      console.log(leagues);
       this.leagues = leagues;
     });
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
+
+  handleLeagueChange($event: MatSelectChange) {
+    if ($event && $event.value) {
+      const leagueName = $event.value;
+      this.router.navigate([`/standings/${leagueName}`]);
+    }
   }
 
 }

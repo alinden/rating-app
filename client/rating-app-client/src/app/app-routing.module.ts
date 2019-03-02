@@ -7,6 +7,11 @@ import { KeepScoreComponent } from './keep-score/keep-score.component';
 
 const routes: Routes = [
   { path: 'standings', component: StandingsComponent },
+  { path: 'standings/:leagueName', component: StandingsComponent },
+  { path: 'months', component: StandingsComponent},
+  { path: 'games', component: StandingsComponent},
+  { path: 'ratings', component: StandingsComponent},
+  { path: 'rating-distribution', component: StandingsComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'keep-score/:leagueId', component: KeepScoreComponent },
 ];

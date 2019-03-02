@@ -6,23 +6,27 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/admin">Admin</a>
+      <a mat-list-item routerLink="/ratings">Ratings</a>
       <a mat-list-item routerLink="/standings">Standings</a>
+      <a mat-list-item routerLink="/games">Recent Games</a>
+      <a mat-list-item routerLink="/months">Months</a>
+      <a mat-list-item routerLink="/rating-distribution">Rating Distribution</a>
     </mat-nav-list>
     <div class="options-wrapper">
       <div *ngIf="leagues.length" class="option-wrapper">
         <mat-form-field>
-          <mat-select placeholder="League">
+          <mat-select placeholder="League" (selectionChange)="handleLeagueChange($event)">
             <mat-option *ngFor="let league of leagues" [value]="league.entity.name">
               {{league.entity.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf="views.length" class="option-wrapper">
+      <div *ngIf="users.length" class="option-wrapper">
         <mat-form-field>
-          <mat-select placeholder="View">
-            <mat-option *ngFor="let view of views" [value]="view">
-              {{view}}
+          <mat-select placeholder="Player">
+            <mat-option *ngFor="let user of users" [value]="user.entity.name">
+              {{user.entity.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>

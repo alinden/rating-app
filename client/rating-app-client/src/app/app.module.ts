@@ -45,6 +45,7 @@ import { WinLossRecordComponent } from './win-loss-record/win-loss-record.compon
 import { RatingsDistributionComponent } from './ratings-distribution/ratings-distribution.component';
 import { MonthTotalComponent } from './month-total/month-total.component';
 import { StandingsComponent } from './standings/standings.component';
+import { MonthsComponent } from './months/months.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { StandingsComponent } from './standings/standings.component';
     WinLossRecordComponent,
     RatingsDistributionComponent,
     MonthTotalComponent,
-    StandingsComponent
+    StandingsComponent,
+    MonthsComponent
   ],
   imports: [
     NgxChartsModule,
