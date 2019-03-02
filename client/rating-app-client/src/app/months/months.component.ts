@@ -1,11 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatGridList } from '@angular/material';
-
-import { ClientService } from '../client.service';
 import { GameService } from '../game.service';
-import { UserService } from '../user.service';
 import { StatsService } from '../stats.service';
 
 import { Game } from '../game';
@@ -23,11 +19,58 @@ import { MonthTotal } from '../month-total';
 })
 export class MonthsComponent implements OnInit {
 
-  monthNames: string[] = [];
+  leagueWithGames: LeagueWithGames;
+  leagueName: string = '';
 
-  constructor() { }
+  monthNames: string[] = [];
+  monthTotals: MonthTotal[];
+
+  private sub: any;
+
+  setMonthNames(): void {
+    const monthNames = [];
+    let now;
+    for (let i = 0; i <= 11; i++) {
+      now = new Date(Date.now());
+      now.setMonth(now.getMonth() - i);
+      const monthName = now.toLocaleString( 'en-us', { month: 'short' });
+      monthNames.push(monthName);
+    }
+    this.monthNames = monthNames.reverse();
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private gameService: GameService,
+    private statsService: StatsService,
+    ) {
+      this.setMonthNames();
+    }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      if (params['leagueName']) {
+        this.leagueName = params['leagueName'];
+      }
+      this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
+        if (this.leagueName) {
+          this.leagueWithGames = leaguesWithGames.find((x) => {
+            return x.league.entity.name === this.leagueName;
+          });
+        }
+        if (!this.leagueWithGames) {
+          this.leagueWithGames = leaguesWithGames[0];
+        }
+        this.statsService.getStats().subscribe(stats => {
+          const monthTotalsByLeagueId = new Map();
+          for (const leagueIdAndMonthTotals of stats.leagueIdAndMonthTotals) {
+            monthTotalsByLeagueId.set(leagueIdAndMonthTotals[0],
+              leagueIdAndMonthTotals[1]);
+          }
+          this.monthTotals = monthTotalsByLeagueId.get(this.leagueWithGames.league.id);
+        });
+      });
+    });
   }
 
 }

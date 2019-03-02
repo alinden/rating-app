@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 
 import { GameService } from '../game.service';
 import { LeagueWithGames } from '../league-with-games';
@@ -20,13 +19,11 @@ export class StandingsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
-    private router: Router
   ) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
-        console.log('set leagueName');
         this.leagueName = params['leagueName'];
       }
       this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
