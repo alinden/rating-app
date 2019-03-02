@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin/admin.component';
 import { StandingsComponent } from './standings/standings.component';
+import { RatingsComponent } from './ratings/ratings.component';
 import { MonthsComponent } from './months/months.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
 
@@ -11,8 +12,9 @@ const routes: Routes = [
   { path: 'standings/:leagueName', component: StandingsComponent },
   { path: 'months', component: MonthsComponent},
   { path: 'months/:leagueName', component: MonthsComponent},
+  { path: 'ratings', component: RatingsComponent},
+  { path: 'ratings/:leagueName', component: RatingsComponent},
   { path: 'games', component: StandingsComponent},
-  { path: 'ratings', component: StandingsComponent},
   { path: 'rating-distribution', component: StandingsComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'keep-score/:leagueId', component: KeepScoreComponent },
