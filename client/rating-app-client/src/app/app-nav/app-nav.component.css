@@ -2,12 +2,12 @@
   height: 100%;
 }
 
-.sidenav {
-  width: 200px;
-}
-
 .sidenav .mat-toolbar {
   background: inherit;
+}
+
+.sidenav {
+  min-width: 200px;
 }
 
 .mat-toolbar {
@@ -27,15 +27,6 @@
   #logo {
     display: none;
   }
-
-  .mat-toolbar {
-    display: none;
-  }
-
-  .sidenav {
-    width: 150px;
-  }
-
 }
 
 

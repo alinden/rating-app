@@ -6,12 +6,22 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/admin">Admin</a>
-      <a mat-list-item routerLink="/ratings">Rating</a>
-      <a mat-list-item routerLink="/games">Games</a>
+      <a mat-list-item routerLink="/standings">Standings</a>
     </mat-nav-list>
+    <div>
+      <p>
+        Select League
+      </p>
+      <p>
+        Select View
+      </p>
+      <p>
+        Options
+      </p>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar id="main-toolbar">
       <button
         type="button"
         aria-label="Toggle sidenav"
