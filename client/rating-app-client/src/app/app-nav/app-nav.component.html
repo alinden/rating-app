@@ -8,16 +8,25 @@
       <a mat-list-item routerLink="/admin">Admin</a>
       <a mat-list-item routerLink="/standings">Standings</a>
     </mat-nav-list>
-    <div>
-      <p>
-        Select League
-      </p>
-      <p>
-        Select View
-      </p>
-      <p>
-        Options
-      </p>
+    <div class="options-wrapper">
+      <div *ngIf="leagues.length" class="option-wrapper">
+        <mat-form-field>
+          <mat-select placeholder="League">
+            <mat-option *ngFor="let league of leagues" [value]="league.entity.name">
+              {{league.entity.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="views.length" class="option-wrapper">
+        <mat-form-field>
+          <mat-select placeholder="View">
+            <mat-option *ngFor="let view of views" [value]="view">
+              {{view}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

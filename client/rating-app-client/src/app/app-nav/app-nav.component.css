@@ -16,6 +16,15 @@
   z-index: 1;
 }
 
+.option-wrapper {
+  padding: 0 16px;
+}
+
+.options-wrapper {
+  border-top: 1px #e0e0e0 solid;
+  padding-top: 24px;
+}
+
 #logo {
   position: absolute;
   right: 8px;
