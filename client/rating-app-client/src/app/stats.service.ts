@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { WithId } from './with-id';
 import { WinLossRecord } from './win-loss-record';
+import { MonthTotal } from './month-total';
 import { Stats } from './stats';
 
 const httpOptions = {
@@ -28,6 +29,11 @@ export class StatsService {
   getConditionalStandings(leagueId: number, userId: number): Observable<WinLossRecord[]> {
     const url = `api/conditional-standings/${leagueId}/${userId}`;
     return this.http.get<WinLossRecord[]>(url);
+  }
+
+  getConditionalMonths(leagueId: number, userId: number): Observable<MonthTotal[]> {
+    const url = `api/conditional-months/${leagueId}/${userId}`;
+    return this.http.get<MonthTotal[]>(url);
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

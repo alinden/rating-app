@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { MonthTotal } from '../month-total';
 
@@ -10,7 +10,13 @@ import { MonthTotal } from '../month-total';
 export class MonthTotalComponent implements OnInit {
   @Input() monthTotal: MonthTotal;
 
+  @Output() userSelected = new EventEmitter<number>();
+
   ngOnInit() {
+  }
+
+  selectUser(userId: number) {
+    this.userSelected.emit(userId);
   }
 
 }

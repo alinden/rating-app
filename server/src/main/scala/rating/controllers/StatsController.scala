@@ -19,6 +19,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 trait StatsController[F[_]]{
   def getStats: F[Stats]
   def getConditionalWinLossRecords(leagueId: Int, userId: Int): F[List[WinLossRecord]]
+  def getConditionalMonths(leagueId: Int, userId: Int): F[List[MonthTotal]]
 }
 
 object StatsController {
@@ -29,6 +30,8 @@ object StatsController {
       jsonEncoderOf[F, Stats]
     implicit def winLossRecordListEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[WinLossRecord]] =
       jsonEncoderOf[F, List[WinLossRecord]]
+    implicit def monthTotalListEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[MonthTotal]] =
+      jsonEncoderOf[F, List[MonthTotal]]
   }
 
   def impl[F[_]: Applicative](implicit xb: Transactor[IO]): StatsController[F] = new StatsController[F]{
@@ -51,6 +54,13 @@ object StatsController {
       userId: Int
     ): F[List[WinLossRecord]] = {
       StatsRepository.getConditionalWinLossRecords(leagueId, userId).pure[F]
+    }
+
+    def getConditionalMonths(
+      leagueId: Int,
+      userId: Int
+    ): F[List[MonthTotal]] = {
+      StatsRepository.getConditionalMonths(leagueId, userId).pure[F]
     }
   }
 
