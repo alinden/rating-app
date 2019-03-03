@@ -31,9 +31,9 @@ object StatsRepository {
           users
         left outer join (
           select * from games where games.league_id = ${leagueId}
-          and games.loser_id = ${userId}
+          and games.winner_id = ${userId}
         ) games
-          on users.id = games.winner_id
+          on users.id = games.loser_id
         group by users.id
       ) wins
         on users.id = wins.user_id
@@ -45,9 +45,9 @@ object StatsRepository {
           users
         left outer join (
           select * from games where games.league_id = ${leagueId}
-          and games.winner_id = ${userId}
+          and games.loser_id = ${userId}
         ) games
-          on users.id = games.loser_id
+          on users.id = games.winner_id
         group by users.id
       ) losses
         on users.id = losses.user_id
@@ -164,17 +164,6 @@ object StatsRepository {
           COALESCE(w.count, 0)-COALESCE(l.count,0) AS score
         FROM
           (SELECT
-            winner_id AS player_id,
-            EXTRACT(MONTH FROM date_played) AS month,
-            EXTRACT(YEAR FROM date_played) AS year,
-            COUNT(*)
-          FROM games
-          WHERE league_id = ${leagueId}
-          AND loser_id = ${userId}
-          GROUP BY 1,2,3
-        ) w
-        FULL OUTER JOIN
-          (SELECT
             loser_id AS player_id,
             EXTRACT(MONTH FROM date_played) AS month,
             EXTRACT(YEAR FROM date_played) AS year,
@@ -182,6 +171,17 @@ object StatsRepository {
           FROM games
           WHERE league_id = ${leagueId}
           AND winner_id = ${userId}
+          GROUP BY 1,2,3
+        ) w
+        FULL OUTER JOIN
+          (SELECT
+            winner_id AS player_id,
+            EXTRACT(MONTH FROM date_played) AS month,
+            EXTRACT(YEAR FROM date_played) AS year,
+            COUNT(*)
+          FROM games
+          WHERE league_id = ${leagueId}
+          AND loser_id = ${userId}
           GROUP BY 1,2,3
         ) l
         ON w.player_id = l.player_id
