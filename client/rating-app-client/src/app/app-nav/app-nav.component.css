@@ -7,7 +7,7 @@
 }
 
 .sidenav {
-  min-width: 200px;
+  width: 210px;
 }
 
 .mat-toolbar {
@@ -37,6 +37,12 @@
   bottom: 24px;
   background: #FFDE03;
   color: black;
+}
+
+.settings-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
 }
 
 

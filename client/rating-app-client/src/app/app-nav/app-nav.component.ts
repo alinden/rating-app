@@ -11,6 +11,7 @@ import { User } from '../user';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-app-nav',
@@ -22,7 +23,6 @@ export class AppNavComponent {
   usernames: string[] = [];
 
   views: string[] = [
-    'Admin',
     'Standings',
     'Ratings',
     'Games',
@@ -47,6 +47,7 @@ export class AppNavComponent {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
 
   ngOnInit() {
@@ -77,13 +78,12 @@ export class AppNavComponent {
   handleViewChange($event: MatSelectChange) {
     if ($event && $event.value) {
       const viewName = $event.value;
-      const url = this.router.routerState.snapshot.url;
-      if ((viewName === 'admin') || (!url.split('/').length)) {
-        this.router.navigate([`/${viewName}`]);
+      if (this.leagueName && !this.playerName) {
+        this.router.navigate([`/${viewName}/${this.leagueName}`]);
+      } else if (this.leagueName && this.playerName) {
+        this.router.navigate([`/${viewName}/${this.leagueName}/${this.playerName}`]);
       } else {
-        const basePath = url.split('/')[1];
-        const pathSuffix = url.slice(basePath.length + 2);
-        this.router.navigate([`/${viewName}/${pathSuffix}`]);
+        this.router.navigate([`/${viewName}`]);
       }
     }
   }
@@ -91,17 +91,18 @@ export class AppNavComponent {
   handleLeagueChange($event: MatSelectChange) {
     if ($event && $event.value) {
       const leagueName = $event.value;
-      const basePath = this.router.routerState.snapshot.url.split('/')[1];
-      this.router.navigate([`/${basePath}/${leagueName}`]);
+      if (this.viewName) {
+        this.router.navigate([`/${this.viewName}/${leagueName}`]);
+      }
     }
   }
 
   handlePlayerChange($event: MatSelectChange) {
     if ($event) {
       const playerName = $event.value;
-      const basePath = this.router.routerState.snapshot.url.split('/')[1];
-      const leagueName = this.router.routerState.snapshot.url.split('/')[2];
-      this.router.navigate([`/${basePath}/${leagueName}/${playerName}`]);
+      if (this.viewName && this.leagueName) {
+        this.router.navigate([`/${this.viewName}/${this.leagueName}/${playerName}`]);
+      }
     }
   }
 
@@ -111,5 +112,13 @@ export class AppNavComponent {
     } else {
       this.router.navigate([`/add-game/${this.leagueName}`]);
     }
+  }
+
+  openAppSettings() {
+    this.router.navigate(['/Admin']);
+  }
+
+  closeAppSettings() {
+    this.location.back();
   }
 }
