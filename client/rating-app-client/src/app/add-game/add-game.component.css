@@ -1,8 +1,7 @@
 mat-card {
-  max-height: calc(100% - 80px);
+  max-height: calc(100% - 32px);
   padding: 0;
   margin: 8px;
-  overflow-y: scroll;
 }
 
 #add-user-form {
@@ -12,10 +11,20 @@ mat-card {
 mat-card-content {
   overflow-y: scroll;
   margin: 0;
+  border-bottom: 1px #e0e0e0 solid;
+  padding-top: 8px;
 }
 
 mat-form-field {
   margin: 8px;
+}
+
+.mat-card-actions mat-button {
+  margin: 0 8px 8px 8px;
+}
+
+.select-wrapper {
+  padding: 0 8px;
 }
 
 .record-container {
