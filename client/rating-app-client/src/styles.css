@@ -29,6 +29,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background: #FFDE03;
 }
 
+.accent-yellow {
+  background: #FFDE03;
+}
+
 .title {
   line-height: 45px;
   margin: 0 16px;

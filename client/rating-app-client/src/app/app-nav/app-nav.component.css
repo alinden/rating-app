@@ -21,7 +21,6 @@
 }
 
 .options-wrapper {
-  border-top: 1px #e0e0e0 solid;
   padding-top: 24px;
 }
 
@@ -31,6 +30,15 @@
   top: 8px;
   height: 48px;
 }
+
+.add-button {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  background: #FFDE03;
+  color: black;
+}
+
 
 @media only screen and (max-width: 1200px) {
   #logo {

@@ -1,12 +1,10 @@
 .user-container {
-  width: 20%;
   height: 100%;
   line-height: 100%;
   vertical-align: center;
 }
 
 .record-container {
-  width: 80%;
   height: 45px;
   line-height: 45px;
   vertical-align: middle;
@@ -21,6 +19,12 @@
 
 @media screen and (max-width: 1050px) {
   .historical {
+    display: none;
+   }
+}
+
+@media screen and (max-width: 600px) {
+  .distant {
     display: none;
    }
 }

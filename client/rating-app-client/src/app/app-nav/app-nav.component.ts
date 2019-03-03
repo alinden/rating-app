@@ -19,12 +19,22 @@ import { NavigationEnd } from '@angular/router';
 })
 export class AppNavComponent {
   leagues: WithId<League>[] = [];
-  users: WithId<User>[] = [];
+  usernames: string[] = [];
+
+  views: string[] = [
+    'Admin',
+    'Standings',
+    'Ratings',
+    'Games',
+    'Months',
+  ];
 
   private sub: any;
 
   leagueName = '';
+  viewName = '';
   playerName = '';
+  url = '';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -44,32 +54,58 @@ export class AppNavComponent {
       this.leagues = leagues;
     });
     this.userService.getUsers().subscribe(users => {
-      this.users = users;
+      this.usernames = [...[''], ...users.map(user => user.entity.name)];
     });
     this.sub = this.router.events.subscribe(routerEvent => {
       const x = routerEvent as NavigationEnd;
-      console.log('x subscribe');
-      console.log('x');
-      console.log(x);
-      if (x.url) {
-        console.log('x.url');
-        console.log(x.url);
+      if (x.url && (x.url !== this.url)) {
+        this.url = x.url;
         const urlSegments = x.url.split('/');
-        console.log('urlSegments');
-        console.log(urlSegments);
+        if (urlSegments.length > 1) {
+          this.viewName = urlSegments[1].replace(/%20/, ' ');
+          if (urlSegments.length > 2) {
+            this.leagueName = urlSegments[2].replace(/%20/, ' ');
+            if (urlSegments.length > 3) {
+              this.playerName = urlSegments[3].replace(/%20/, ' ');
+            }
+          }
+        }
       }
     });
+  }
+
+  handleViewChange($event: MatSelectChange) {
+    if ($event && $event.value) {
+      const viewName = $event.value;
+      const url = this.router.routerState.snapshot.url;
+      if ((viewName === 'admin') || (!url.split('/').length)) {
+        this.router.navigate([`/${viewName}`]);
+      } else {
+        const basePath = url.split('/')[1];
+        const pathSuffix = url.slice(basePath.length + 2);
+        this.router.navigate([`/${viewName}/${pathSuffix}`]);
+      }
+    }
   }
 
   handleLeagueChange($event: MatSelectChange) {
     if ($event && $event.value) {
       const leagueName = $event.value;
       const basePath = this.router.routerState.snapshot.url.split('/')[1];
-      const urlSegments = this.router.routerState.snapshot.url.split('/');
-      console.log('urlSegments');
-      console.log(urlSegments);
       this.router.navigate([`/${basePath}/${leagueName}`]);
     }
   }
 
+  handlePlayerChange($event: MatSelectChange) {
+    if ($event) {
+      const playerName = $event.value;
+      const basePath = this.router.routerState.snapshot.url.split('/')[1];
+      const leagueName = this.router.routerState.snapshot.url.split('/')[2];
+      this.router.navigate([`/${basePath}/${leagueName}/${playerName}`]);
+    }
+  }
+
+  handleAdd() {
+    this.router.navigate([`/add-game/${this.leagueName}`]);
+  }
 }

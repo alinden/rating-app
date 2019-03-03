@@ -36,8 +36,6 @@ import { LeaguesCardComponent } from './leagues-card/leagues-card.component';
 import { LeaguesCardItemComponent } from './leagues-card-item/leagues-card-item.component';
 import { RatedUserCardItemComponent } from './rated-user-card-item/rated-user-card-item.component';
 import { RatedGameCardItemComponent } from './rated-game-card-item/rated-game-card-item.component';
-import { GamesCardComponent } from './games-card/games-card.component';
-import { RatingsCardComponent } from './ratings-card/ratings-card.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
 import { RatingChangeComponent } from './rating-change/rating-change.component';
 import { CricketScoreboardRowComponent } from './cricket-scoreboard-row/cricket-scoreboard-row.component';
@@ -46,6 +44,7 @@ import { RatingsDistributionComponent } from './ratings-distribution/ratings-dis
 import { MonthTotalComponent } from './month-total/month-total.component';
 import { StandingsComponent } from './standings/standings.component';
 import { MonthsComponent } from './months/months.component';
+import { AddGameComponent } from './add-game/add-game.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +59,6 @@ import { MonthsComponent } from './months/months.component';
     LeaguesCardItemComponent,
     RatedUserCardItemComponent,
     RatedGameCardItemComponent,
-    GamesCardComponent,
-    RatingsCardComponent,
     KeepScoreComponent,
     RatingChangeComponent,
     CricketScoreboardRowComponent,
@@ -69,7 +66,8 @@ import { MonthsComponent } from './months/months.component';
     RatingsDistributionComponent,
     MonthTotalComponent,
     StandingsComponent,
-    MonthsComponent
+    MonthsComponent,
+    AddGameComponent
   ],
   imports: [
     NgxChartsModule,

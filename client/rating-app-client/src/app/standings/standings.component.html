@@ -1,14 +1,19 @@
 <mat-card>
-  <ng-container *ngIf="leagueWithGames">
+  <ng-container *ngIf="winLossRecords">
     <div class="card-header">
       <div class="avatar-container">
         <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
       </div>
       <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+      <span class="record-container">
+        <span class="num-wins">W</span>
+        <span class="num-losses">L</span>
+        <span class="win-percentage">Pct</span>
+      </span>
     </div>
     <mat-card-content>
-      <app-rated-game-card-item *ngFor="let ratedGame of leagueWithGames.ratedGames" [ratedGame]="ratedGame">
-      </app-rated-game-card-item>
+      <app-win-loss-record *ngFor="let winLossRecord of winLossRecords" [winLossRecord]="winLossRecord">
+      </app-win-loss-record>
     </mat-card-content>
   </ng-container>
 </mat-card>
