@@ -49,7 +49,6 @@ export class KeepScoreComponent implements OnInit {
   }
 
   recordLag() {
-    console.log('record lag');
     let playerOne = this.leagueWithRatings.ratedUsers.find((ratedUser) => {
       return ratedUser.user.id === this.playerOneId;
     });
@@ -175,9 +174,6 @@ export class KeepScoreComponent implements OnInit {
         this.leagueWithRatings = leaguesWithRatings.find((x) => {
           return x.league.id === this.leagueId;
         });
-        console.log('entering lag mode');
-        console.log('this.leagueWithRatings');
-        console.log(this.leagueWithRatings);
         this.enterLagMode();
       });
       this.userService.getUsers().subscribe((users) => {
