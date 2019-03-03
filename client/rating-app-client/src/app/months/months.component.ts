@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { UserService } from '../user.service';
 import { GameService } from '../game.service';
 import { StatsService } from '../stats.service';
 
@@ -19,8 +20,10 @@ import { MonthTotal } from '../month-total';
 })
 export class MonthsComponent implements OnInit {
 
+  users: WithId<User>[] = [];
   leagueWithGames: LeagueWithGames;
   leagueName: string = '';
+  playerName: string = '';
 
   monthNames: string[] = [];
   monthTotals: MonthTotal[];
@@ -43,14 +46,21 @@ export class MonthsComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: GameService,
     private statsService: StatsService,
+    private userService: UserService,
     ) {
       this.setMonthNames();
     }
 
   ngOnInit() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
     this.sub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
         this.leagueName = params['leagueName'];
+      }
+      if (params['playerName']) {
+        this.playerName = params['playerName'];
       }
       this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
         if (this.leagueName) {
@@ -61,14 +71,27 @@ export class MonthsComponent implements OnInit {
         if (!this.leagueWithGames) {
           this.leagueWithGames = leaguesWithGames[0];
         }
-        this.statsService.getStats().subscribe(stats => {
-          const monthTotalsByLeagueId = new Map();
-          for (const leagueIdAndMonthTotals of stats.leagueIdAndMonthTotals) {
-            monthTotalsByLeagueId.set(leagueIdAndMonthTotals[0],
-              leagueIdAndMonthTotals[1]);
+        if (this.playerName && this.users.length) {
+          const player = this.users.find((user) => {
+            return user.entity.name === this.playerName;
+          });
+          if (player) {
+            this.statsService.getConditionalMonths(
+              this.leagueWithGames.league.id, player.id
+            ).subscribe(monthTotals => {
+              this.monthTotals = monthTotals;
+            });
           }
-          this.monthTotals = monthTotalsByLeagueId.get(this.leagueWithGames.league.id);
-        });
+        } else {
+          this.statsService.getStats().subscribe(stats => {
+            const monthTotalsByLeagueId = new Map();
+            for (const leagueIdAndMonthTotals of stats.leagueIdAndMonthTotals) {
+              monthTotalsByLeagueId.set(leagueIdAndMonthTotals[0],
+                leagueIdAndMonthTotals[1]);
+            }
+            this.monthTotals = monthTotalsByLeagueId.get(this.leagueWithGames.league.id);
+          });
+        }
       });
     });
   }

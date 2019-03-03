@@ -1,15 +1,21 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { GameService } from '../game.service';
+import { RatingService } from '../rating.service';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatGridList } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { League } from '../league';
 import { RatedUser } from '../rated-user';
 import { WithId } from '../with-id';
+import { User } from '../user';
+import { Rating } from '../rating';
+import { Game } from '../game';
 import { LiveGame } from '../live-game';
 import { GameType } from '../game-type';
 import { CricketState, C } from '../cricket-state';
+import { LeagueWithRatings } from '../league-with-ratings';
 import { DartShot } from '../dart-shot';
-import { ClientService } from '../client.service';
+import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +24,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./keep-score.component.css']
 })
 export class KeepScoreComponent implements OnInit {
-  @ViewChild('grid') grid: MatGridList;
   @Input() playerOneId: number;
   @Input() playerTwoId: number;
 
@@ -29,14 +34,9 @@ export class KeepScoreComponent implements OnInit {
   rules: string;
   mode: string;
   shotHistory: DartShot[] = [];
+  users: WithId<User>[] = [];
 
-  gridRowHeightByBreakpoint = {
-    xl: 'fit',
-    lg: 'fit',
-    md: '704px',
-    sm: '704px',
-    xs: '540px'
-  };
+  leagueWithRatings: LeagueWithRatings;
 
   private sub: any;
 
@@ -49,8 +49,51 @@ export class KeepScoreComponent implements OnInit {
   }
 
   recordLag() {
-    const playerOne = this.client.getRatedUserById(this.playerOneId, this.leagueId);
-    const playerTwo = this.client.getRatedUserById(this.playerTwoId, this.leagueId);
+    console.log('record lag');
+    let playerOne = this.leagueWithRatings.ratedUsers.find((ratedUser) => {
+      return ratedUser.user.id === this.playerOneId;
+    });
+    let playerTwo = this.leagueWithRatings.ratedUsers.find((ratedUser) => {
+      return ratedUser.user.id === this.playerTwoId;
+    });
+    if (!playerOne) {
+      const unratedPlayerOne = this.users.find((user) => {
+        return user.id === this.playerOneId;
+      });
+      const newRating = {
+        id: 0,
+        entity: {
+          league_id: 0,
+          user_id: unratedPlayerOne.id,
+          last_game_id: 0,
+          new_rating: 1500,
+          previous_rating: 1500,
+        }
+      } as WithId<Rating>;
+      playerOne = {
+        user: unratedPlayerOne,
+        rating: newRating,
+      } as RatedUser;
+    }
+    if (!playerTwo) {
+      const unratedPlayerTwo = this.users.find((user) => {
+        return user.id === this.playerTwoId;
+      });
+      const newRating = {
+        id: 0,
+        entity: {
+          league_id: 0,
+          user_id: unratedPlayerTwo.id,
+          last_game_id: 0,
+          new_rating: 1500,
+          previous_rating: 1500,
+        }
+      } as WithId<Rating>;
+      playerTwo = {
+        user: unratedPlayerTwo,
+        rating: newRating,
+      } as RatedUser;
+    }
     this.startGame([playerOne, playerTwo]);
     this.enterGameMode();
   }
@@ -81,12 +124,14 @@ export class KeepScoreComponent implements OnInit {
     if (this.liveGame.state.isOver) {
       this.liveGame.winner = this.liveGame.players[this.liveGame.state.turnIndex].user;
       this.liveGame.loser = this.liveGame.players[((this.liveGame.state.turnIndex + 1) % 2)].user;
-      this.client.addGame(
-        this.league.id,
-        this.liveGame.winner.id,
-        this.liveGame.loser.id
-      );
-      this.router.navigate(['/games']);
+      const newGame = {
+        'league_id': this.leagueId,
+        'winner_id': this.liveGame.winner.id,
+        'loser_id': this.liveGame.loser.id,
+      } as Game;
+      this.gameService.addGame(newGame).subscribe(() => {
+        this.router.navigate([`/Games/${this.leagueWithRatings.league.entity.name}`]);
+      });
     }
   }
 
@@ -115,25 +160,29 @@ export class KeepScoreComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private client: ClientService,
     private mediaObserver: MediaObserver,
+    private ratingService: RatingService,
+    private gameService: GameService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
   ngOnInit() {
-    this.mediaObserver.media$.subscribe((change: MediaChange) => {
-      this.grid.rowHeight = this.gridRowHeightByBreakpoint[change.mqAlias];
-    });
 
     this.sub = this.route.params.subscribe(params => {
       this.leagueId = +params['leagueId'];
+      this.ratingService.getLeaguesWithRatings().subscribe((leaguesWithRatings) => {
+        this.leagueWithRatings = leaguesWithRatings.find((x) => {
+          return x.league.id === this.leagueId;
+        });
+        console.log('entering lag mode');
+        console.log('this.leagueWithRatings');
+        console.log(this.leagueWithRatings);
+        this.enterLagMode();
+      });
+      this.userService.getUsers().subscribe((users) => {
+        this.users = users;
+      });
     });
-    if (!this.client.initialized) {
-      this.client.loadAllData();
-      this.league = this.client.getLeagueById(this.leagueId);
-    } else {
-      this.league = this.client.getLeagueById(this.leagueId);
-    }
-    this.enterLagMode();
   }
 }

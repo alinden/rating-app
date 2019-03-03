@@ -1,56 +1,73 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="!(isHandset$ | async)">
-    <mat-toolbar>Menu</mat-toolbar>
-    <div class="options-wrapper">
-      <div *ngIf="views.length" class="option-wrapper">
-        <mat-form-field>
-          <mat-select placeholder="View" [(ngModel)]="viewName" (selectionChange)="handleViewChange($event)" name="view" required>
-            <mat-option *ngFor="let view of views" [value]="view">
-              {{view}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+<ng-container *ngIf="!this.viewName || this.viewName !== 'keep-score'">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="!(isHandset$ | async)">
+      <mat-toolbar>Menu</mat-toolbar>
+      <div class="options-wrapper">
+        <div *ngIf="views.length" class="option-wrapper">
+          <mat-form-field>
+            <mat-select placeholder="View"
+                        [(ngModel)]="viewName"
+                        (selectionChange)="handleViewChange($event)"
+                        name="view">
+              <mat-option *ngFor="let view of views" [value]="view">
+                {{view}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="leagues.length" class="option-wrapper">
+          <mat-form-field>
+            <mat-select placeholder="League"
+                        [(ngModel)]="leagueName"
+                        (selectionChange)="handleLeagueChange($event)"
+                        name="league">
+              <mat-option *ngFor="let league of leagues" [value]="league.entity.name">
+                {{league.entity.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="usernames.length" class="option-wrapper">
+          <mat-form-field>
+            <mat-select placeholder="Player"
+                        [(ngModel)]="playerName"
+                        (selectionChange)="handlePlayerChange($event)"
+                        name="player">
+              <mat-option *ngFor="let username of usernames" [value]="username">
+                {{username}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
-      <div *ngIf="leagues.length" class="option-wrapper">
-        <mat-form-field>
-          <mat-select placeholder="League" [(ngModel)]="leagueName" (selectionChange)="handleLeagueChange($event)" name="league" required>
-            <mat-option *ngFor="let league of leagues" [value]="league.entity.name">
-              {{league.entity.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div *ngIf="usernames.length" class="option-wrapper">
-        <mat-form-field>
-          <mat-select placeholder="Player" [(ngModel)]="playerName" (selectionChange)="handlePlayerChange($event)" name="player">
-            <mat-option *ngFor="let username of usernames" [value]="username">
-              {{username}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar id="main-toolbar">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <div>
-        <h1>Ratings App</h1>
-        <img id="logo" width="300" alt="Ratings Logo" src="/assets/ratings_logo.png">
-      </div>
-    </mat-toolbar>
-    <router-outlet>
-    </router-outlet>
-    <button mat-fab class="add-button accent-yellow" (click)="handleAdd()">+</button>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar id="main-toolbar">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div>
+          <h1>Ratings App</h1>
+          <img id="logo" width="300" alt="Ratings Logo" src="/assets/ratings_logo.png">
+        </div>
+      </mat-toolbar>
+      <router-outlet>
+      </router-outlet>
+      <ng-container *ngIf="leagueName && viewName && (viewName !== 'add-game')">
+        <button mat-fab class="add-button accent-yellow" (click)="handleAdd()">+</button>
+      </ng-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+<ng-container *ngIf="this.viewName && this.viewName === 'keep-score'">
+  <router-outlet>
+  </router-outlet>
+</ng-container>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { WithId } from '../with-id';
+import { User } from '../user';
+import { UserService } from '../user.service';
 import { GameService } from '../game.service';
 import { StatsService } from '../stats.service';
 import { LeagueWithGames } from '../league-with-games';
@@ -14,8 +17,10 @@ import { WinLossRecord } from '../win-loss-record';
 })
 export class StandingsComponent implements OnInit {
 
+  users: WithId<User>[] = [];
   leagueWithGames: LeagueWithGames;
   leagueName: string = '';
+  playerName: string = '';
 
   winLossRecords: WinLossRecord[];
 
@@ -25,12 +30,19 @@ export class StandingsComponent implements OnInit {
     private route: ActivatedRoute,
     private statsService: StatsService,
     private gameService: GameService,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
     this.sub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
         this.leagueName = params['leagueName'];
+      }
+      if (params['playerName']) {
+        this.playerName = params['playerName'];
       }
       this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
         if (this.leagueName) {
@@ -41,16 +53,27 @@ export class StandingsComponent implements OnInit {
         if (!this.leagueWithGames) {
           this.leagueWithGames = leaguesWithGames[0];
         }
-        this.statsService.getStats().subscribe(stats => {
-          const winLossRecordsByLeagueId = new Map();
-          for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
-            winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
-              leagueIdAndWinLossRecords[1]);
+        if (this.playerName && this.users.length) {
+          const player = this.users.find((user) => {
+            return user.entity.name === this.playerName;
+          });
+          if (player) {
+            this.statsService.getConditionalStandings(
+              this.leagueWithGames.league.id, player.id
+            ).subscribe(winLossRecords => {
+              this.winLossRecords = winLossRecords;
+            });
           }
-          this.winLossRecords = winLossRecordsByLeagueId.get(this.leagueWithGames.league.id);
-          console.log('set this.winLossRecords to');
-          console.log(this.winLossRecords);
-        });
+        } else {
+          this.statsService.getStats().subscribe(stats => {
+            const winLossRecordsByLeagueId = new Map();
+            for (const leagueIdAndWinLossRecords of stats.leagueIdAndWinLossRecords) {
+              winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
+                leagueIdAndWinLossRecords[1]);
+            }
+            this.winLossRecords = winLossRecordsByLeagueId.get(this.leagueWithGames.league.id);
+          });
+        }
       });
     });
   }

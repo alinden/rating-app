@@ -106,6 +106,10 @@ export class AppNavComponent {
   }
 
   handleAdd() {
-    this.router.navigate([`/add-game/${this.leagueName}`]);
+    if (this.leagueName === 'Cricket') {
+      this.router.navigate(['/keep-score/3']);
+    } else {
+      this.router.navigate([`/add-game/${this.leagueName}`]);
+    }
   }
 }
