@@ -1,12 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatGridList } from '@angular/material';
+import { RatingService } from '../rating.service';
+import { StatsService } from '../stats.service';
 
-import { ClientService } from '../client.service';
-
-import { Rating } from '../rating';
+import { Game } from '../game';
+import { User } from '../user';
+import { League } from '../league';
+import { WithId } from '../with-id';
 import { LeagueWithRatings } from '../league-with-ratings';
+import { WinLossRecord } from '../win-loss-record';
+import { MonthTotal } from '../month-total';
+
 
 @Component({
   selector: 'app-ratings',
@@ -14,28 +19,31 @@ import { LeagueWithRatings } from '../league-with-ratings';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
- @ViewChild('grid') grid: MatGridList;
+  leagueWithRatings: LeagueWithRatings;
+  leagueName: string = '';
 
-  gridByBreakpoint = {
-    xl: 3,
-    lg: 2,
-    md: 1,
-    sm: 1,
-    xs: 1
-  };
+  private sub: any;
 
   constructor(
-    public client: ClientService,
-    private mediaObserver: MediaObserver
-  ) { }
+    private route: ActivatedRoute,
+    private ratingService: RatingService,
+    ) { }
 
   ngOnInit() {
-    this.mediaObserver.media$.subscribe((change: MediaChange) => {
-      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    this.sub = this.route.params.subscribe(params => {
+      if (params['leagueName']) {
+        this.leagueName = params['leagueName'];
+      }
+      this.ratingService.getLeaguesWithRatings().subscribe((leaguesWithRatings) => {
+        if (this.leagueName) {
+          this.leagueWithRatings = leaguesWithRatings.find((x) => {
+            return x.league.entity.name === this.leagueName;
+          });
+        }
+        if (!this.leagueWithRatings) {
+          this.leagueWithRatings = leaguesWithRatings[0];
+        }
+      });
     });
-
-    if (!this.client.initialized) {
-      this.client.loadAllData();
-    }
   }
 }

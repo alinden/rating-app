@@ -5,6 +5,11 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+#main-toolbar {
+  background: #0336FF;
+  color: white;
+}
+
 .card {
   width: calc(100% - 24px);
   height: calc(100% - 24px);
@@ -21,7 +26,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .card-header {
   height: 45px;
   border-bottom: 2px solid #e0e0e0;
-  background: #FFFF8D;
+  background: #FFDE03;
+}
+
+.accent-yellow {
+  background: #FFDE03;
 }
 
 .title {

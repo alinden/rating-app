@@ -25,7 +25,7 @@ import { MonthTotal } from './month-total';
 export class ClientService {
   users: WithId<User>[];
   leagues: WithId<League>[];
-  leaguesWithGames: LeagueWithGames[];
+  leaguesWithGames: LeagueWithGames[] = [];
   leaguesWithRatings: LeagueWithRatings[];
 
   userById: Map<number, WithId<User>>;

@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatGridList } from '@angular/material';
-
-import { ClientService } from '../client.service';
-
-import { Game } from '../game';
+import { GameService } from '../game.service';
 import { LeagueWithGames } from '../league-with-games';
 
 @Component({
@@ -14,28 +10,32 @@ import { LeagueWithGames } from '../league-with-games';
   styleUrls: ['./games.component.css']
 })
 export class GamesComponent implements OnInit {
- @ViewChild('grid') grid: MatGridList;
 
-  gridByBreakpoint = {
-    xl: 3,
-    lg: 2,
-    md: 1,
-    sm: 1,
-    xs: 1
-  };
+  leagueWithGames: LeagueWithGames;
+  leagueName: string = '';
+
+  private sub: any;
 
   constructor(
-    public client: ClientService,
-    private mediaObserver: MediaObserver
-  ) { }
+    private route: ActivatedRoute,
+    private gameService: GameService,
+  ) {}
 
   ngOnInit() {
-    this.mediaObserver.media$.subscribe((change: MediaChange) => {
-      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    this.sub = this.route.params.subscribe(params => {
+      if (params['leagueName']) {
+        this.leagueName = params['leagueName'];
+      }
+      this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
+        if (this.leagueName) {
+          this.leagueWithGames = leaguesWithGames.find((x) => {
+            return x.league.entity.name === this.leagueName;
+          });
+        }
+        if (!this.leagueWithGames) {
+          this.leagueWithGames = leaguesWithGames[0];
+        }
+      });
     });
-
-    if (!this.client.initialized) {
-      this.client.loadAllData();
-    }
   }
 }
