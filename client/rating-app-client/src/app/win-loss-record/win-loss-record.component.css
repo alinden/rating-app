@@ -6,12 +6,13 @@
 }
 
 .record-container {
-  width: 50%;
+  width: 120px;
+  table-layout: fixed;
   height: 45px;
-  line-height: 45px;
   vertical-align: middle;
   text-align: right;
   float: right;
+  margin-right: 16px;
 }
 
 

@@ -5,25 +5,37 @@
 }
 
 .record-container {
+  width: 560px;
   height: 45px;
-  line-height: 45px;
-  vertical-align: middle;
+  vertical-align: bottom;
   text-align: right;
   float: right;
+  margin-right: 16px;
 }
 
+table {
+  table-layout: fixed;
+}
 
 .num-wins {
   margin: 0 15px;
 }
 
 @media screen and (max-width: 1050px) {
+  .record-container {
+    width: 350px;
+  }
+
   .historical {
     display: none;
    }
 }
 
 @media screen and (max-width: 600px) {
+  .record-container {
+    width: 150px;
+  }
+
   .distant {
     display: none;
    }

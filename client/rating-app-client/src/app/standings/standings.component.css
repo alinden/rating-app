@@ -19,7 +19,8 @@ mat-form-field {
 
 .record-container {
   height: 45px;
-  line-height: 45px;
+  width: 120px;
+  table-layout: fixed;
   vertical-align: bottom;
   text-align: right;
   float: right;
