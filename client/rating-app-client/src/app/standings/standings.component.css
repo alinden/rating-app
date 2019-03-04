@@ -2,6 +2,7 @@ mat-card {
   max-height: calc(100% - 32px);
   padding: 0;
   margin: 8px;
+  overflow-y: scroll;
 }
 
 #add-user-form {

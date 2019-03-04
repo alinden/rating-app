@@ -1,6 +1,7 @@
 mat-card {
   padding: 0;
   margin: 8px;
+  overflow-y: scroll;
   max-height: calc(100% - 32px);
 }
 
