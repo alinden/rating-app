@@ -11,13 +11,19 @@ mat-card {
 mat-card-content {
   overflow-y: scroll;
   margin: 0;
+  width: 100%;
 }
 
 mat-form-field {
   margin: 8px;
 }
 
+table {
+  table-layout: fixed;
+}
+
 .record-container {
+  width: 60%;
   height: 45px;
   line-height: 45px;
   vertical-align: bottom;

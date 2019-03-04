@@ -5,15 +5,17 @@
     </div>
     <span class="subtitle">{{ winLossRecord.user.entity.name | titlecase }}</span>
   </span>
-  <span class="record-container">
-    <span class="num-wins">
-      {{ winLossRecord.wins }}
-    </span>
-    <span class="num-losses">
-      {{ winLossRecord.losses }}
-    </span>
-    <span class="win-percentage">
-      {{ winPercentage | number:'0.3-3' }}
-    </span>
-  </span>
+  <table class="record-container">
+    <tr>
+      <td class="num-wins">
+        {{ winLossRecord.wins }}
+      </td>
+      <td class="num-losses">
+        {{ winLossRecord.losses }}
+      </td>
+      <td class="win-percentage" colspan="2">
+        {{ winPercentage | number:'0.3-3' }}
+      </td>
+    </tr>
+  </table>
 </div>

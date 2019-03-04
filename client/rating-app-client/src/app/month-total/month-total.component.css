@@ -5,13 +5,17 @@
 }
 
 .record-container {
+  width: 60%;
   height: 45px;
-  line-height: 45px;
-  vertical-align: middle;
+  vertical-align: bottom;
   text-align: right;
   float: right;
+  margin-right: 16px;
 }
 
+table {
+  table-layout: fixed;
+}
 
 .num-wins {
   margin: 0 15px;

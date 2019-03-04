@@ -5,11 +5,13 @@
         <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
       </div>
       <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
-      <span class="record-container">
-        <span class="num-wins">W</span>
-        <span class="num-losses">L</span>
-        <span class="win-percentage">Pct</span>
-      </span>
+      <table class="record-container">
+        <tr>
+          <td class="num-wins">W</td>
+          <td class="num-losses">L</td>
+          <td class="win-percentage" colspan="2">Pct</td>
+        </tr>
+      </table>
     </div>
     <mat-card-content>
       <app-win-loss-record *ngFor="let winLossRecord of winLossRecords" [winLossRecord]="winLossRecord">
