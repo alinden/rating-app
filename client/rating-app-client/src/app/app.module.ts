@@ -18,6 +18,7 @@ import {
   MatCardModule,
   MatPaginatorModule,
   MatSortModule,
+  MatDialogModule,
   MatGridListModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -45,12 +46,14 @@ import { MonthTotalComponent } from './month-total/month-total.component';
 import { StandingsComponent } from './standings/standings.component';
 import { MonthsComponent } from './months/months.component';
 import { AddGameComponent } from './add-game/add-game.component';
+import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GamesComponent,
     RatingsComponent,
+    DetailsDialogComponent,
     AdminComponent,
     AppNavComponent,
     UsersCardComponent,
@@ -81,6 +84,7 @@ import { AddGameComponent } from './add-game/add-game.component';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatDialogModule,
     MatCheckboxModule,
     LayoutModule,
     MatToolbarModule,
@@ -95,6 +99,7 @@ import { AddGameComponent } from './add-game/add-game.component';
     FlexLayoutModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DetailsDialogComponent],
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MatDialog, MatDialogConfig} from "@angular/material";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -12,6 +13,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
+import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
 
 @Component({
   selector: 'app-app-nav',
@@ -48,6 +50,7 @@ export class AppNavComponent {
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -115,10 +118,21 @@ export class AppNavComponent {
   }
 
   openAppSettings() {
-    this.router.navigate(['/Admin']);
+    // this.router.navigate(['/Admin']);
+    this.openDialog();
   }
 
   closeAppSettings() {
     this.location.back();
+  }
+
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(DetailsDialogComponent, dialogConfig);
   }
 }
