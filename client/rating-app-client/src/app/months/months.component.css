@@ -23,7 +23,7 @@ table {
 }
 
 .record-container {
-  width: 60%;
+  width: 560px;
   height: 45px;
   line-height: 45px;
   vertical-align: bottom;
@@ -43,12 +43,20 @@ table {
 }
 
 @media screen and (max-width: 1050px) {
+  .record-container {
+    width: 350px;
+  }
+
   .historical {
     display: none;
    }
 }
 
 @media screen and (max-width: 600px) {
+  .record-container {
+    width: 150px;
+  }
+
   .distant {
     display: none;
    }
