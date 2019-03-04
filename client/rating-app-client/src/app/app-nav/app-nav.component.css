@@ -24,6 +24,10 @@
   padding-top: 24px;
 }
 
+.mat-form-field {
+  margin: 0;
+}
+
 #logo {
   position: absolute;
   right: 8px;
@@ -37,6 +41,7 @@
   bottom: 24px;
   background: #FFDE03;
   color: black;
+  font-size: 18px;
 }
 
 .settings-button {
