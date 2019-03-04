@@ -5,20 +5,22 @@
         <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
       </div>
       <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
-      <span class="record-container">
-        <span class="month-label historical">{{monthNames[0]}}</span>
-        <span class="month-label historical">{{monthNames[1]}}</span>
-        <span class="month-label historical">{{monthNames[2]}}</span>
-        <span class="month-label historical">{{monthNames[3]}}</span>
-        <span class="month-label historical">{{monthNames[4]}}</span>
-        <span class="month-label historical">{{monthNames[5]}}</span>
-        <span class="month-label distant">{{monthNames[6]}}</span>
-        <span class="month-label distant">{{monthNames[7]}}</span>
-        <span class="month-label distant">{{monthNames[8]}}</span>
-        <span class="month-label">{{monthNames[9]}}</span>
-        <span class="month-label">{{monthNames[10]}}</span>
-        <span class="month-label">{{monthNames[11]}}</span>
-      </span>
+      <table class="record-container">
+        <tr>
+          <td class="month-label historical">{{monthNames[0]}}</td>
+          <td class="month-label historical">{{monthNames[1]}}</td>
+          <td class="month-label historical">{{monthNames[2]}}</td>
+          <td class="month-label historical">{{monthNames[3]}}</td>
+          <td class="month-label historical">{{monthNames[4]}}</td>
+          <td class="month-label historical">{{monthNames[5]}}</td>
+          <td class="month-label distant">{{monthNames[6]}}</td>
+          <td class="month-label distant">{{monthNames[7]}}</td>
+          <td class="month-label distant">{{monthNames[8]}}</td>
+          <td class="month-label">{{monthNames[9]}}</td>
+          <td class="month-label">{{monthNames[10]}}</td>
+          <td class="month-label">{{monthNames[11]}}</td>
+        </tr>
+      </table>
     </div>
     <mat-card-content>
       <app-month-total *ngFor="let monthTotal of monthTotals; let i = index"
