@@ -18,6 +18,7 @@ import {
   MatCardModule,
   MatPaginatorModule,
   MatSortModule,
+  MatDialogModule,
   MatGridListModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -44,13 +45,15 @@ import { RatingsDistributionComponent } from './ratings-distribution/ratings-dis
 import { MonthTotalComponent } from './month-total/month-total.component';
 import { StandingsComponent } from './standings/standings.component';
 import { MonthsComponent } from './months/months.component';
-import { AddGameComponent } from './add-game/add-game.component';
+import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
+import { AddGameDialogComponent } from './add-game-dialog/add-game-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GamesComponent,
     RatingsComponent,
+    DetailsDialogComponent,
     AdminComponent,
     AppNavComponent,
     UsersCardComponent,
@@ -67,7 +70,7 @@ import { AddGameComponent } from './add-game/add-game.component';
     MonthTotalComponent,
     StandingsComponent,
     MonthsComponent,
-    AddGameComponent
+    AddGameDialogComponent
   ],
   imports: [
     NgxChartsModule,
@@ -81,6 +84,7 @@ import { AddGameComponent } from './add-game/add-game.component';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatDialogModule,
     MatCheckboxModule,
     LayoutModule,
     MatToolbarModule,
@@ -95,6 +99,10 @@ import { AddGameComponent } from './add-game/add-game.component';
     FlexLayoutModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DetailsDialogComponent,
+    AddGameDialogComponent,
+  ],
 })
 export class AppModule { }

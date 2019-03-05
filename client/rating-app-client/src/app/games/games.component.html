@@ -7,7 +7,9 @@
       <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
     </div>
     <mat-card-content>
-      <app-rated-game-card-item *ngFor="let ratedGame of leagueWithGames.ratedGames" [ratedGame]="ratedGame">
+      <app-rated-game-card-item *ngFor="let ratedGame of leagueWithGames.ratedGames"
+                                [ratedGame]="ratedGame"
+                                (click)="openGameDetails(ratedGame)">
       </app-rated-game-card-item>
     </mat-card-content>
   </ng-container>

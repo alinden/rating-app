@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>
+  <div class="avatar-container">
+    <img class="avatar" src="/assets/{{league.entity.image}}">
+  </div>
+  <span class="title">{{league.entity.name | titlecase}}</span>
+</h2>
+
+<mat-dialog-content>
+  <div class="select-wrapper">
+    <mat-form-field>
+      <mat-select placeholder="Winner" [(ngModel)]="winner" name="winner">
+        <mat-option *ngFor="let user of users" [value]="user">
+          {{user.entity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="select-wrapper">
+    <mat-form-field>
+      <mat-select placeholder="Loser" [(ngModel)]="loser" name="loser">
+        <mat-option *ngFor="let user of users" [value]="user">
+          {{user.entity.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="action-button" (click)="saveGame()">
+    Add Game
+  </button>
+</mat-dialog-actions>
