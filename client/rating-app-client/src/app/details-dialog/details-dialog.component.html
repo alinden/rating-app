@@ -11,7 +11,7 @@
 <mat-dialog-content>
   <div class="winner-container">
     <span class="avatar-container">
-      <img class="avatar" src="{{ratedGame.winner.entity.image}}">
+      <img class="avatar" src="/assets/{{ratedGame.winner.entity.image}}">
     </span>
     <span class="subtitle winner">{{ ratedGame.winner.entity.name | titlecase }}</span>
     <app-rating-change [rating]="ratedGame.winner_rating.entity">
@@ -19,7 +19,7 @@
   </div>
   <div class="loser-container">
     <span class="avatar-container">
-      <img class="avatar" src="{{ratedGame.loser.entity.image}}">
+      <img class="avatar" src="/assets/{{ratedGame.loser.entity.image}}">
     </span>
     <span class="subtitle loser">{{ ratedGame.loser.entity.name | titlecase }}</span>
     <app-rating-change [rating]="ratedGame.loser_rating.entity">
