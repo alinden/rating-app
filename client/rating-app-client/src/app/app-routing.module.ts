@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { StandingsComponent } from './standings/standings.component';
 import { GamesComponent } from './games/games.component';
-import { AddGameComponent } from './add-game/add-game.component';
 import { RatingsComponent } from './ratings/ratings.component';
 import { MonthsComponent } from './months/months.component';
 import { KeepScoreComponent } from './keep-score/keep-score.component';
@@ -25,7 +24,6 @@ const routes: Routes = [
   { path: 'rating-distribution', component: StandingsComponent},
   { path: 'Admin', component: AdminComponent },
   { path: 'keep-score/:leagueId', component: KeepScoreComponent },
-  { path: 'add-game/:leagueName', component: AddGameComponent },
 ];
 
 @NgModule({

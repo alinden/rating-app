@@ -45,8 +45,8 @@ import { RatingsDistributionComponent } from './ratings-distribution/ratings-dis
 import { MonthTotalComponent } from './month-total/month-total.component';
 import { StandingsComponent } from './standings/standings.component';
 import { MonthsComponent } from './months/months.component';
-import { AddGameComponent } from './add-game/add-game.component';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
+import { AddGameDialogComponent } from './add-game-dialog/add-game-dialog.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +70,7 @@ import { DetailsDialogComponent } from './details-dialog/details-dialog.componen
     MonthTotalComponent,
     StandingsComponent,
     MonthsComponent,
-    AddGameComponent
+    AddGameDialogComponent
   ],
   imports: [
     NgxChartsModule,
@@ -100,6 +100,9 @@ import { DetailsDialogComponent } from './details-dialog/details-dialog.componen
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DetailsDialogComponent],
+  entryComponents: [
+    DetailsDialogComponent,
+    AddGameDialogComponent,
+  ],
 })
 export class AppModule { }

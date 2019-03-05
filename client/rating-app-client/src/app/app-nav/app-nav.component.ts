@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LeagueService } from '../league.service';
 import { UserService } from '../user.service';
+import { GameService } from '../game.service';
+import { Game } from '../game';
 import { WithId } from '../with-id';
 import { League } from '../league';
 import { User } from '../user';
@@ -14,6 +16,7 @@ import { Router } from '@angular/router';
 import { NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
+import { AddGameDialogComponent } from '../add-game-dialog/add-game-dialog.component';
 
 @Component({
   selector: 'app-app-nav',
@@ -23,6 +26,7 @@ import { DetailsDialogComponent } from '../details-dialog/details-dialog.compone
 export class AppNavComponent {
   leagues: WithId<League>[] = [];
   usernames: string[] = [];
+  users: WithId<User>[] = [];
 
   views: string[] = [
     'Standings',
@@ -34,9 +38,16 @@ export class AppNavComponent {
   private sub: any;
 
   leagueName = '';
+  league: WithId<League>;
   viewName = '';
   playerName = '';
   url = '';
+
+  setLeague(leagueName: string) {
+    this.league = this.leagues.find((league) => {
+      return league.entity.name === leagueName;
+    });
+  }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -47,6 +58,7 @@ export class AppNavComponent {
     private breakpointObserver: BreakpointObserver,
     private leagueService: LeagueService,
     private userService: UserService,
+    private gameService: GameService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
@@ -54,27 +66,29 @@ export class AppNavComponent {
   ) {}
 
   ngOnInit() {
-    this.leagueService.getLeagues().subscribe(leagues => {
-      this.leagues = leagues;
-    });
-    this.userService.getUsers().subscribe(users => {
-      this.usernames = [...[''], ...users.map(user => user.entity.name)];
-    });
     this.sub = this.router.events.subscribe(routerEvent => {
-      const x = routerEvent as NavigationEnd;
-      if (x.url && (x.url !== this.url)) {
-        this.url = x.url;
-        const urlSegments = x.url.split('/');
-        if (urlSegments.length > 1) {
-          this.viewName = urlSegments[1].replace(/%20/, ' ');
-          if (urlSegments.length > 2) {
-            this.leagueName = urlSegments[2].replace(/%20/, ' ');
-            if (urlSegments.length > 3) {
-              this.playerName = urlSegments[3].replace(/%20/, ' ');
+      this.leagueService.getLeagues().subscribe(leagues => {
+        this.leagues = leagues;
+        const x = routerEvent as NavigationEnd;
+        this.userService.getUsers().subscribe(users => {
+          this.users = users;
+          this.usernames = [...[''], ...users.map(user => user.entity.name)];
+          if (x.url && (x.url !== this.url)) {
+            this.url = x.url;
+            const urlSegments = x.url.split('/');
+            if (urlSegments.length > 1) {
+              this.viewName = urlSegments[1].replace(/%20/, ' ');
+              if (urlSegments.length > 2) {
+                this.leagueName = urlSegments[2].replace(/%20/, ' ');
+                this.setLeague(this.leagueName);
+                if (urlSegments.length > 3) {
+                  this.playerName = urlSegments[3].replace(/%20/, ' ');
+                }
+              }
             }
           }
-        }
-      }
+        });
+      });
     });
   }
 
@@ -113,7 +127,7 @@ export class AppNavComponent {
     if (this.leagueName === 'Cricket') {
       this.router.navigate(['/keep-score/3']);
     } else {
-      this.router.navigate([`/add-game/${this.leagueName}`]);
+      this.openAddGameDialog();
     }
   }
 
@@ -123,5 +137,30 @@ export class AppNavComponent {
 
   closeAppSettings() {
     this.location.back();
+  }
+
+  openAddGameDialog() {
+    if (this.leagueName) {
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.autoFocus = true;
+
+      dialogConfig.data = {
+        users: this.users,
+        league: this.league,
+      };
+
+      const dialogRef = this.dialog.open(AddGameDialogComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe((data: { newGame: Game }) => {
+        console.log('dialogRef.afterClosed()');
+        console.log('data.newGame');
+        console.log('data.newGame');
+        this.gameService.addGame(data.newGame).subscribe(() => {
+          console.log('addGame callback');
+          this.router.navigate([`/Games/${this.league.entity.name}`]);
+        });
+      });
+    }
   }
 }

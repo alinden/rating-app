@@ -28,10 +28,6 @@ export class DetailsDialogComponent implements OnInit {
 
   ngOnInit() { }
 
-  close() {
-    this.dialogRef.close();
-  }
-
   showDate(date: Date): string {
     // date is a string
     date = new Date(date);
