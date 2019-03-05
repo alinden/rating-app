@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { GameService } from '../game.service';
 import { StatsService } from '../stats.service';
 import { LeagueWithGames } from '../league-with-games';
+import { DataRefreshRequiredService } from '../data-refresh-required.service';
 
 import { WinLossRecord } from '../win-loss-record';
 
@@ -24,26 +25,40 @@ export class StandingsComponent implements OnInit {
 
   winLossRecords: WinLossRecord[];
 
-  private sub: any;
+  private urlSub: any;
+  private dataRefreshSub: any;
+
+  dataVersion: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private statsService: StatsService,
     private gameService: GameService,
     private userService: UserService,
+    private dataRefreshRequiredService: DataRefreshRequiredService,
   ) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
-    });
-    this.sub = this.route.params.subscribe(params => {
+    this.urlSub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
         this.leagueName = params['leagueName'];
       }
       if (params['playerName']) {
         this.playerName = params['playerName'];
       }
+      this.refreshData();
+    });
+    this.dataRefreshSub = this.dataRefreshRequiredService.dataChangeCounter.subscribe((value) => {
+      if (this.dataVersion !== value) {
+        this.dataVersion = value;
+        this.refreshData();
+      }
+    });
+  }
+
+  refreshData() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
       this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
         if (this.leagueName) {
           this.leagueWithGames = leaguesWithGames.find((x) => {

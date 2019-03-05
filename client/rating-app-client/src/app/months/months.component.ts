@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user.service';
 import { GameService } from '../game.service';
+import { DataRefreshRequiredService } from '../data-refresh-required.service';
 import { StatsService } from '../stats.service';
 
 import { Game } from '../game';
@@ -28,7 +29,10 @@ export class MonthsComponent implements OnInit {
   monthNames: string[] = [];
   monthTotals: MonthTotal[];
 
-  private sub: any;
+  private urlSub: any;
+  private dataRefreshSub: any;
+
+  dataVersion: number = 0;
 
   setMonthNames(): void {
     const monthNames = [];
@@ -47,21 +51,32 @@ export class MonthsComponent implements OnInit {
     private gameService: GameService,
     private statsService: StatsService,
     private userService: UserService,
+    private dataRefreshRequiredService: DataRefreshRequiredService,
     ) {
       this.setMonthNames();
     }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
-    });
-    this.sub = this.route.params.subscribe(params => {
+    this.urlSub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
         this.leagueName = params['leagueName'];
       }
       if (params['playerName']) {
         this.playerName = params['playerName'];
       }
+      this.refreshData();
+    });
+    this.dataRefreshSub = this.dataRefreshRequiredService.dataChangeCounter.subscribe((value) => {
+      if (this.dataVersion !== value) {
+        this.dataVersion = value;
+        this.refreshData();
+      }
+    });
+  }
+
+  refreshData() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
       this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
         if (this.leagueName) {
           this.leagueWithGames = leaguesWithGames.find((x) => {
