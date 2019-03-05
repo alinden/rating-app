@@ -42,11 +42,6 @@ export class AddGameDialogComponent implements OnInit {
   }
 
   saveGame() {
-    console.log('saveGame');
-    console.log('this.winner');
-    console.log(this.winner);
-    console.log('this.loser');
-    console.log(this.loser);
     const newGame = {
         'league_id': this.league.id,
         'winner_id': this.winner.id,
