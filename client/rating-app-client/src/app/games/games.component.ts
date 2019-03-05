@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogConfig} from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 
 import { GameService } from '../game.service';
+import { RatedGame } from '../rated-game';
 import { LeagueWithGames } from '../league-with-games';
+import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
 
 @Component({
   selector: 'app-games',
@@ -19,6 +22,7 @@ export class GamesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -37,5 +41,18 @@ export class GamesComponent implements OnInit {
         }
       });
     });
+  }
+
+  openGameDetails(ratedGame: RatedGame) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      ratedGame: ratedGame,
+      league: this.leagueWithGames.league.entity,
+    };
+
+    this.dialog.open(DetailsDialogComponent, dialogConfig);
   }
 }

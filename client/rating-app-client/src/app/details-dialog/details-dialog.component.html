@@ -1,11 +1,28 @@
-<h2 mat-dialog-title>Title</h2>
+<h2 mat-dialog-title>
+  <div class="avatar-container">
+    <img class="avatar" src="/assets/{{league.image}}">
+  </div>
+  <span class="title">{{league.name | titlecase}}</span>
+  <span class="game-date-played">
+    {{ dateStr }}
+  </span>
+</h2>
 
 <mat-dialog-content>
-  <p>Content</p>
+  <div class="winner-container">
+    <span class="avatar-container">
+      <img class="avatar" src="{{ratedGame.winner.entity.image}}">
+    </span>
+    <span class="subtitle winner">{{ ratedGame.winner.entity.name | titlecase }}</span>
+    <app-rating-change [rating]="ratedGame.winner_rating.entity">
+    </app-rating-change>
+  </div>
+  <div class="loser-container">
+    <span class="avatar-container">
+      <img class="avatar" src="{{ratedGame.loser.entity.image}}">
+    </span>
+    <span class="subtitle loser">{{ ratedGame.loser.entity.name | titlecase }}</span>
+    <app-rating-change [rating]="ratedGame.loser_rating.entity">
+    </app-rating-change>
+  </div>
 </mat-dialog-content>
-
-<mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
-</mat-dialog-actions>
-

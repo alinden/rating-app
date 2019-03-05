@@ -118,21 +118,10 @@ export class AppNavComponent {
   }
 
   openAppSettings() {
-    // this.router.navigate(['/Admin']);
-    this.openDialog();
+    this.router.navigate(['/Admin']);
   }
 
   closeAppSettings() {
     this.location.back();
-  }
-
-  openDialog() {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    this.dialog.open(DetailsDialogComponent, dialogConfig);
   }
 }

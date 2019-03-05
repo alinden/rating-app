@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+
+import { RatedGame } from '../rated-game';
+import { League } from '../league';
 
 @Component({
   selector: 'app-details-dialog',
@@ -7,9 +11,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsDialogComponent implements OnInit {
 
-  constructor() { }
+  ratedGame: RatedGame;
+  league: League;
+  dateStr: string;
 
-  ngOnInit() {
+  constructor(
+    private dialogRef: MatDialogRef<DetailsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data,
+  ) {
+    this.ratedGame = data.ratedGame;
+    this.league = data.league;
+    console.log('this.league');
+    console.log(this.league);
+    this.dateStr = this.showDate(data.ratedGame.date_played);
   }
 
+  ngOnInit() { }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  showDate(date: Date): string {
+    // date is a string
+    date = new Date(date);
+    const options = {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    };
+    return date.toLocaleString('en-US', options);
+  }
 }
