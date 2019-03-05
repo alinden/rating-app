@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataRefreshRequiredService } from '../data-refresh-required.service';
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
@@ -55,6 +56,7 @@ export class AppNavComponent {
     );
 
   constructor(
+    private dataRefreshRequiredService: DataRefreshRequiredService,
     private breakpointObserver: BreakpointObserver,
     private leagueService: LeagueService,
     private userService: UserService,
@@ -153,12 +155,8 @@ export class AppNavComponent {
       const dialogRef = this.dialog.open(AddGameDialogComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe((data: { newGame: Game }) => {
-        console.log('dialogRef.afterClosed()');
-        console.log('data.newGame');
-        console.log('data.newGame');
         this.gameService.addGame(data.newGame).subscribe(() => {
-          console.log('addGame callback');
-          this.router.navigate([`/Games/${this.league.entity.name}`]);
+          this.dataRefreshRequiredService.signalDataRefreshRequired();
         });
       });
     }
