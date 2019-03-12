@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>
+  <div class="avatar-container">
+    <img class="avatar" src="/assets/{{league.image}}">
+  </div>
+  <span class="title">{{league.name | titlecase}}</span>
+  <table class="record-container">
+    <tr>
+      <td class="stat-name">min</td>
+      <td class="stat-name">max</td>
+      <td class="stat-name">current</td>
+    </tr>
+  </table>
+</h2>
+
+<mat-dialog-content>
+  <div class="avatar-container">
+    <img class="avatar" src="/assets/{{ratedUser.user.entity.image}}">
+  </div>
+  <span class="subtitle winner">{{ ratedUser.user.entity.name | titlecase }}</span>
+  <table class="record-container">
+    <tr>
+      <td class="stat min">{{ ratedUser.minRating }}</td>
+      <td class="stat max">{{ ratedUser.maxRating }}</td>
+      <td class="stat">{{ ratedUser.rating.entity.new_rating }}</td>
+    </tr>
+  </table>
+</mat-dialog-content>
