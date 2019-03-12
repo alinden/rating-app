@@ -20,10 +20,6 @@ export class RatingHistoryDialogComponent implements OnInit {
   ) {
     this.ratedUser = data.ratedUser;
     this.league = data.league;
-    console.log('this.league');
-    console.log(this.league);
-    console.log('this.ratedUser');
-    console.log(this.ratedUser);
   }
 
   ngOnInit() {
