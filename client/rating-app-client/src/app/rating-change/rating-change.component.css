@@ -7,7 +7,7 @@
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
-.rating-increase, .rating-decrease  {
+.rating-increase, .rating-decrease, .min-rating, .max-rating  {
   margin: 0 16px;
 }
 
@@ -24,7 +24,7 @@ mat-icon {
 }
 
 @media only screen and (max-width: 500px) {
-  .rating-increase, .rating-decrease {
+  .rating-increase, .rating-decrease, .min-rating, .max-rating {
     display: none;
   }
 }

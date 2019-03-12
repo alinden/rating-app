@@ -73,7 +73,9 @@ object RatingRepository extends Repository[Rating] {
         ratings.user_id,
         ratings.last_game_id,
         ratings.new_rating,
-        ratings.previous_rating
+        ratings.previous_rating,
+        min_ratings.new_rating as min_rating,
+        max_ratings.new_rating as max_rating
       from (
         select
           users.id as user_id,
@@ -86,8 +88,19 @@ object RatingRepository extends Repository[Rating] {
             on ratings.user_id = users.id
         group by users.id
       ) a
-      inner join ratings
-        on a.user_rating_id = ratings.id
+      inner join ratings on a.user_rating_id = ratings.id
+      inner join (
+        select user_id, min(new_rating) new_rating
+        from ratings
+        where league_id = ${league.id}
+        group by user_id
+      ) min_ratings on ratings.user_id = min_ratings.user_id
+      inner join (
+        select user_id, max(new_rating) new_rating
+        from ratings
+        where league_id = ${league.id}
+        group by user_id
+      ) max_ratings on ratings.user_id = max_ratings.user_id
       order by ratings.new_rating desc;
     """
       .query[RatedUser]
