@@ -6,4 +6,6 @@ import { User } from './user';
 export class RatedUser {
   user: WithId<User>;
   rating: WithId<Rating>;
+  minRating: number;
+  maxRating: number;
 }

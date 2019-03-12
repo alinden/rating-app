@@ -9,8 +9,6 @@
     <mat-card-content>
       <div class="ratings-list">
         <app-rated-user-card-item *ngFor="let ratedUser of leagueWithRatings.ratedUsers" [ratedUser]="ratedUser">
-          <span>{{ ratedUser.user.entity.name | titlecase}}</span>
-          <span>{{ ratedUser.rating }}</span>
         </app-rated-user-card-item>
       </div>
     </mat-card-content>
