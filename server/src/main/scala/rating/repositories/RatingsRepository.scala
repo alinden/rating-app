@@ -92,11 +92,13 @@ object RatingRepository extends Repository[Rating] {
       inner join (
         select user_id, min(new_rating) new_rating
         from ratings
+        where where league_id = ${league.id}
         group by user_id
       ) min_ratings on ratings.user_id = min_ratings.user_id
       inner join (
         select user_id, max(new_rating) new_rating
         from ratings
+        where where league_id = ${league.id}
         group by user_id
       ) max_ratings on ratings.user_id = max_ratings.user_id
       order by ratings.new_rating desc;
