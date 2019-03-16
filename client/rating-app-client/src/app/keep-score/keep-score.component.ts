@@ -167,17 +167,14 @@ export class KeepScoreComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     this.sub = this.route.params.subscribe(params => {
       this.leagueId = +params['leagueId'];
-      this.ratingService.getLeaguesWithRatings().subscribe((leaguesWithRatings) => {
-        this.leagueWithRatings = leaguesWithRatings.find((x) => {
-          return x.league.id === this.leagueId;
+      this.ratingService.getLeagueWithRatings(this.leagueId).subscribe((leagueWithRatings) => {
+        this.leagueWithRatings = leagueWithRatings;
+        this.userService.getUsers().subscribe((users) => {
+          this.users = users;
+          this.enterLagMode();
         });
-        this.enterLagMode();
-      });
-      this.userService.getUsers().subscribe((users) => {
-        this.users = users;
       });
     });
   }

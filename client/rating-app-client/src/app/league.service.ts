@@ -27,14 +27,6 @@ export class LeagueService {
       );
   }
 
-  getLeague(id: number): Observable<WithId<League>> {
-    const url = `${this.leaguesUrl}/${id}`;
-    return this.http.get<WithId<League>>(url)
-      .pipe(
-        catchError(this.handleError<WithId<League>>(`getLeague(${id})`))
-      );
-  }
-
   updateLeague(league: WithId<League>): Observable<any> {
     return this.http.put(this.leaguesUrl, league, httpOptions).pipe(
       catchError(this.handleError<any>('updateLeague'))

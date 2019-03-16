@@ -4,8 +4,6 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { MatGridList } from '@angular/material';
 
-import { ClientService } from '../client.service';
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -31,7 +29,6 @@ export class AdminComponent implements OnInit {
   };
 
   constructor(
-    public client: ClientService,
     private mediaObserver: MediaObserver
   ) { }
 
@@ -40,9 +37,5 @@ export class AdminComponent implements OnInit {
       this.grid.cols = this.gridColsByBreakpoint[change.mqAlias];
       this.grid.rowHeight = this.gridRowHeightByBreakpoint[change.mqAlias];
     });
-
-    if (!this.client.initialized) {
-      this.client.loadAllData();
-    }
   }
 }
