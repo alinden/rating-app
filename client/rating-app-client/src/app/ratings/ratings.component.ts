@@ -1,21 +1,16 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import {MatDialog, MatDialogConfig} from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 
-import { RatingService } from '../rating.service';
-import { StatsService } from '../stats.service';
 import { DataRefreshRequiredService } from '../data-refresh-required.service';
-import { RatingHistoryDialogComponent } from '../rating-history-dialog/rating-history-dialog.component';
+import { LeagueService } from '../league.service';
+import { RatingService } from '../rating.service';
 
-import { Game } from '../game';
-import { User } from '../user';
 import { League } from '../league';
-import { WithId } from '../with-id';
 import { LeagueWithRatings } from '../league-with-ratings';
-import { WinLossRecord } from '../win-loss-record';
-import { MonthTotal } from '../month-total';
+import { RatingHistoryDialogComponent } from '../rating-history-dialog/rating-history-dialog.component';
 import { RatedUser } from '../rated-user';
-
+import { WithId } from '../with-id';
 
 @Component({
   selector: 'app-ratings',
@@ -23,20 +18,23 @@ import { RatedUser } from '../rated-user';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  leagueWithRatings: LeagueWithRatings;
+  league: WithId<League> = null;
   leagueName: string = '';
+  leagueWithRatings: LeagueWithRatings;
+  leagues: WithId<League>[] = [];
 
-  private urlSub: any;
   private dataRefreshSub: any;
+  private urlSub: any;
 
   dataVersion: number = 0;
 
   constructor(
-    private route: ActivatedRoute,
-    private ratingService: RatingService,
-    private dialog: MatDialog,
     private dataRefreshRequiredService: DataRefreshRequiredService,
-    ) { }
+    private dialog: MatDialog,
+    private leagueService: LeagueService,
+    private ratingService: RatingService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
     this.urlSub = this.route.params.subscribe(params => {
@@ -54,29 +52,28 @@ export class RatingsComponent implements OnInit {
   }
 
   refreshData() {
-    this.ratingService.getLeaguesWithRatings().subscribe((leaguesWithRatings) => {
+    this.leagueService.getLeagues().subscribe((leagues) => {
+      this.leagues = leagues;
       if (this.leagueName) {
-        this.leagueWithRatings = leaguesWithRatings.find((x) => {
-          return x.league.entity.name === this.leagueName;
+        this.league = this.leagues.find((league) => {
+          return league.entity.name === this.leagueName;
         });
-      }
-      if (!this.leagueWithRatings) {
-        this.leagueWithRatings = leaguesWithRatings[0];
+        if (this.league) {
+          this.ratingService.getLeagueWithRatings(this.league.id).subscribe((leagueWithRatings) => {
+            this.leagueWithRatings = leagueWithRatings;
+          });
+        }
       }
     });
   }
 
   openRatingDetails(ratedUser: RatedUser) {
-    console.log('openRatingDetails');
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.autoFocus = true;
-
     dialogConfig.data = {
       ratedUser: ratedUser,
-      league: this.leagueWithRatings.league.entity,
+      league: this.league.entity,
     };
-
     this.dialog.open(RatingHistoryDialogComponent, dialogConfig);
   }
 }

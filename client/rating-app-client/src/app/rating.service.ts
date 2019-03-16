@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Rating } from './rating';
-import { WithId } from './with-id';
-import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { LeagueWithRatings } from './league-with-ratings';
 
 const httpOptions = {
@@ -14,42 +13,16 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RatingService {
-  private leaguesWithRatingsUrl = 'api/leagues-with-ratings';
   private leagueWithRatingsUrl = 'api/league-with-ratings';
-  private ratingsUrl = 'api/ratings';
-  private ratingUrlBase = 'api/rating/';
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getLeaguesWithRatings(): Observable<LeagueWithRatings[]> {
-    return this.http.get<LeagueWithRatings[]>(this.leaguesWithRatingsUrl)
+  getLeagueWithRatings(leagueId: number): Observable<LeagueWithRatings> {
+    return this.http.get<LeagueWithRatings>(`${this.leagueWithRatingsUrl}/${leagueId}`)
       .pipe(
-        catchError(this.handleError('getLeaguesWithRatings', [])),
-      );
-  }
-
-  reloadLeagueWithRatings(leagueId: number): Observable<LeagueWithRatings> {
-    const fullUrl = this.leagueWithRatingsUrl + '/' + leagueId;
-    return this.http.get<LeagueWithRatings>(fullUrl)
-      .pipe(
-        catchError(this.handleError('getLeaguesWithRatings', null)),
-      );
-  }
-
-  getRatings(): Observable<WithId<Rating>[]> {
-    return this.http.get<WithId<Rating>[]>(this.ratingsUrl)
-      .pipe(
-        catchError(this.handleError('getRatings', []))
-      );
-  }
-
-  getRating(id: number): Observable<WithId<Rating>> {
-    const url = `${this.ratingsUrl}/${id}`;
-    return this.http.get<WithId<Rating>>(url)
-      .pipe(
-        catchError(this.handleError<WithId<Rating>>(`getRating(${id})`))
+        catchError(this.handleError('getLeagueWithRatings', null)),
       );
   }
 
@@ -57,9 +30,5 @@ export class RatingService {
     return (error: any): Observable<T> => {
       return of(result as T);
     };
-  }
-
-  private getRatingUrl(id: number): string {
-    return this.ratingUrlBase + id;
   }
 }

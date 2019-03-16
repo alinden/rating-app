@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { DataRefreshRequiredService } from '../data-refresh-required.service';
+import { LeagueService } from '../league.service';
+import { StatsService } from '../stats.service';
+import { UserService } from '../user.service';
+
 import { WithId } from '../with-id';
 import { User } from '../user';
-import { UserService } from '../user.service';
-import { GameService } from '../game.service';
-import { StatsService } from '../stats.service';
-import { LeagueWithGames } from '../league-with-games';
-import { DataRefreshRequiredService } from '../data-refresh-required.service';
+import { League } from '../league';
 
 import { WinLossRecord } from '../win-loss-record';
 
@@ -17,25 +18,24 @@ import { WinLossRecord } from '../win-loss-record';
   styleUrls: ['./standings.component.css']
 })
 export class StandingsComponent implements OnInit {
-
-  users: WithId<User>[] = [];
-  leagueWithGames: LeagueWithGames;
+  league: WithId<League> = null;
   leagueName: string = '';
+  leagues: WithId<League>[] = [];
   playerName: string = '';
-
+  users: WithId<User>[] = [];
   winLossRecords: WinLossRecord[];
 
-  private urlSub: any;
   private dataRefreshSub: any;
+  private urlSub: any;
 
   dataVersion: number = 0;
 
   constructor(
+    private dataRefreshRequiredService: DataRefreshRequiredService,
+    private leagueService: LeagueService,
     private route: ActivatedRoute,
     private statsService: StatsService,
-    private gameService: GameService,
     private userService: UserService,
-    private dataRefreshRequiredService: DataRefreshRequiredService,
   ) {}
 
   ngOnInit() {
@@ -59,14 +59,12 @@ export class StandingsComponent implements OnInit {
   refreshData() {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
-      this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
+      this.leagueService.getLeagues().subscribe((leagues) => {
+        this.leagues = leagues;
         if (this.leagueName) {
-          this.leagueWithGames = leaguesWithGames.find((x) => {
-            return x.league.entity.name === this.leagueName;
+          this.league = leagues.find((league) => {
+            return league.entity.name === this.leagueName;
           });
-        }
-        if (!this.leagueWithGames) {
-          this.leagueWithGames = leaguesWithGames[0];
         }
         if (this.playerName && this.users.length) {
           const player = this.users.find((user) => {
@@ -74,7 +72,7 @@ export class StandingsComponent implements OnInit {
           });
           if (player) {
             this.statsService.getConditionalStandings(
-              this.leagueWithGames.league.id, player.id
+              this.league.id, player.id
             ).subscribe(winLossRecords => {
               this.winLossRecords = winLossRecords;
             });
@@ -86,7 +84,7 @@ export class StandingsComponent implements OnInit {
               winLossRecordsByLeagueId.set(leagueIdAndWinLossRecords[0],
                 leagueIdAndWinLossRecords[1]);
             }
-            this.winLossRecords = winLossRecordsByLeagueId.get(this.leagueWithGames.league.id);
+            this.winLossRecords = winLossRecordsByLeagueId.get(this.league.id);
           });
         }
       });

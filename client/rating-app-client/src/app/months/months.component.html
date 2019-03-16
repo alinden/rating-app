@@ -1,10 +1,10 @@
 <mat-card>
-  <ng-container *ngIf="leagueWithGames">
+  <ng-container *ngIf="league">
     <div class="card-header">
       <div class="avatar-container">
-        <img class="avatar" src="/assets/{{leagueWithGames.league.entity.image}}">
+        <img class="avatar" src="/assets/{{league.entity.image}}">
       </div>
-      <span class="title">{{leagueWithGames.league.entity.name | titlecase}}</span>
+      <span class="title">{{league.entity.name | titlecase}}</span>
       <table class="record-container">
         <tr>
           <td class="month-label historical">{{monthNames[0]}}</td>
