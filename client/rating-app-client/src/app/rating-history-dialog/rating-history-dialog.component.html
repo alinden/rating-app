@@ -24,4 +24,18 @@
       <td class="stat">{{ ratedUser.rating.entity.new_rating }}</td>
     </tr>
   </table>
+  <div class="history-graph-wrapper">
+    <ngx-charts-line-chart
+      [scheme]="colorScheme"
+      [view]="[400, 200]"
+      [results]="ratingHistory"
+      [xAxis]="false"
+      [yAxis]="true"
+      [autoScale]="true"
+      [legend]="false"
+      [timeline]="false"
+      [showXAxisLabel]="false"
+      [showYAxisLabel]="false">
+    </ngx-charts-line-chart>
+  </div>
 </mat-dialog-content>
