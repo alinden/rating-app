@@ -14,8 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class GameService {
-  private leaguesWithGamesUrl = 'api/leagues-with-games';
   private leagueWithGamesUrl = 'api/league-with-games';
+  private conditionalLeagueWithGamesUrl = 'api/conditional-league-with-games';
   private gamesUrl = 'api/games';
   private gameUrlBase = 'api/game/';
   private gameById = {};
@@ -28,6 +28,13 @@ export class GameService {
     return this.http.get<LeagueWithGames>(`${this.leagueWithGamesUrl}/${leagueId}`)
       .pipe(
         catchError(this.handleError('getLeaguesWithGames', null)),
+      );
+  }
+
+  getConditionalLeagueWithGames(userId: number, leagueId: number): Observable<LeagueWithGames> {
+    return this.http.get<LeagueWithGames>(`${this.conditionalLeagueWithGamesUrl}/${userId}/${leagueId}`)
+      .pipe(
+        catchError(this.handleError('getConditionalLeaguesWithGames', null)),
       );
   }
 
