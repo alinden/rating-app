@@ -8,7 +8,7 @@
   <mat-card-content [ngSwitch]="mode">
 
     <div *ngSwitchCase="'list'" class="users-list">
-      <app-users-card-item *ngFor="let user of client.users" [user]="user">
+      <app-users-card-item *ngFor="let user of users" [user]="user">
       </app-users-card-item>
     </div>
 

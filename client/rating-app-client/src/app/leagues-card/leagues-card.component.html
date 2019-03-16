@@ -8,7 +8,7 @@
   <mat-card-content [ngSwitch]="mode">
 
     <div *ngSwitchCase="'list'" class="leagues-list">
-        <app-leagues-card-item *ngFor="let league of client.leagues" [league]="league">
+        <app-leagues-card-item *ngFor="let league of leagues" [league]="league">
         </app-leagues-card-item>
     </div>
 

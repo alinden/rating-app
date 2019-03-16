@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../user';
 import { WithId } from '../with-id';
 
-import { ClientService } from '../client.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-users-card',
@@ -31,23 +31,21 @@ export class UsersCardComponent implements OnInit {
   }
 
   saveUser(name: string): void {
-    this.client.addUser(this.userName, this.userImage);
+    this.userService.addUser({
+      name: this.userName,
+      image: this.userImage,
+    });
     this.enterListMode();
   }
 
   constructor(
-    private client: ClientService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.users = [
-      { id: 1, entity: { name: 'alex', image: '#'  }},
-      { id: 2, entity: { name: 'robert', image: '#'  }},
-      { id: 3, entity: { name: 'jason', image: '#'  }},
-      { id: 4, entity: { name: 'dong soo', image: '#'  }},
-      { id: 5, entity: { name: 'kade', image: '#'  }},
-      { id: 6, entity: { name: 'colby', image: '#'  }},
-    ];
+    this.userService.getUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
 }

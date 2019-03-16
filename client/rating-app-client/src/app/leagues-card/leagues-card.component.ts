@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ClientService } from '../client.service';
+import { LeagueService } from '../league.service';
 
 import { League } from '../league';
 import { WithId } from '../with-id';
@@ -31,24 +31,21 @@ export class LeaguesCardComponent implements OnInit {
   }
 
   saveLeague(name: string): void {
-    this.client.addLeague(this.leagueName, this.leagueImage);
+    this.leagueService.addLeague({
+      name: this.leagueName,
+      image: this.leagueImage,
+    });
     this.enterListMode();
   }
 
   constructor(
-    private client: ClientService,
+    private leagueService: LeagueService,
   ) { }
 
-
   ngOnInit() {
-    this.leagues = [
-      { id: 1, entity: { name: '8 Ball', image: '#' }},
-      { id: 2, entity: { name: '9 Ball', image: '#' }},
-      { id: 3, entity: { name: 'Snooker', image: '#' }},
-      { id: 4, entity: { name: 'Cricket', image: '#' }},
-      { id: 5, entity: { name: 'English Cricket', image: '#' }},
-      { id: 6, entity: { name: '301', image: '#' }},
-    ];
+    this.leagueService.getLeagues().subscribe((leagues) => {
+      this.leagues = leagues;
+    });
   }
 
 }

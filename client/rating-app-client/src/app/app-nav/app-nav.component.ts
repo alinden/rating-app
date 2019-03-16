@@ -69,28 +69,33 @@ export class AppNavComponent {
 
   ngOnInit() {
     this.sub = this.router.events.subscribe(routerEvent => {
-      this.leagueService.getLeagues().subscribe(leagues => {
-        this.leagues = leagues;
-        const x = routerEvent as NavigationEnd;
-        this.userService.getUsers().subscribe(users => {
-          this.users = users;
-          this.usernames = [...[''], ...users.map(user => user.entity.name)];
-          if (x.url && (x.url !== this.url)) {
-            this.url = x.url;
-            const urlSegments = x.url.split('/');
-            if (urlSegments.length > 1) {
-              this.viewName = urlSegments[1].replace(/%20/, ' ');
-              if (urlSegments.length > 2) {
-                this.leagueName = urlSegments[2].replace(/%20/, ' ');
-                this.setLeague(this.leagueName);
-                if (urlSegments.length > 3) {
-                  this.playerName = urlSegments[3].replace(/%20/, ' ');
+      if (routerEvent instanceof NavigationEnd) {
+        console.log('app-nav routerevent sub');
+        console.log('routerEvent');
+        console.log(routerEvent);
+        this.leagueService.getLeagues().subscribe(leagues => {
+          this.leagues = leagues;
+          const x = routerEvent as NavigationEnd;
+          this.userService.getUsers().subscribe(users => {
+            this.users = users;
+            this.usernames = [...[''], ...users.map(user => user.entity.name)];
+            if (x.url && (x.url !== this.url)) {
+              this.url = x.url;
+              const urlSegments = x.url.split('/');
+              if (urlSegments.length > 1) {
+                this.viewName = urlSegments[1].replace(/%20/, ' ');
+                if (urlSegments.length > 2) {
+                  this.leagueName = urlSegments[2].replace(/%20/, ' ');
+                  this.setLeague(this.leagueName);
+                  if (urlSegments.length > 3) {
+                    this.playerName = urlSegments[3].replace(/%20/, ' ');
+                  }
                 }
               }
             }
-          }
+          });
         });
-      });
+      }
     });
   }
 

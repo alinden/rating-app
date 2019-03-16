@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Game } from './game';
 import { WithId } from './with-id';
 import { Observable, of } from 'rxjs';
-import { RatingService } from './rating.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LeagueWithGames } from './league-with-games';
@@ -22,38 +21,13 @@ export class GameService {
   private gameById = {};
 
   constructor(
-    private ratingService: RatingService,
     private http: HttpClient
   ) { }
 
-  getLeaguesWithGames(): Observable<LeagueWithGames[]> {
-    return this.http.get<LeagueWithGames[]>(this.leaguesWithGamesUrl)
-      .pipe(
-        catchError(this.handleError('getLeaguesWithGames', [])),
-      );
-  }
-
-  reloadLeagueWithGames(leagueId: number): Observable<LeagueWithGames> {
-    const fullUrl = this.leagueWithGamesUrl + '/' + leagueId;
-    return this.http.get<LeagueWithGames>(fullUrl)
+  getLeagueWithGames(leagueId: number): Observable<LeagueWithGames> {
+    return this.http.get<LeagueWithGames>(`${this.leagueWithGamesUrl}/${leagueId}`)
       .pipe(
         catchError(this.handleError('getLeaguesWithGames', null)),
-      );
-  }
-
-  getGames(): Observable<WithId<Game>[]> {
-    return this.http.get<WithId<Game>[]>(this.gamesUrl)
-      .pipe(
-        catchError(this.handleError('getGames', [])),
-        tap(games => this.setGameById(games))
-      );
-  }
-
-  getGame(id: number): Observable<WithId<Game>> {
-    const url = `${this.gamesUrl}/${id}`;
-    return this.http.get<WithId<Game>>(url)
-      .pipe(
-        catchError(this.handleError<WithId<Game>>(`getGame(${id})`))
       );
   }
 
@@ -81,13 +55,5 @@ export class GameService {
     return (error: any): Observable<T> => {
       return of(result as T);
     };
-  }
-
-  private getGameUrl(id: number): string {
-    return this.gameUrlBase + id;
-  }
-
-  private setGameById(games: WithId<Game>[]): void {
-    games.forEach( game => this.gameById[game.id] = game);
   }
 }

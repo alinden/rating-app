@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { GameService } from '../game.service';
+import { LeagueService } from '../league.service';
 import { DataRefreshRequiredService } from '../data-refresh-required.service';
 import { StatsService } from '../stats.service';
 
@@ -10,7 +10,6 @@ import { Game } from '../game';
 import { User } from '../user';
 import { League } from '../league';
 import { WithId } from '../with-id';
-import { LeagueWithGames } from '../league-with-games';
 import { WinLossRecord } from '../win-loss-record';
 import { MonthTotal } from '../month-total';
 
@@ -20,17 +19,16 @@ import { MonthTotal } from '../month-total';
   styleUrls: ['./months.component.css']
 })
 export class MonthsComponent implements OnInit {
-
-  users: WithId<User>[] = [];
-  leagueWithGames: LeagueWithGames;
+  league: WithId<League> = null;
   leagueName: string = '';
-  playerName: string = '';
-
+  leagues: WithId<League>[] = [];
   monthNames: string[] = [];
   monthTotals: MonthTotal[];
+  playerName: string = '';
+  users: WithId<User>[] = [];
 
-  private urlSub: any;
   private dataRefreshSub: any;
+  private urlSub: any;
 
   dataVersion: number = 0;
 
@@ -47,11 +45,11 @@ export class MonthsComponent implements OnInit {
   }
 
   constructor(
+    private dataRefreshRequiredService: DataRefreshRequiredService,
+    private leagueService: LeagueService,
     private route: ActivatedRoute,
-    private gameService: GameService,
     private statsService: StatsService,
     private userService: UserService,
-    private dataRefreshRequiredService: DataRefreshRequiredService,
     ) {
       this.setMonthNames();
     }
@@ -77,14 +75,12 @@ export class MonthsComponent implements OnInit {
   refreshData() {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
-      this.gameService.getLeaguesWithGames().subscribe((leaguesWithGames) => {
+      this.leagueService.getLeagues().subscribe((leagues) => {
+        this.leagues = leagues;
         if (this.leagueName) {
-          this.leagueWithGames = leaguesWithGames.find((x) => {
-            return x.league.entity.name === this.leagueName;
+          this.league = leagues.find((league) => {
+            return league.entity.name === this.leagueName;
           });
-        }
-        if (!this.leagueWithGames) {
-          this.leagueWithGames = leaguesWithGames[0];
         }
         if (this.playerName && this.users.length) {
           const player = this.users.find((user) => {
@@ -92,7 +88,7 @@ export class MonthsComponent implements OnInit {
           });
           if (player) {
             this.statsService.getConditionalMonths(
-              this.leagueWithGames.league.id, player.id
+              this.league.id, player.id
             ).subscribe(monthTotals => {
               this.monthTotals = monthTotals;
             });
@@ -104,7 +100,7 @@ export class MonthsComponent implements OnInit {
               monthTotalsByLeagueId.set(leagueIdAndMonthTotals[0],
                 leagueIdAndMonthTotals[1]);
             }
-            this.monthTotals = monthTotalsByLeagueId.get(this.leagueWithGames.league.id);
+            this.monthTotals = monthTotalsByLeagueId.get(this.league.id);
           });
         }
       });
