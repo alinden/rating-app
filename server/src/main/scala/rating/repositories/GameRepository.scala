@@ -58,6 +58,43 @@ object GameRepository extends Repository[Game] {
       .query[RatedGame]
       .to[List]
 
+  def getByUserAndLeagueQuery(userId: Int, leagueId: Int) =
+    sql"""
+      select
+        winners.id,
+        winners.name,
+        winners.image,
+        winner_ratings.id,
+        winner_ratings.league_id,
+        winner_ratings.user_id,
+        winner_ratings.last_game_id,
+        winner_ratings.new_rating,
+        winner_ratings.previous_rating,
+        losers.id,
+        losers.name,
+        losers.image,
+        loser_ratings.id,
+        loser_ratings.league_id,
+        loser_ratings.user_id,
+        loser_ratings.last_game_id,
+        loser_ratings.new_rating,
+        loser_ratings.previous_rating,
+        games.date_played
+      from
+        (select * from games where league_id = ${leagueId} and (winner_id = ${userId} or loser_id = ${userId})) games
+        inner join users winners
+          on games.winner_id = winners.id
+        inner join users losers
+          on games.loser_id = losers.id
+        inner join ratings winner_ratings
+          on games.id = winner_ratings.last_game_id and winners.id = winner_ratings.user_id
+        inner join ratings loser_ratings
+          on games.id = loser_ratings.last_game_id and losers.id = loser_ratings.user_id
+      order by games.id desc;
+    """
+      .query[RatedGame]
+      .to[List]
+
   override def addQuery(newGame: Game) =
     sql"""
       insert into games
@@ -84,6 +121,8 @@ object GameRepository extends Repository[Game] {
   override def getAll(implicit xb: Transactor[IO]): List[WithId[Game]] = getAllQuery.transact(xb).unsafeRunSync
   override def get(id: Int)(implicit xb: Transactor[IO]): Option[WithId[Game]] = getQuery(id).transact(xb).unsafeRunSync
   def getByLeague(league: WithId[League])(implicit xb: Transactor[IO]): List[RatedGame] = getByLeagueQuery(league).transact(xb).unsafeRunSync
+  def getByUserAndLeague(userId: Int, leagueId: Int)(implicit xb: Transactor[IO]): List[RatedGame] =
+    getByUserAndLeagueQuery(userId, leagueId).transact(xb).unsafeRunSync
   override def add(newGame: Game)(implicit xb: Transactor[IO]): Option[WithId[Game]] = for {
     id <- addQuery(newGame).transact(xb).unsafeRunSync
     game <- getQuery(id).transact(xb).unsafeRunSync

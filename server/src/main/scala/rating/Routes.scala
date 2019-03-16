@@ -74,21 +74,10 @@ object Routes {
     import dsl._
     import GameController.Encoders._
     HttpRoutes.of[F] {
-      case GET -> Root / "api" / "games" =>
-        for {
-          game <- U.all
-          response <- Ok(game)
-        } yield response
-      case GET -> Root / "api" / "leagues-with-games" =>
-        for {
-          leaguesWithGames <- U.leaguesWithGames
-          response <- Ok(leaguesWithGames)
-        } yield response
       case GET -> Root / "api" / "league-with-games" / id =>
-        for {
-          leagueWithGames <- U.leagueWithGames(id.toInt)
-          response <- Ok(leagueWithGames)
-        } yield response
+        Ok(U.leagueWithGames(id.toInt))
+      case GET -> Root / "api" / "conditional-league-with-games" / userId / leagueId =>
+        Ok(U.getConditionalLeagueWithGames(userId.toInt, leagueId.toInt))
       case GET -> Root / "api" / "games" / id => Ok(U.get(id.toInt))
       case req @ POST -> Root / "api" / "games" => for {
         newGame <- req.as[Game]
