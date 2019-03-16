@@ -5,5 +5,7 @@ import io.circe.generic.JsonCodec, io.circe.syntax._
 
 @JsonCodec case class RatedUser(
   user: WithId[User],
-  rating: WithId[Rating]
+  rating: WithId[Rating],
+  minRating: Int,
+  maxRating: Int,
 )

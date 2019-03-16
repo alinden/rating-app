@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {MatDialog, MatDialogConfig} from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 
 import { RatingService } from '../rating.service';
 import { StatsService } from '../stats.service';
 import { DataRefreshRequiredService } from '../data-refresh-required.service';
+import { RatingHistoryDialogComponent } from '../rating-history-dialog/rating-history-dialog.component';
 
 import { Game } from '../game';
 import { User } from '../user';
@@ -12,6 +14,7 @@ import { WithId } from '../with-id';
 import { LeagueWithRatings } from '../league-with-ratings';
 import { WinLossRecord } from '../win-loss-record';
 import { MonthTotal } from '../month-total';
+import { RatedUser } from '../rated-user';
 
 
 @Component({
@@ -31,6 +34,7 @@ export class RatingsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ratingService: RatingService,
+    private dialog: MatDialog,
     private dataRefreshRequiredService: DataRefreshRequiredService,
     ) { }
 
@@ -60,5 +64,19 @@ export class RatingsComponent implements OnInit {
         this.leagueWithRatings = leaguesWithRatings[0];
       }
     });
+  }
+
+  openRatingDetails(ratedUser: RatedUser) {
+    console.log('openRatingDetails');
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      ratedUser: ratedUser,
+      league: this.leagueWithRatings.league.entity,
+    };
+
+    this.dialog.open(RatingHistoryDialogComponent, dialogConfig);
   }
 }

@@ -47,6 +47,7 @@ import { StandingsComponent } from './standings/standings.component';
 import { MonthsComponent } from './months/months.component';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 import { AddGameDialogComponent } from './add-game-dialog/add-game-dialog.component';
+import { RatingHistoryDialogComponent } from './rating-history-dialog/rating-history-dialog.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { AddGameDialogComponent } from './add-game-dialog/add-game-dialog.compon
     MonthTotalComponent,
     StandingsComponent,
     MonthsComponent,
-    AddGameDialogComponent
+    AddGameDialogComponent,
+    RatingHistoryDialogComponent
   ],
   imports: [
     NgxChartsModule,
@@ -102,6 +104,7 @@ import { AddGameDialogComponent } from './add-game-dialog/add-game-dialog.compon
   bootstrap: [AppComponent],
   entryComponents: [
     DetailsDialogComponent,
+    RatingHistoryDialogComponent,
     AddGameDialogComponent,
   ],
 })
