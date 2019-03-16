@@ -99,30 +99,32 @@ export class AppNavComponent {
   handleViewChange($event: MatSelectChange) {
     if ($event && $event.value) {
       const viewName = $event.value;
-      if (this.leagueName && !this.playerName) {
-        this.router.navigate([`/${viewName}/${this.leagueName}`]);
-      } else if (this.leagueName && this.playerName) {
-        this.router.navigate([`/${viewName}/${this.leagueName}/${this.playerName}`]);
-      } else {
-        this.router.navigate([`/${viewName}`]);
-      }
+      this.navigate();
     }
   }
 
   handleLeagueChange($event: MatSelectChange) {
     if ($event && $event.value) {
       const leagueName = $event.value;
-      if (this.viewName) {
-        this.router.navigate([`/${this.viewName}/${leagueName}`]);
-      }
+      this.navigate();
     }
   }
 
   handlePlayerChange($event: MatSelectChange) {
     if ($event) {
       const playerName = $event.value;
-      if (this.viewName && this.leagueName) {
-        this.router.navigate([`/${this.viewName}/${this.leagueName}/${playerName}`]);
+      this.navigate();
+    }
+  }
+
+  navigate() {
+    if (this.viewName) {
+      if (this.leagueName && !this.playerName) {
+        this.router.navigate([`/${this.viewName}/${this.leagueName}`]);
+      } else if (this.leagueName && this.playerName) {
+        this.router.navigate([`/${this.viewName}/${this.leagueName}/${this.playerName}`]);
+      } else {
+        this.router.navigate([`/${this.viewName}`]);
       }
     }
   }
