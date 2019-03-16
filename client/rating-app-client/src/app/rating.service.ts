@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { LeagueWithRatings } from './league-with-ratings';
+import { RatingHistory, RatingHistoryRecord } from './rating-history';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,6 +15,7 @@ const httpOptions = {
 })
 export class RatingService {
   private leagueWithRatingsUrl = 'api/league-with-ratings';
+  private ratingHistoryUrl = 'api/rating-history';
 
   constructor(
     private http: HttpClient
@@ -23,6 +25,13 @@ export class RatingService {
     return this.http.get<LeagueWithRatings>(`${this.leagueWithRatingsUrl}/${leagueId}`)
       .pipe(
         catchError(this.handleError('getLeagueWithRatings', null)),
+      );
+  }
+
+  getRatingHistory(userId: number, leagueId: number): Observable<RatingHistory> {
+    return this.http.get<RatingHistory>(`${this.ratingHistoryUrl}/${userId}/${leagueId}`)
+      .pipe(
+        catchError(this.handleError('getRatingHistory', null)),
       );
   }
 

@@ -8,9 +8,10 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 
-import rating.models.{Rating, RatedUser, League}
+import rating.models.{Rating, RatedUser, League, RatingHistoryRecord}
 
 object RatingRepository extends Repository[Rating] {
+
   override val getAllQuery =
     sql"""
       select
@@ -137,6 +138,17 @@ object RatingRepository extends Repository[Rating] {
       .update
       .run
 
+  def getRatingHistoryRecordsQuery(userId: Int, leagueId: Int) =
+    sql"""
+      select
+        ratings.new_rating,
+        games.date_played
+      from ratings
+      inner join games on ratings.last_game_id = games.id
+      where ratings.user_id = ${userId} and ratings.league_id = ${leagueId}
+    """.query[RatingHistoryRecord]
+       .to[List]
+
   override def getAll(implicit xb: Transactor[IO]): List[WithId[Rating]] = getAllQuery.transact(xb).unsafeRunSync
   override def get(id: Int)(implicit xb: Transactor[IO]): Option[WithId[Rating]] = getQuery(id).transact(xb).unsafeRunSync
   def getByUserIdAndLeagueId(userId: Int, leagueId: Int)(implicit xb: Transactor[IO]): Option[WithId[Rating]] =
@@ -148,4 +160,7 @@ object RatingRepository extends Repository[Rating] {
   } yield rating
   override def update(rating: WithId[Rating])(implicit xb: Transactor[IO]): Int = updateQuery(rating).transact(xb).unsafeRunSync
   override def delete(id: Int)(implicit xb: Transactor[IO]): Int = deleteQuery(id).transact(xb).unsafeRunSync
+
+  def getRatingHistoryRecords(userId: Int, leagueId: Int)(implicit xb: Transactor[IO]): List[RatingHistoryRecord] =
+    getRatingHistoryRecordsQuery(userId, leagueId).transact(xb).unsafeRunSync
 }

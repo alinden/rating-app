@@ -33,6 +33,10 @@ table {
   table-layout: fixed;
 }
 
+.history-graph-wrapper {
+  margin-top: 32px;
+}
+
 @media screen and (max-width: 600px) {
   .record-container {
     width: 150px;

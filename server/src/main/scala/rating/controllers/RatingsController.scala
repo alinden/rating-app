@@ -7,7 +7,7 @@ import io.circe.{Encoder, Decoder, Json}
 import org.http4s.{EntityEncoder, EntityDecoder}
 import org.http4s.circe._
 
-import rating.models.{Rating, LeagueWithRatings}
+import rating.models.{Rating, LeagueWithRatings, RatingHistory}
 import rating.repositories.{RatingRepository, LeagueRepository, WithId}
 
 import doobie._
@@ -17,10 +17,8 @@ import cats.effect.{ExitCode, IO, IOApp}
 
 
 trait RatingController[F[_]]{
-  def all: F[List[WithId[Rating]]]
-  def get(id: Int): F[WithId[Rating]]
-  def leaguesWithRatings: F[List[LeagueWithRatings]]
   def leagueWithRatings(id: Int): F[LeagueWithRatings]
+  def getRatingHistory(userId: Int, leagueId: Int): F[RatingHistory]
 }
 
 object RatingController {
@@ -35,24 +33,21 @@ object RatingController {
       jsonOf[F, Rating]
     implicit def ratingEntityDecoder[F[_]: Sync]: EntityDecoder[F, WithId[Rating]] =
       jsonOf[F, WithId[Rating]]
-    implicit def leaguesWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[LeagueWithRatings]] =
-      jsonEncoderOf[F, List[LeagueWithRatings]]
     implicit def leagueWithRatingsEntityEncoder[F[_]: Applicative]: EntityEncoder[F, LeagueWithRatings] =
       jsonEncoderOf[F, LeagueWithRatings]
+    implicit def ratingHistoryEntityEncoder[F[_]: Applicative]: EntityEncoder[F, RatingHistory] =
+      jsonEncoderOf[F, RatingHistory]
   }
 
   def impl[F[_]: Applicative](implicit xb: Transactor[IO]): RatingController[F] = new RatingController[F]{
-    def leaguesWithRatings: F[List[LeagueWithRatings]] = {
-      val leagues = LeagueRepository.getAll
-      val leaguesWithRatings = leagues
-        .map(x => LeagueWithRatings(x, RatingRepository.getByLeague(x)))
-      leaguesWithRatings.pure[F]
-    }
     def leagueWithRatings(id: Int): F[LeagueWithRatings] = {
       val league = LeagueRepository.get(id).get
       LeagueWithRatings(league, RatingRepository.getByLeague(league)).pure[F]
     }
-    def all: F[List[WithId[Rating]]] = RatingRepository.getAll.pure[F]
-    def get(id: Int): F[WithId[Rating]] = RatingRepository.get(id).get.pure[F]
+    def getRatingHistory(userId: Int, leagueId: Int): F[RatingHistory] = {
+      val league = LeagueRepository.get(leagueId).get
+      val records = RatingRepository.getRatingHistoryRecords(userId, leagueId)
+      RatingHistory(league.entity.name, records).pure[F]
+    }
   }
 }
