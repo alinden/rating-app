@@ -109,22 +109,10 @@ object Routes {
     import dsl._
     import RatingController.Encoders._
     HttpRoutes.of[F] {
-      case GET -> Root / "api" / "ratings" =>
-        for {
-          rating <- U.all
-          response <- Ok(rating)
-        } yield response
-      case GET -> Root / "api" / "ratings" / id => Ok(U.get(id.toInt))
-      case GET -> Root / "api" / "leagues-with-ratings" =>
-        for {
-          leaguesWithRatings <- U.leaguesWithRatings
-          response <- Ok(leaguesWithRatings)
-        } yield response
+      case GET -> Root / "api" / "rating-history" / userId / leagueId =>
+        Ok(U.getRatingHistory(userId.toInt, leagueId.toInt))
       case GET -> Root / "api" / "league-with-ratings" / id =>
-        for {
-          leagueWithRatings <- U.leagueWithRatings(id.toInt)
-          response <- Ok(leagueWithRatings)
-        } yield response
+        Ok(U.leagueWithRatings(id.toInt))
     }
   }
 
