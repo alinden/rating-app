@@ -20,7 +20,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 
 trait GameController[F[_]]{
   def all: F[List[WithId[Game]]]
-  def leaguesWithGames: F[List[LeagueWithGames]]
+  def getConditionalLeagueWithGames(userId: Int, leagueId: Int): F[LeagueWithGames]
   def leagueWithGames(id: Int): F[LeagueWithGames]
   def get(id: Int): F[WithId[Game]]
   def add(newGame: Game): F[Unit]
@@ -73,11 +73,9 @@ object GameController {
       (newWinnerRating, newLoserRating)
     }
 
-    def leaguesWithGames: F[List[LeagueWithGames]] = {
-      val leagues = LeagueRepository.getAll
-      val leaguesWithGames = leagues
-        .map(x => LeagueWithGames(x, GameRepository.getByLeague(x)))
-      leaguesWithGames.pure[F]
+    def getConditionalLeagueWithGames(userId: Int, leagueId: Int): F[LeagueWithGames] = {
+      val league = LeagueRepository.get(leagueId).get
+      LeagueWithGames(league, GameRepository.getByUserAndLeague(userId, leagueId)).pure[F]
     }
 
     def leagueWithGames(id: Int): F[LeagueWithGames] = {

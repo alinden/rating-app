@@ -4,9 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DataRefreshRequiredService } from '../data-refresh-required.service';
 import { LeagueService } from '../league.service';
+import { UserService } from '../user.service';
 import { GameService } from '../game.service';
 
 import { League } from '../league';
+import { User } from '../user';
 import { LeagueWithGames } from '../league-with-games';
 import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
 import { RatedGame } from '../rated-game';
@@ -22,6 +24,9 @@ export class GamesComponent implements OnInit {
   leagueName: string = '';
   leagueWithGames: LeagueWithGames;
   leagues: WithId<League>[] = [];
+  playerName: string = '';
+  users: WithId<User>[] = [];
+  user: WithId<User> = null;
 
   private dataRefreshSub: any;
   private urlSub: any;
@@ -33,6 +38,7 @@ export class GamesComponent implements OnInit {
     private dialog: MatDialog,
     private leagueService: LeagueService,
     private gameService: GameService,
+    private userService: UserService,
     private route: ActivatedRoute,
   ) {}
 
@@ -40,6 +46,9 @@ export class GamesComponent implements OnInit {
     this.urlSub = this.route.params.subscribe(params => {
       if (params['leagueName']) {
         this.leagueName = params['leagueName'];
+      }
+      if (params['playerName']) {
+        this.playerName = params['playerName'];
       }
       this.refreshData();
     });
@@ -59,9 +68,22 @@ export class GamesComponent implements OnInit {
           return league.entity.name === this.leagueName;
         });
         if (this.league) {
-          this.gameService.getLeagueWithGames(this.league.id).subscribe((leagueWithGames) => {
-            this.leagueWithGames = leagueWithGames;
-          });
+          if (this.playerName) {
+            this.userService.getUsers().subscribe(users => {
+              this.user = users.find((user) => {
+                return user.entity.name === this.playerName;
+              });
+              if (this.user) {
+                this.gameService.getConditionalLeagueWithGames(this.user.id, this.league.id).subscribe((leagueWithGames) => {
+                  this.leagueWithGames = leagueWithGames;
+                });
+              }
+            });
+          } else {
+            this.gameService.getLeagueWithGames(this.league.id).subscribe((leagueWithGames) => {
+              this.leagueWithGames = leagueWithGames;
+            });
+          }
         }
       }
     });
