@@ -68,12 +68,15 @@ export class RatingsComponent implements OnInit {
   }
 
   openRatingDetails(ratedUser: RatedUser) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      ratedUser: ratedUser,
-      league: this.league.entity,
-    };
-    this.dialog.open(RatingHistoryDialogComponent, dialogConfig);
+    this.ratingService.getRatingHistory(ratedUser.user.id, this.league.id).subscribe((ratingHistory) => {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = {
+        ratedUser: ratedUser,
+        league: this.league.entity,
+        ratingHistory,
+      };
+      this.dialog.open(RatingHistoryDialogComponent, dialogConfig);
+    });
   }
 }
