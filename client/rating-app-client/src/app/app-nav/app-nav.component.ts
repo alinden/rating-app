@@ -70,9 +70,6 @@ export class AppNavComponent {
   ngOnInit() {
     this.sub = this.router.events.subscribe(routerEvent => {
       if (routerEvent instanceof NavigationEnd) {
-        console.log('app-nav routerevent sub');
-        console.log('routerEvent');
-        console.log(routerEvent);
         this.leagueService.getLeagues().subscribe(leagues => {
           this.leagues = leagues;
           const x = routerEvent as NavigationEnd;
